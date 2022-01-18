@@ -28,3 +28,10 @@ monitor:
 
 clean:
 	$(DOCKER) rm -rf build
+
+simulator: x86_64
+	${PWD}/x86_64/build/embedded-crypto-ticker
+
+x86_64: 
+	cmake -DCMAKE_BUILD_TYPE:STRING=Release -H$(PWD)/x86_64 -B$(PWD)/x86_64/build -G "Unix Makefiles"
+	cmake --build $(PWD)/x86_64/build --config MinSizeRel --target all -j 18 --
