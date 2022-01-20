@@ -7,7 +7,7 @@ file(GLOB_RECURSE LVGL_DRIVERS ${CMAKE_CURRENT_SOURCE_DIR}/lv_drivers/*.c)
 
 add_executable(embedded-crypto-ticker 
     ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/hal/lvgl/lvgl_driver.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/gui/hal/driver.cpp
     ${LVGL_DRIVERS}
 )
 

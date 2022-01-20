@@ -1,9 +1,11 @@
 #include <lvgl.h>
+// Adapted from https://github.com/lvgl/lv_sim_vscode_sdl
+// MIT Licence
 
-#include <gui/hal/driver.hpp>
-// #define _DEFAULT_SOURCE /* needed for usleep() */
 #include <stdlib.h>
 #include <unistd.h>
+
+#include <gui/hal/driver.hpp>
 #define SDL_MAIN_HANDLED    /*To fix SDL's "undefined reference to WinMain" \
                                issue*/
 #include <SDL2/SDL.h>
@@ -15,14 +17,6 @@
 #include "lvgl/lvgl.h"
 
 using namespace GUI::HAL;
-
-#ifndef LV_TICK_PERIOD_MS
-  #define LV_TICK_PERIOD_MS 1
-#endif
-
-#ifndef LV_UPDATE_INTERVAL
-  #define LV_UPDATE_INTERVAL_MS 10
-#endif
 
 #include <condition_variable>
 #include <mutex>
@@ -100,13 +94,7 @@ void Driver::init() {
 
   /*This function will be called periodically (by the library) to get the mouse position and state*/
   mouse_drv.read_cb = mouse_read;
-  // lv_indev_t* mouse_indev = lv_indev_drv_register(&mouse_drv);
-
-  // /*Set a cursor for the mouse*/
-  // LV_IMG_DECLARE(mouse_cursor_icon);                        /*Declare the image file.*/
-  // lv_obj_t* cursor_obj = lv_img_create(lv_scr_act(), NULL); /*Create an image object for the cursor */
-  // lv_img_set_src(cursor_obj, &mouse_cursor_icon);           /*Set the image source*/
-  // lv_indev_set_cursor(mouse_indev, cursor_obj);             /*Connect the image  object to the driver*/
+  lv_indev_t* mouse_indev = lv_indev_drv_register(&mouse_drv);
 
   /* Add the keyboard as input device
    * Use the 'keyboard' driver which reads the PC's keyboard*/
