@@ -1,9 +1,0 @@
-idf_component_register(
-    SRCS 
-        "main.cpp"
-        "gui/hal/driver.cpp"
-        "../components/gui/assets/btc_icon_60.c"
-        "../components/gui/views/ticker/legacy.cpp"
-    INCLUDE_DIRS 
-        ${CMAKE_SOURCE_DIR}/components
-)

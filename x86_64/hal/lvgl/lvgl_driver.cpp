@@ -1,6 +1,6 @@
 #include <lvgl.h>
 
-#include <hal/lvgl/lvgl_driver.hpp>
+#include <gui/hal/driver.hpp>
 // #define _DEFAULT_SOURCE /* needed for usleep() */
 #include <stdlib.h>
 #include <unistd.h>
@@ -14,7 +14,7 @@
 #include "lv_drivers/indev/mousewheel.h"
 #include "lvgl/lvgl.h"
 
-using namespace HAL;
+using namespace GUI::HAL;
 
 #ifndef LV_TICK_PERIOD_MS
   #define LV_TICK_PERIOD_MS 1
@@ -24,6 +24,9 @@ using namespace HAL;
   #define LV_UPDATE_INTERVAL_MS 10
 #endif
 
+#include <condition_variable>
+#include <mutex>
+#include <semaphore>
 #include <thread>
 
 static void hal_init(void);
@@ -38,12 +41,43 @@ lv_indev_drv_t mouse_drv;
 lv_indev_drv_t keyb_drv;
 lv_indev_drv_t enc_drv;
 
-LVGLDriver LVGLDriver::_instance;
+class Semaphore {
+  std::mutex mutex_;
+  std::condition_variable condition_;
+  unsigned long count_ = 1;  // Initialized as locked.
 
-LVGLDriver::LVGLDriver() {
+ public:
+  void release() {
+    std::lock_guard<decltype(mutex_)> lock(mutex_);
+    ++count_;
+    condition_.notify_one();
+  }
+
+  void acquire() {
+    std::unique_lock<decltype(mutex_)> lock(mutex_);
+    while(!count_)  // Handle spurious wake-ups.
+      condition_.wait(lock);
+    --count_;
+  }
+
+  bool try_acquire() {
+    std::lock_guard<decltype(mutex_)> lock(mutex_);
+    if(count_) {
+      --count_;
+      return true;
+    }
+    return false;
+  }
+};
+
+static Semaphore semaphore;
+
+Driver Driver::_instance;
+
+Driver::Driver() {
 }
 
-void LVGLDriver::init() {
+void Driver::init() {
   lv_init();
 
   /* Use the 'monitor' driver which creates window on PC's monitor to simulate a display*/
@@ -96,17 +130,21 @@ void LVGLDriver::init() {
   ut.detach();
 }
 
-bool LVGLDriver::aquireMutex(size_t timeoutMs) {
+bool Driver::aquireMutex(size_t timeoutMs) {
   (void)timeoutMs;
+  semaphore.acquire();
   return true;
 }
 
-void LVGLDriver::releaseMutex() {
+void Driver::releaseMutex() {
+  semaphore.release();
 }
 
 void update_thread() {
   while(true) {
+    semaphore.acquire();
     lv_task_handler();
+    semaphore.release();
     usleep(5 * 1000);
   }
 }

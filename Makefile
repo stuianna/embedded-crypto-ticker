@@ -9,25 +9,26 @@ DOCKER_INTERACTIVE=docker run --rm -it --device=$(PORT) -v $(PWD):/project -w /p
 all: build
 
 setup:
-	git apply patches/ttgo-t-display.patch --directory  components/lvgl_esp32_drivers
+	git apply patches/ttgo-t-display.patch --directory  esp32/components/lvgl_esp32_drivers
 
 configure:
-	$(DOCKER_INTERACTIVE) idf.py menuconfig
+	$(DOCKER_INTERACTIVE) idf.py -C esp32 menuconfig
 
 run-image:
 	$(DOCKER_INTERACTIVE) /bin/bash
 
 build:
-	$(DOCKER) idf.py build
+	$(DOCKER) idf.py -C esp32 build
 
 flash:
-	$(DOCKER) idf.py -p $(PORT) flash
+	$(DOCKER) idf.py -C esp32 -p $(PORT) flash
 
 monitor:
 	screen $(PORT) 115200
 
 clean:
-	$(DOCKER) rm -rf build
+	$(DOCKER) rm -rf esp32/build
+	rm -rf x86_64/build
 
 simulator: x86_64
 	${PWD}/x86_64/build/embedded-crypto-ticker

@@ -2,33 +2,106 @@
 #include <unistd.h>
 
 #include <cstdio>
-#include <hal/lvgl/lvgl_driver.hpp>
+// #include <gui/tools/cpl.hpp>
+// #include <gui/widgets/elemental/image.hpp>
+// #include <gui/widgets/elemental/percentage.hpp>
+// #include <gui/widgets/elemental/price.hpp>
+// #include <gui/widgets/composite/quote_banner.hpp>
+// #include <gui/widgets/elemental/chart.hpp>
+#include <gui/views/ticker/legacy.hpp>
+#include <gui/hal/driver.hpp>
+
+
+LV_IMG_DECLARE(btc_icon_60);
 
 static void setupGUI();
 
-static lv_obj_t* hello_world_label;
-static lv_obj_t* count_label;
+// static lv_obj_t* hello_world_label;
+// static lv_obj_t* count_label;
 
-static void setupGUI() {
-  hello_world_label = lv_label_create(lv_scr_act(), NULL);
-  lv_label_set_text(hello_world_label, "abcdefghijklmnopqrstuvwxyz123");
-  lv_obj_align(hello_world_label, NULL, LV_ALIGN_CENTER, 0, 0);
+// static void setupGUI() {
+//   hello_world_label = lv_label_create(lv_scr_act(), NULL);
 
-  count_label = lv_label_create(lv_scr_act(), NULL);
-  lv_obj_align(count_label, NULL, LV_ALIGN_IN_BOTTOM_MID, 0, 0);
-}
+// }
 
 int main(int, char**) {
-  HAL::LVGL()->init();
-  setupGUI();
+  GUI::HAL::LVGL()->init();
+  // GUI::HAL::LVGL()->aquireMutex(0);
+  auto view = GUI::Views::Legacy();
+  view.setPlotRange(0, 10);
+  view.plotValue(2);
+  view.plotValue(9);
+  view.plotValue(2);
+  view.plotValue(4);
+  view.plotValue(4);
+  view.plotValue(3);
+  view.plotValue(10);
+  view.plotValue(0);
+  view.plotValue(1);
+  view.plotValue(1);
+  view.setCurrencySymbol('$');
+  view.setDailyDelta(0.32);
+  view.setName("Bitcoin");
+  view.setCurrentQuote(123456);
+  view.setIcon(&btc_icon_60);
+
+  // view.show();
+  // auto chart = GUI::Widgets::Chart(lv_scr_act());
+  // chart.setHeight(135);
+  // chart.setWidth(240);
+  // chart.setRange(0, 10);
+  // chart.plot(2);
+  // chart.plot(9);
+  // chart.plot(1);
+  // chart.plot(8);
+  // chart.plot(1);
+  // chart.plot(2);
+  // chart.plot(0);
+  // chart.plot(8);
+  // chart.plot(4);
+  // chart.plot(10);
+  // chart.update();
+  // auto banner = GUI::Widgets::QuoteBanner(lv_scr_act());
+  // banner.setIcon(&btc_icon_60);
+  // banner.setWidth(lv_obj_get_width(lv_scr_act()));
+  // banner.setHeight(lv_obj_get_height(lv_scr_act()) * 0.50);
+  // banner.setCurrencySymbol('$');
+  // banner.setPercentChange(0.32);
+  // banner.setLabel("Bitcoin");
+  // banner.setQuote(123456);
+  // GUI::HAL::LVGL()->releaseMutex();
+  // auto image = GUI::Widgets::Image(lv_scr_act());
+  // image.setSource(&btc_icon_60);
+  // setupGUI();
+  // auto price = GUI::Widgets::Percentage(lv_scr_act());
+  // price.setLayout(LV_LAYOUT_OFF);
+  // price.setHeight(100);
+  // price.setWidth(200);
+  // price.setFit(LV_FIT_PARENT);
+  // price.update();
 
   int32_t count = 0;
-  char count_str[11] = {0};
+  // char count_str[11] = {0};
   while(1) {
-    snprintf(count_str, 11, "%d", count++);
-    HAL::LVGL()->aquireMutex(0);
-    lv_label_set_text(count_label, count_str);
-    HAL::LVGL()->releaseMutex();
-    usleep(1000 * 1000);
+    // snprintf(count_str, 11, "%d", count++);
+    // GUI::HAL::LVGL()->aquireMutex(0);
+    // if (count %2) {
+      view.show();
+
+    // }
+    // else {
+    //   view.hide();
+
+    // }
+    // auto image = GUI::Widgets::Image(lv_scr_act());
+    // image.setSource(&btc_icon_60);
+    // image.setWidth(count);
+    // image.setHeight(count);
+    // count++;
+    // price.setValue(count);
+    count++;
+    // lv_label_set_text(count_label, count_str);
+    // GUI::HAL::LVGL()->releaseMutex();
+    usleep(1000 * 100);
   }
 }
