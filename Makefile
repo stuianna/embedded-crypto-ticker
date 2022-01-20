@@ -4,7 +4,7 @@ PORT=/dev/ttyUSB0
 DOCKER=docker run --rm --device=$(PORT) -v $(PWD):/project -w /project $(DOCKER_IMAGE)
 DOCKER_INTERACTIVE=docker run --rm -it --device=$(PORT) -v $(PWD):/project -w /project $(DOCKER_IMAGE)
 
-.PHONY: build flash run-image setup
+.PHONY: build flash run-image setup simulator x86_64
 
 all: build
 

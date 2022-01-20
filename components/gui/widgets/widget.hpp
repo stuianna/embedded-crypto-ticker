@@ -26,7 +26,7 @@ namespace GUI {
       virtual void update() = 0;
 
      protected:
-      explicit Widget(lv_obj_t* parent) { _rootObject = lv_cont_create(parent, NULL); }
+      explicit Widget(lv_obj_t* parent) : _rootObject(lv_cont_create(parent, NULL)) {}
       void containerStyle(lv_style_t* style, uint8_t part) { lv_obj_add_style(_rootObject, part, style); }
       lv_obj_t* _rootObject;
     };

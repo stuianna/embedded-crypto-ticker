@@ -8,7 +8,7 @@ namespace GUI {
     enum class Family {
       MONTSERRAT,
     };
-    const lv_font_t* get(const Family family, const size_t size) {
+    static const lv_font_t* get(const Family family, const size_t size) {
       switch(family) {
         default:
         case Family::MONTSERRAT:

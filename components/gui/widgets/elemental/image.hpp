@@ -16,13 +16,19 @@ namespace GUI {
         _image = lv_img_create(_rootObject, NULL);
         lv_obj_set_style_local_border_width(_image, LV_OBJ_PART_MAIN, LV_STATE_DEFAULT, 0);
         lv_obj_set_style_local_border_color(_image, LV_OBJ_PART_MAIN, LV_STATE_DEFAULT, currentTheme()->colorBackground());
+        lv_obj_set_style_local_border_color(_rootObject, LV_OBJ_PART_MAIN, LV_STATE_DEFAULT, currentTheme()->colorBackground());
+        lv_obj_set_style_local_bg_color(_rootObject, LV_OBJ_PART_MAIN, LV_STATE_DEFAULT, currentTheme()->colorBackground());
       }
 
       void update() override {
+        if(!_width || !_height) {
+          return;
+        }
+
         float percentOfWidth = getWidth() / static_cast<float>(_width);
         float percentOfHeight = getHeight() / static_cast<float>(_height);
         float smallestDimension = percentOfWidth <= percentOfHeight ? percentOfWidth : percentOfHeight;
-        lv_img_set_zoom(_image, 256 * smallestDimension);
+        lv_img_set_zoom(_image, 250 * smallestDimension);
         lv_obj_align(_image, NULL, LV_ALIGN_CENTER, 0, 0);
       };
 

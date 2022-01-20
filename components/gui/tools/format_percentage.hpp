@@ -1,12 +1,12 @@
-#ifndef __GUI_TOOLS_FORMATE_PERCENTAGE_HPP
-#define __GUI_TOOLS_FORMATE_PERCENTAGE_HPP
+#ifndef __GUI_TOOLS_FORMAT_PERCENTAGE_HPP
+#define __GUI_TOOLS_FORMAT_PERCENTAGE_HPP
 
 #include <cstddef>
 #include <cstdio>
 
 namespace GUI {
   namespace Tools {
-    void formatPercentage(char* buffer, const size_t length, const float value, const float max) {
+    static void formatPercentage(char* buffer, const size_t length, const float value, const float max) {
       int i;
       if(value > 100.f || value < -100.f) {
         i = snprintf(buffer, length, "%d%%", (int)value);

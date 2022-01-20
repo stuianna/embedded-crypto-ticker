@@ -21,6 +21,7 @@ namespace GUI {
         buffer.fill(' ');
         Tools::formatPrice(buffer.data(), buffer.size(), price, 1000000, _symbol);
         setText(buffer.data());
+        setColor(currentTheme()->colorTextNormal());
       };
       void setCurrencySymbol(const char symbol) { _symbol = symbol; }
 

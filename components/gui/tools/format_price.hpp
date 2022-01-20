@@ -1,12 +1,12 @@
-#ifndef __GUI_TOOLS_FORMATE_PRICE_HPP
-#define __GUI_TOOLS_FORMATE_PRICE_HPP
+#ifndef __GUI_TOOLS_FORMAT_PRICE_HPP
+#define __GUI_TOOLS_FORMAT_PRICE_HPP
 
 #include <cstddef>
 #include <cstdio>
 
 namespace GUI {
   namespace Tools {
-    void formatPrice(char* buffer, const size_t length, const float value, float max, const char symbol) {
+    static void formatPrice(char* buffer, const size_t length, const float value, float max, const char symbol) {
       int i;
       if(value < 0.1f) {
         i = snprintf(&buffer[1], 31, "%.4f", value);

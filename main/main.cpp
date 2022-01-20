@@ -1,43 +1,41 @@
-#include <driver/gpio.h>
+#include <esp_log.h>
 #include <esp_system.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
-#include <lvgl.h>
-#include <lvgl_helpers.h>
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-#include <hal/lvgl/lvgl_driver.hpp>
+#include <gui/hal/driver.hpp>
+#include <gui/views/ticker/legacy.hpp>
 
-static void setupGUI();
 
-static lv_obj_t* hello_world_label;
-static lv_obj_t* count_label;
+LV_IMG_DECLARE(btc_icon_60);
 
-extern "C" void app_main() {
-  HAL::LVGL()->init();
-  HAL::LVGL()->aquireMutex(0);
-  setupGUI();
-  HAL::LVGL()->releaseMutex();
-
-  int32_t count = 0;
-  char count_str[11] = {0};
-  while(1) {
-    snprintf(count_str, 11, "%d", count++);
-    HAL::LVGL()->aquireMutex(0);
-    lv_label_set_text(count_label, count_str);
-    HAL::LVGL()->releaseMutex();
-    vTaskDelay(pdMS_TO_TICKS(1000));
-  }
+int32_t ranint(int32_t min, int32_t max) {
+  uint32_t n = esp_random();
+  float scaled = (max - min) * (n / float(0xFFFFFFFF));
+  return scaled + min;
 }
 
-static void setupGUI() {
-  hello_world_label = lv_label_create(lv_scr_act(), NULL);
-  lv_label_set_text(hello_world_label, "Hello world!");
-  lv_obj_align(hello_world_label, NULL, LV_ALIGN_CENTER, 0, 0);
+extern "C" void app_main() {
+  GUI::HAL::LVGL()->init();
+  auto view = GUI::Views::Legacy();
+  GUI::HAL::LVGL()->aquireMutex(100);
+  view.setPlotRange(0, 100);
+  view.setCurrencySymbol('$');
+  view.setName("Bitcoin");
+  view.setIcon(&btc_icon_60);
+  view.show();
+  GUI::HAL::LVGL()->releaseMutex();
 
-  count_label = lv_label_create(lv_scr_act(), NULL);
-  lv_obj_align(count_label, NULL, LV_ALIGN_IN_BOTTOM_MID, 0, 0);
+  while(1) {
+    GUI::HAL::LVGL()->aquireMutex(200);
+    view.plotValue(ranint(0, 100));
+    view.setDailyDelta(ranint(-10000, 10000) / 100.);
+    view.setCurrentQuote(ranint(0, 1000000) / 100.);
+    GUI::HAL::LVGL()->releaseMutex();
+    vTaskDelay(pdMS_TO_TICKS(20));
+  }
 }
