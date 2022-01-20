@@ -4,9 +4,9 @@
 #include <lvgl.h>
 #include <lvgl_helpers.h>
 
-#include <hal/lvgl/lvgl_driver.hpp>
+#include <gui/hal/driver.hpp>
 
-using namespace HAL;
+using namespace GUI::HAL;
 
 #ifndef LV_TICK_PERIOD_MS
   #define LV_TICK_PERIOD_MS 1
@@ -21,24 +21,24 @@ static void task_GUI(void* pvParameter);
 
 static SemaphoreHandle_t xGuiSemaphore = NULL;
 
-LVGLDriver LVGLDriver::_instance;
+Driver Driver::_instance;
 
-LVGLDriver::LVGLDriver() {
+Driver::Driver() {
 }
 
-void LVGLDriver::init() {
+void Driver::init() {
   xTaskCreatePinnedToCore(task_GUI, "GUI", 4096 * 2, NULL, 0, NULL, 1);
 
   while((xGuiSemaphore == NULL) || (xSemaphoreTake(xGuiSemaphore, portMAX_DELAY) == pdFALSE)) {};
   xSemaphoreGive(xGuiSemaphore);
 }
 
-bool LVGLDriver::aquireMutex(size_t timeoutMs) {
+bool Driver::aquireMutex(size_t timeoutMs) {
   TickType_t ticks = timeoutMs ? pdMS_TO_TICKS(timeoutMs) : portMAX_DELAY;
   return xSemaphoreTake(xGuiSemaphore, ticks) == pdTRUE;
 }
 
-void LVGLDriver::releaseMutex() {
+void Driver::releaseMutex() {
   xSemaphoreGive(xGuiSemaphore);
 }
 
