@@ -1,6 +1,16 @@
 #include "legacy.hpp"
 
+#include "../../hal/driver.hpp"
+
 using namespace GUI::Views;
+using namespace GUI::HAL;
+
+Legacy* Legacy::instance() {
+  LVGL()->aquireMutex(LVL_MUTEX_AQUISITION_MSEC);
+  static Legacy _instance;
+  LVGL()->releaseMutex();
+  return &_instance;
+}
 
 Legacy::Legacy() :
   _screen(lv_obj_create(NULL, NULL)),
@@ -42,64 +52,94 @@ Legacy::Legacy() :
 }
 
 void Legacy::show() {
+  LVGL()->aquireMutex(LVL_MUTEX_AQUISITION_MSEC);
   lv_scr_load(_screen);
+  LVGL()->releaseMutex();
 };
 
 void Legacy::hide() {
+  LVGL()->aquireMutex(LVL_MUTEX_AQUISITION_MSEC);
   lv_scr_load(_empty);
+  LVGL()->releaseMutex();
 };
 
 void Legacy::setCurrentQuote(const float quote) {
+  LVGL()->aquireMutex(LVL_MUTEX_AQUISITION_MSEC);
   _banner.setQuote(quote);
+  LVGL()->releaseMutex();
 }
 
 void Legacy::clearCurrentQuote() {
+  LVGL()->aquireMutex(LVL_MUTEX_AQUISITION_MSEC);
   _banner.clearQuote();
+  LVGL()->releaseMutex();
 }
 
 void Legacy::setDailyDelta(const float percent) {
+  LVGL()->aquireMutex(LVL_MUTEX_AQUISITION_MSEC);
   _banner.setPercentChange(percent);
+  LVGL()->releaseMutex();
 }
 
 void Legacy::clearDailyDelta() {
+  LVGL()->aquireMutex(LVL_MUTEX_AQUISITION_MSEC);
   _banner.clearPercentageChange();
+  LVGL()->releaseMutex();
 }
 
 void Legacy::setName(const char* text) {
+  LVGL()->aquireMutex(LVL_MUTEX_AQUISITION_MSEC);
   _banner.setLabel(text);
+  LVGL()->releaseMutex();
 }
 
 void Legacy::clearName() {
+  LVGL()->aquireMutex(LVL_MUTEX_AQUISITION_MSEC);
   _banner.clearLabel();
+  LVGL()->releaseMutex();
 }
 
 void Legacy::setCurrencySymbol(const char symbol) {
+  LVGL()->aquireMutex(LVL_MUTEX_AQUISITION_MSEC);
   _banner.setCurrencySymbol(symbol);
+  LVGL()->releaseMutex();
 }
 
 void Legacy::clearCurrencySymbol() {
+  LVGL()->aquireMutex(LVL_MUTEX_AQUISITION_MSEC);
   _banner.clearCurrencySymbol();
+  LVGL()->releaseMutex();
 }
 
 void Legacy::setIcon(const lv_img_dsc_t* src) {
+  LVGL()->aquireMutex(LVL_MUTEX_AQUISITION_MSEC);
   _banner.setIcon(src);
+  LVGL()->releaseMutex();
 }
 
 void Legacy::clearIcon() {
 }
 
 void Legacy::plotValue(const float value) {
+  LVGL()->aquireMutex(LVL_MUTEX_AQUISITION_MSEC);
   _chart.plot(value);
+  LVGL()->releaseMutex();
 }
 
 void Legacy::clearPlot() {
+  LVGL()->aquireMutex(LVL_MUTEX_AQUISITION_MSEC);
   _chart.clear();
+  LVGL()->releaseMutex();
 }
 
 void Legacy::setPlotRange(const float min, const float max) {
+  LVGL()->aquireMutex(LVL_MUTEX_AQUISITION_MSEC);
   _chart.setRange(min, max);
+  LVGL()->releaseMutex();
 }
 
 void Legacy::setPlotPointCount(size_t count) {
+  LVGL()->aquireMutex(LVL_MUTEX_AQUISITION_MSEC);
   _chart.setPointCount(count);
+  LVGL()->releaseMutex();
 }

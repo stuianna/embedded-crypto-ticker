@@ -7,3 +7,6 @@
 [submodule "x86_64/third_party/lv_drivers"]
 	path = x86_64/lv_drivers
 	url = https://github.com/lvgl/lv_drivers.git
+[submodule "lib/gui/lv_lib_qrcode"]
+	path = lib/gui/lv_lib_qrcode
+	url = https://github.com/lvgl/lv_lib_qrcode.git

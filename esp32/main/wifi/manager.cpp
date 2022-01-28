@@ -8,7 +8,9 @@
 #include <wifi_provisioning/manager.h>
 #include <wifi_provisioning/scheme_softap.h>
 
-#define TAG "WIFI"
+#define TAG                   "WIFI_MANAGER"
+#define PROV_QR_VERSION       "v1"
+#define PROV_TRANSPORT_SOFTAP "softap"
 
 using namespace WIFI;
 
@@ -114,6 +116,17 @@ void Manager::startProvisioning(const char* ssid, const char* password, const ch
 
 void Manager::stopProvisioning() {
   wifi_prov_mgr_deinit();
+}
+
+void Manager::resetProvisioningCredentials() {
+  wifi_prov_mgr_reset_sm_state_on_failure();
+}
+
+void Manager::getQRCodeData(char* buffer, size_t maxLength, const char* ssid, const char* popCode) {
+  snprintf(buffer, maxLength,
+           "{\"ver\":\"%s\",\"name\":\"%s\""
+           ",\"pop\":\"%s\",\"transport\":\"%s\"}",
+           PROV_QR_VERSION, ssid, popCode, PROV_TRANSPORT_SOFTAP);
 }
 
 ConnectionState Manager::status() {

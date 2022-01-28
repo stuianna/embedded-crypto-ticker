@@ -11,7 +11,7 @@ namespace GUI {
   namespace Views {
     class Legacy : public Ticker {
      public:
-      Legacy();
+      static Legacy* instance();
       void show() override;
       void hide() override;
       void setCurrentQuote(const float quote) override;
@@ -47,6 +47,7 @@ namespace GUI {
       void clearTickerBase() override {}
 
      private:
+      Legacy();
       lv_obj_t* _screen;
       lv_obj_t* _empty;
       lv_obj_t* _container;
@@ -56,7 +57,8 @@ namespace GUI {
     };
 
   }  // namespace Views
-};   // namespace GUI
+  constexpr auto LegacyScreen = Views::Legacy::instance;
+};  // namespace GUI
 
 
 #endif  // __GUI_VIEW_QUOTECHART_HPP

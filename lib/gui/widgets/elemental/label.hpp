@@ -28,6 +28,7 @@ namespace GUI {
         lv_obj_align(_label, NULL, _alignment, 0, 0);
       };
       void setColor(lv_color_t color) { lv_style_set_text_color(&_style, LV_STATE_DEFAULT, color); }
+      void setColor(Widgets::Severity level) { lv_style_set_text_color(&_style, LV_STATE_DEFAULT, _lookupColor(level)); }
       void setAlignment(lv_align_t alignment) { _alignment = alignment; }
 
      protected:

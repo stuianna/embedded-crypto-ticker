@@ -5,6 +5,11 @@
 
 namespace GUI {
   namespace Widgets {
+    enum class Severity {
+      GOOD,
+      BAD,
+      NORMAL,
+    };
     class Widget {
      public:
       void setWidth(const size_t width) {
@@ -28,6 +33,14 @@ namespace GUI {
      protected:
       explicit Widget(lv_obj_t* parent) : _rootObject(lv_cont_create(parent, NULL)) {}
       void containerStyle(lv_style_t* style, uint8_t part) { lv_obj_add_style(_rootObject, part, style); }
+      lv_color_t _lookupColor(Severity level) const {
+        switch(level) {
+          case Severity::BAD: return currentTheme()->colorTextBad();
+          case Severity::GOOD: return currentTheme()->colorTextGood();
+          default:
+          case Severity::NORMAL: return currentTheme()->colorTextNormal();
+        }
+      }
       lv_obj_t* _rootObject;
     };
   };  // namespace Widgets

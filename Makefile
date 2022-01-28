@@ -1,4 +1,4 @@
-DOCKER_IMAGE=espressif/idf:v4.3.1
+DOCKER_IMAGE=espressif/idf:release-v4.4
 BOARD=esp32
 PORT=/dev/ttyUSB0
 DOCKER=docker run --rm --device=$(PORT) -v $(PWD):/project -w /project $(DOCKER_IMAGE)
@@ -22,6 +22,9 @@ build:
 
 flash:
 	$(DOCKER) idf.py -C esp32 -p $(PORT) flash
+
+erase:
+	$(DOCKER) idf.py -C esp32 -p $(PORT) erase-flash
 
 monitor:
 	screen $(PORT) 115200

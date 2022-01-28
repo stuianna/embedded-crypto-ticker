@@ -1,6 +1,8 @@
 #ifndef __WIFI_MANAGER_HPP
 #define __WIFI_MANAGER_HPP
 
+#include <cstddef>
+
 namespace WIFI {
   enum ConnectionState {
     CONNECTING,
@@ -28,6 +30,8 @@ namespace WIFI {
     void disconnect();
     void startProvisioning(const char* ssid, const char* password, const char* popCode);
     void stopProvisioning();
+    void resetProvisioningCredentials();
+    void getQRCodeData(char* buffer, size_t maxLength, const char* ssid, const char* popCode);
 
     static Manager* instance() {
       static Manager _instance;

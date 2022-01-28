@@ -2,10 +2,13 @@
 #define __GUI_VIEWS_VIEW_HPP
 
 #include <cstdint>
+#define LVL_MUTEX_AQUISITION_MSEC 100
 
 namespace GUI {
   namespace Views {
     class View {
+     public:
+      virtual ~View() = default;
       virtual void show() = 0;
       virtual void hide() = 0;
     };

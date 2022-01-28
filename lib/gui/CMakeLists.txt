@@ -8,6 +8,10 @@ SET(ASSETS
 
 set(SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/views/ticker/legacy.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/views/startup/provisioning.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/views/startup/loading.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/lv_lib_qrcode/lv_qrcode.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/lv_lib_qrcode/qrcodegen.c
 )
 
 if(ESP_PLATFORM)
