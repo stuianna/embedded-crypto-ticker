@@ -3,6 +3,7 @@ idf_component_register(
     SRCS 
         "main.cpp"
         "gui/hal/driver.cpp"
+        "crypto/hal/requests.cpp"
         "wifi/manager.cpp"
         ${CMAKE_CURRENT_SOURCE_DIR}/../../lib/gui/assets/btc_icon_60.c
         ${CMAKE_CURRENT_SOURCE_DIR}/../../lib/gui/views/ticker/legacy.cpp
