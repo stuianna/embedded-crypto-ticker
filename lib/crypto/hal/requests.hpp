@@ -11,7 +11,7 @@ namespace Crypto {
       struct GetRequest {
         const char* host;
         const char* path;
-        char* data;
+        char* data = 0;
         size_t length;
         size_t timeout;
       };
@@ -19,6 +19,7 @@ namespace Crypto {
       static Requests* instance() { return &_instance; }
       void init();
       size_t get(GetRequest& request);
+      void cleanup(GetRequest& request);
 
       // Disable copy and move constructors and operators.
       Requests(const Requests&) = delete;

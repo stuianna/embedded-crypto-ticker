@@ -68,6 +68,15 @@ void Requests::init() {
 }
 
 size_t Requests::get(GetRequest& request) {
+  init();
+  request.data = (char*)pvPortMalloc(sizeof(char) * request.length);
+
+  if(!request.data) {
+    ESP_LOGE(LOG_TAG, "Error perform http request. Cannot allocate memory for storage");
+    return 0;
+  }
+
+  xQueueReset(responseQueue);
   if(xQueueSend(getQueue, (void*)(&request), pdMS_TO_TICKS(request.timeout)) != pdTRUE) {
     ESP_LOGI(LOG_TAG, "Failed to add request to queue.");
     return 0;
@@ -77,6 +86,12 @@ size_t Requests::get(GetRequest& request) {
   ESP_LOGI(LOG_TAG, "Received = %d", received);
   ESP_LOGI(LOG_TAG, "rc = %d", rc);
   return received ? rc : 0;
+}
+
+void Requests::cleanup(GetRequest& request) {
+  if(request.data) {
+    vPortFree(request.data);
+  }
 }
 
 bool Requests::_status(size_t& httpStatusCode, size_t timeout) {

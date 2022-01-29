@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <crypto/data_sources/sntp.hpp>
 #include <gui/hal/driver.hpp>
 #include <gui/views/startup/loading.hpp>
 #include <gui/views/startup/provisioning.hpp>
@@ -19,6 +20,8 @@ static const char* SSID = "PROV_ticker";
 static const char* popCode = "abcd1234";
 
 LV_IMG_DECLARE(btc_icon_60);
+
+using namespace Crypto::DataSources;
 
 void initialise() {
   GUI::HAL::LVGL()->init();
@@ -78,7 +81,7 @@ void initialise() {
         case WIFI::ConnectionState::CONNECTING: break;
         default:
           char buffer[32] = {0};
-          snprintf(buffer, 32, "Unexpected WiFi status: %d.", WIFI::controller()->status());
+          snprintf(buffer, 32, "Unexpected WiFi status: %d", WIFI::controller()->status());
           GUI::LoadingScreen()->status(buffer);
           break;
       }
@@ -86,8 +89,10 @@ void initialise() {
     }
   }
 
-  GUI::LoadingScreen()->status("Connected", GUI::Widgets::Severity::GOOD);
+  GUI::LoadingScreen()->status("WiFi connected");
   vTaskDelay(pdMS_TO_TICKS(500));
+  GUI::LoadingScreen()->status("Synchronising time with SNTP");
+  Crypto::SNTP()->syncronise();
   GUI::LoadingScreen()->hide();
 }
 
