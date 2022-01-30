@@ -12,6 +12,7 @@ idf_component_register(
         ${CMAKE_CURRENT_SOURCE_DIR}/../../lib/gui/views/startup/loading.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/../../lib/gui/lv_lib_qrcode/lv_qrcode.c
         ${CMAKE_CURRENT_SOURCE_DIR}/../../lib/gui/lv_lib_qrcode/qrcodegen.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../lib/crypto/data_sources/coin_gecko.cpp
     INCLUDE_DIRS 
         ${CMAKE_SOURCE_DIR}/components
         ${CMAKE_SOURCE_DIR}/../lib/

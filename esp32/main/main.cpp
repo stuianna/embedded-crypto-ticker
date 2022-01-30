@@ -7,6 +7,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <algorithm>
+#include <crypto/data_sources/coin_gecko.hpp>
 #include <crypto/data_sources/sntp.hpp>
 #include <gui/hal/driver.hpp>
 #include <gui/views/startup/loading.hpp>
@@ -92,20 +94,57 @@ void initialise() {
   GUI::LoadingScreen()->status("WiFi connected");
   vTaskDelay(pdMS_TO_TICKS(500));
   GUI::LoadingScreen()->status("Synchronising time with SNTP");
-  Crypto::SNTP()->syncronise();
+  bool gotNetworkTime = Crypto::SNTP()->syncronise();
+  if(!gotNetworkTime) {
+    while(1) {
+      GUI::LoadingScreen()->status("Failed SNTP synchronisation", GUI::Widgets::Severity::BAD);
+      vTaskDelay(pdMS_TO_TICKS(2000));
+      GUI::LoadingScreen()->status("Check network credentials", GUI::Widgets::Severity::BAD);
+      vTaskDelay(pdMS_TO_TICKS(2000));
+    }
+  }
+
+  GUI::LoadingScreen()->status("Fetching historical prices");
+  uint32_t currentTimestamp = Crypto::SNTP()->unixTime();
+  auto historical = CoinGecko().marketChartRange24h("bitcoin", "aud", currentTimestamp - (60 * 60 * 24), currentTimestamp);
+
+  if(historical.first != 200) {
+    GUI::LoadingScreen()->status("Failed fetching data", GUI::Widgets::Severity::BAD);
+    while(1) {
+      vTaskDelay(pdMS_TO_TICKS(2000));
+    }
+  }
+
+  for(auto price: historical.second) {
+    if(price != 0.0f) {
+      GUI::LegacyScreen()->plotValue(price);
+    }
+  }
+  auto max = *std::max_element(historical.second.begin(), historical.second.end());
+  auto min = *std::min_element(historical.second.begin(), historical.second.end());
+  GUI::LegacyScreen()->setPlotRange(min, max);
   GUI::LoadingScreen()->hide();
 }
 
 extern "C" void app_main() {
   initialise();
 
-  GUI::LegacyScreen()->setPlotRange(0, 100);
   GUI::LegacyScreen()->setCurrencySymbol('$');
   GUI::LegacyScreen()->setName("Bitcoin");
   GUI::LegacyScreen()->setIcon(&btc_icon_60);
   GUI::LegacyScreen()->show();
 
   while(1) {
-    vTaskDelay(pdMS_TO_TICKS(100));
+    ESP_LOGI(LOG_TAG, "Current unix time: %d", Crypto::SNTP()->unixTime());
+    CoinGecko::SimplePrice currentData = CoinGecko().simplePrice("bitcoin", "aud", false, false, true);
+    if(currentData.status == 200) {
+      GUI::LegacyScreen()->setCurrentQuote(currentData.price);
+      GUI::LegacyScreen()->setDailyDelta(currentData.change24h);
+      GUI::LegacyScreen()->plotValue(currentData.price);
+    }
+    else {
+      ESP_LOGE(LOG_TAG, "Response code %d", currentData.status);
+    }
+    vTaskDelay(pdMS_TO_TICKS(60000));
   }
 }

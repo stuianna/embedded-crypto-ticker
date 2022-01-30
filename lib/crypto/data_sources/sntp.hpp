@@ -8,7 +8,7 @@ namespace Crypto {
     class SNTP {
      public:
       static SNTP* instance();
-      void syncronise();
+      bool syncronise();
       uint32_t unixTime();
 
       SNTP(const SNTP&) = delete;

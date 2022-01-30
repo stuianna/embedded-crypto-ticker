@@ -20,7 +20,6 @@ constexpr const char* LOG_TAG = "Requests";
 esp_err_t _http_event_handler(esp_http_client_event_t* evt) {
   static size_t dataPosition = 0;
   switch(evt->event_id) {
-    // case HTTP_EVENT_REDIRECT: ESP_LOGW(LOG_TAG, "HTTP_EVENT_REDIRECT"); break;
     case HTTP_EVENT_ERROR: ESP_LOGI(LOG_TAG, "HTTP_EVENT_ERROR"); break;
     case HTTP_EVENT_ON_CONNECTED: ESP_LOGI(LOG_TAG, "HTTP_EVENT_ON_CONNECTED"); break;
     case HTTP_EVENT_HEADER_SENT: ESP_LOGI(LOG_TAG, "HTTP_EVENT_HEADER_SENT"); break;
@@ -56,7 +55,7 @@ void Requests::init() {
     return;
   }
   TaskHandle_t httpTaskHandle;
-  xTaskCreate(&https_task, "http_task", 8192, NULL, 5, &httpTaskHandle);
+  xTaskCreatePinnedToCore(&https_task, "http_task", 4096 * 2, NULL, 2, &httpTaskHandle, 0);
   getQueue = xQueueCreate(1, sizeof(Requests::GetRequest));
   responseQueue = xQueueCreate(1, sizeof(uint32_t));
 
@@ -69,6 +68,7 @@ void Requests::init() {
 
 size_t Requests::get(GetRequest& request) {
   init();
+  ESP_LOGI(LOG_TAG, "Allocating %d bytes for reqeust", request.length);
   request.data = (char*)pvPortMalloc(sizeof(char) * request.length);
 
   if(!request.data) {

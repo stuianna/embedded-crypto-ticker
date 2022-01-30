@@ -9,7 +9,7 @@
 using namespace GUI::HAL;
 
 #ifndef LV_TICK_PERIOD_MS
-  #define LV_TICK_PERIOD_MS 1
+  #define LV_TICK_PERIOD_MS 10
 #endif
 
 #ifndef LV_UPDATE_INTERVAL
@@ -27,7 +27,7 @@ Driver::Driver() {
 }
 
 void Driver::init() {
-  xTaskCreatePinnedToCore(task_GUI, "GUI", 4096 * 2, NULL, 0, NULL, 1);
+  xTaskCreatePinnedToCore(task_GUI, "GUI", 4096 * 2, NULL, 1, NULL, 1);
 
   while((xGuiSemaphore == NULL) || (xSemaphoreTake(xGuiSemaphore, portMAX_DELAY) == pdFALSE)) {};
   xSemaphoreGive(xGuiSemaphore);

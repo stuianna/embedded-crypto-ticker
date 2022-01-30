@@ -19,21 +19,25 @@ SNTP* SNTP::instance() {
   return &_instance;
 }
 
-void SNTP::syncronise() {
+bool SNTP::syncronise() {
   _initialise_sntp();
   time_t now = 0;
   struct tm timeinfo = {0};
   int retry = 0;
-  const int retry_count = 15;
+  const int retry_count = 60;
 
   while(sntp_get_sync_status() == SNTP_SYNC_STATUS_RESET && ++retry < retry_count) {
     ESP_LOGI(TAG, "Waiting for system time to be set... (%d/%d)", retry, retry_count);
     vTaskDelay(2000 / portTICK_PERIOD_MS);
   }
+  if(retry == retry_count) {
+    return false;
+  }
   time(&now);
   localtime_r(&now, &timeinfo);
   time(&now);
   ESP_LOGI(TAG, "SNTP time synchronised");
+  return true;
 }
 
 uint32_t SNTP::unixTime() {
