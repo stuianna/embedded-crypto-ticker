@@ -10,20 +10,59 @@
 #include <algorithm>
 #include <crypto/data_sources/coin_gecko.hpp>
 #include <crypto/data_sources/sntp.hpp>
+#include <database/database.hpp>
+#include <database/definitions/currencies.hpp>
 #include <gui/hal/driver.hpp>
 #include <gui/views/startup/loading.hpp>
 #include <gui/views/startup/provisioning.hpp>
 #include <gui/views/ticker/legacy.hpp>
 
+#include "configuration.hpp"
 #include "wifi/manager.hpp"
 #define LOG_TAG "main"
 
-static const char* SSID = "PROV_ticker";
-static const char* popCode = "abcd1234";
+using namespace Crypto::DataSources;
 
 LV_IMG_DECLARE(btc_icon_60);
 
-using namespace Crypto::DataSources;
+
+struct {
+  Currencies::Definition definition;
+  const char* id;
+  const char* ticker;
+  const lv_img_dsc_t image;
+  Database::Database<float, 288> prices;
+  Database::Database<float, 1> delta24h;
+} cryptoDefinitions[currencyCount()]{{Currencies::getDefinition(Currencies::Crypto::BTC), "bitcoin", "BTC", btc_icon_60, {}, {}},
+                                     {Currencies::getDefinition(Currencies::Crypto::ETH), "ethereum", "ETH", btc_icon_60, {}, {}}};
+
+const struct {
+  Currencies::Definition definition;
+  const char* id;
+  const char* ticker;
+} fiatDefinition{Currencies::getDefinition(Currencies::Fiat::AUD), "aud", "AUD"};
+
+void fetchHistoricalData() {
+  GUI::LoadingScreen()->status("Fetching historical prices");
+  for(size_t i = 0; i < currencyCount(); i++) {
+    uint32_t currentTimestamp = Crypto::SNTP()->unixTime();
+    auto historical =
+    CoinGecko().marketChartRange24h(cryptoDefinitions[i].id, fiatDefinition.id, currentTimestamp - (60 * 60 * 24), currentTimestamp);
+
+    if(historical.first != 200) {
+      GUI::LoadingScreen()->status("Failed fetching data", GUI::Widgets::Severity::BAD);
+      while(1) {
+        vTaskDelay(pdMS_TO_TICKS(1000));
+      }
+    }
+
+    for(auto price: historical.second) {
+      if(price != 0.0f) {
+        cryptoDefinitions[i].prices.add(price);
+      }
+    }
+  }
+}
 
 void initialise() {
   GUI::HAL::LVGL()->init();
@@ -32,10 +71,10 @@ void initialise() {
 
   if(WIFI::controller()->status() == WIFI::ConnectionState::NOT_PROVISIONED) {
     GUI::LoadingScreen()->status("Device needs provisioning");
-    WIFI::controller()->startProvisioning(SSID, NULL, popCode);
+    WIFI::controller()->startProvisioning(Provisioning::SSID, NULL, Provisioning::popCode);
 
     char payload[150] = {0};
-    WIFI::controller()->getQRCodeData(payload, sizeof(payload), SSID, popCode);
+    WIFI::controller()->getQRCodeData(payload, sizeof(payload), Provisioning::SSID, Provisioning::popCode);
     vTaskDelay(pdMS_TO_TICKS(3000));
     GUI::LoadingScreen()->hide();
 
@@ -103,48 +142,29 @@ void initialise() {
       vTaskDelay(pdMS_TO_TICKS(2000));
     }
   }
-
-  GUI::LoadingScreen()->status("Fetching historical prices");
-  uint32_t currentTimestamp = Crypto::SNTP()->unixTime();
-  auto historical = CoinGecko().marketChartRange24h("bitcoin", "aud", currentTimestamp - (60 * 60 * 24), currentTimestamp);
-
-  if(historical.first != 200) {
-    GUI::LoadingScreen()->status("Failed fetching data", GUI::Widgets::Severity::BAD);
-    while(1) {
-      vTaskDelay(pdMS_TO_TICKS(2000));
-    }
-  }
-
-  for(auto price: historical.second) {
-    if(price != 0.0f) {
-      GUI::LegacyScreen()->plotValue(price);
-    }
-  }
-  auto max = *std::max_element(historical.second.begin(), historical.second.end());
-  auto min = *std::min_element(historical.second.begin(), historical.second.end());
-  GUI::LegacyScreen()->setPlotRange(min, max);
+  fetchHistoricalData();
   GUI::LoadingScreen()->hide();
 }
 
 extern "C" void app_main() {
   initialise();
-
-  GUI::LegacyScreen()->setCurrencySymbol('$');
-  GUI::LegacyScreen()->setName("Bitcoin");
-  GUI::LegacyScreen()->setIcon(&btc_icon_60);
+  GUI::LegacyScreen()->setPlotPointCount(cryptoDefinitions[0].prices.length());
   GUI::LegacyScreen()->show();
 
   while(1) {
-    ESP_LOGI(LOG_TAG, "Current unix time: %d", Crypto::SNTP()->unixTime());
-    CoinGecko::SimplePrice currentData = CoinGecko().simplePrice("bitcoin", "aud", false, false, true);
-    if(currentData.status == 200) {
-      GUI::LegacyScreen()->setCurrentQuote(currentData.price);
-      GUI::LegacyScreen()->setDailyDelta(currentData.change24h);
-      GUI::LegacyScreen()->plotValue(currentData.price);
+    for(size_t i = 0; i < currencyCount(); i++) {
+      ESP_LOGI(LOG_TAG, "Current unix time: %d", Crypto::SNTP()->unixTime());
+      GUI::LegacyScreen()->clearPlot();
+      GUI::LegacyScreen()->setCurrencySymbol(fiatDefinition.definition.symbol);
+      GUI::LegacyScreen()->setName(cryptoDefinitions[i].definition.name);
+      GUI::LegacyScreen()->setIcon(&cryptoDefinitions[i].image);
+      GUI::LegacyScreen()->setPlotRange(cryptoDefinitions[i].prices.minimum(), cryptoDefinitions[i].prices.maximum());
+      GUI::LegacyScreen()->setCurrentQuote(cryptoDefinitions[i].prices.latest());
+      GUI::LegacyScreen()->setDailyDelta(cryptoDefinitions[i].delta24h.latest());
+      for(int j = cryptoDefinitions[i].prices.length() - 1; j >= 0; j--) {
+        GUI::LegacyScreen()->plotValue(cryptoDefinitions[i].prices.at(j));
+      }
+      vTaskDelay(pdMS_TO_TICKS(60000));
     }
-    else {
-      ESP_LOGE(LOG_TAG, "Response code %d", currentData.status);
-    }
-    vTaskDelay(pdMS_TO_TICKS(60000));
   }
 }

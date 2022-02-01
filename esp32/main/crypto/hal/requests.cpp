@@ -55,7 +55,7 @@ void Requests::init() {
     return;
   }
   TaskHandle_t httpTaskHandle;
-  xTaskCreatePinnedToCore(&https_task, "http_task", 4096 * 2, NULL, 2, &httpTaskHandle, 0);
+  xTaskCreatePinnedToCore(&https_task, "http_task", 4096 * 2, NULL, 5, &httpTaskHandle, 0);
   getQueue = xQueueCreate(1, sizeof(Requests::GetRequest));
   responseQueue = xQueueCreate(1, sizeof(uint32_t));
 

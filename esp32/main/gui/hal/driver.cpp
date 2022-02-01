@@ -27,7 +27,7 @@ Driver::Driver() {
 }
 
 void Driver::init() {
-  xTaskCreatePinnedToCore(task_GUI, "GUI", 4096 * 2, NULL, 1, NULL, 1);
+  xTaskCreatePinnedToCore(task_GUI, "GUI", 4096 * 2, NULL, 6, NULL, 1);
 
   while((xGuiSemaphore == NULL) || (xSemaphoreTake(xGuiSemaphore, portMAX_DELAY) == pdFALSE)) {};
   xSemaphoreGive(xGuiSemaphore);
