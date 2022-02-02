@@ -10,6 +10,8 @@ constexpr size_t currencyCount() {
   return sizeof(enabledCurrencies) / sizeof(Currencies::Crypto);
 }
 
+const size_t currencyUpdatePeriodSeconds = 300;
+
 namespace Provisioning {
   const char* SSID = "PROV_ticker";
   const char* popCode = "abcd1234";

@@ -53,7 +53,7 @@ Legacy::Legacy() :
 
 void Legacy::show() {
   LVGL()->aquireMutex(LVL_MUTEX_AQUISITION_MSEC);
-  lv_scr_load(_screen);
+  lv_scr_load_anim(_screen, LV_SCR_LOAD_ANIM_FADE_ON, 200, 0, false);
   LVGL()->releaseMutex();
 };
 

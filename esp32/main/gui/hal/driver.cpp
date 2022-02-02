@@ -9,11 +9,11 @@
 using namespace GUI::HAL;
 
 #ifndef LV_TICK_PERIOD_MS
-  #define LV_TICK_PERIOD_MS 10
+  #define LV_TICK_PERIOD_MS 1
 #endif
 
 #ifndef LV_UPDATE_INTERVAL
-  #define LV_UPDATE_INTERVAL_MS 20
+  #define LV_UPDATE_INTERVAL_MS 10
 #endif
 
 static void task_lv_tick(void* arg);

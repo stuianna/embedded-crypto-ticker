@@ -10,3 +10,6 @@
 [submodule "lib/gui/lv_lib_qrcode"]
 	path = lib/gui/lv_lib_qrcode
 	url = https://github.com/lvgl/lv_lib_qrcode.git
+[submodule "esp32/components/esp32-button"]
+	path = esp32/components/esp32-button
+	url = https://github.com/craftmetrics/esp32-button.git
