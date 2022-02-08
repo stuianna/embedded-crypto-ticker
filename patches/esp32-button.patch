@@ -1,0 +1,13 @@
+diff --git a/src/button.c b/src/button.c
+index ad7a9eb..6f891c8 100644
+--- a/src/button.c
++++ b/src/button.c
+@@ -90,7 +90,7 @@ static void button_task(void *pvParameter)
+ }
+ 
+ QueueHandle_t button_init(unsigned long long pin_select) {
+-    return pulled_button_init(pin_select, GPIO_FLOATING);
++    return pulled_button_init(pin_select, GPIO_PULLUP_ONLY);
+ }
+ 
+ 

@@ -9,7 +9,8 @@ DOCKER_INTERACTIVE=docker run --rm -it --device=$(PORT) -v $(PWD):/project -w /p
 all: build
 
 setup:
-	git apply patches/ttgo-t-display.patch --directory  esp32/components/lvgl_esp32_drivers
+	# git apply patches/ttgo-t-display.patch --directory  esp32/components/lvgl_esp32_drivers
+	git apply patches/esp32-button.patch --directory  esp32/components/esp32-button
 
 configure:
 	$(DOCKER_INTERACTIVE) idf.py -C esp32 menuconfig
