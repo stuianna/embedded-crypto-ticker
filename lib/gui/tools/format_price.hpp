@@ -8,7 +8,7 @@ namespace GUI {
   namespace Tools {
     static void formatPrice(char* buffer, const size_t length, const float value, float max, const char symbol) {
       int i;
-      if(value < 0.1f) {
+      if(value < 0.99f) {
         i = snprintf(&buffer[1], 31, "%.4f", value);
         buffer[i + 1] = 0;
       }
