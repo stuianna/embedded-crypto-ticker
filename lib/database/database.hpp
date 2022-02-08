@@ -20,7 +20,17 @@ namespace Database {
       _history[0] = value;
     }
     size_t length() const { return _history.size(); }
-    T at(const size_t position) const { return _history[position]; }
+    T at(const size_t position) const {
+      float max = maximum();
+      float min = minimum();
+      float delta = max - min;
+      if(delta) {
+        return 1000.0f * (_history[position] - min) / delta;
+      }
+      else {
+        return 1;
+      }
+    }
 
    private:
     std::array<T, _length> _history;

@@ -29,6 +29,8 @@ using namespace Crypto::DataSources;
 
 LV_IMG_DECLARE(btc_icon_60);
 LV_IMG_DECLARE(eth_icon_60);
+LV_IMG_DECLARE(ltc_icon_60);
+LV_IMG_DECLARE(dge_icon_60);
 
 QueueHandle_t button_events = NULL;
 
@@ -41,7 +43,9 @@ struct {
   Database::Database<float, 1> delta24h;
   size_t latestUpdate;
 } cryptoDefinitions[currencyCount()]{{Currencies::getDefinition(Currencies::Crypto::BTC), "bitcoin", "BTC", btc_icon_60, {}, {}, 0},
-                                     {Currencies::getDefinition(Currencies::Crypto::ETH), "ethereum", "ETH", eth_icon_60, {}, {}, 0}};
+                                     {Currencies::getDefinition(Currencies::Crypto::ETH), "ethereum", "ETH", eth_icon_60, {}, {}, 0},
+                                     {Currencies::getDefinition(Currencies::Crypto::LTC), "litecoin", "LTC", ltc_icon_60, {}, {}, 0},
+                                     {Currencies::getDefinition(Currencies::Crypto::DOGE), "dogecoin", "DOGE", dge_icon_60, {}, {}, 0}};
 
 const struct {
   Currencies::Definition definition;
@@ -101,7 +105,6 @@ void fetchHistoricalData() {
       cryptoDefinitions[i].latestUpdate = Crypto::SNTP()->unixTime();
     }
     else {
-      ESP_LOGE(LOG_TAG, "Response code %d", currentData.status);
       ESP_LOGE(LOG_TAG, "Response code %d", currentData.status);
     }
   }
@@ -190,6 +193,7 @@ void initialise() {
     }
   }
   fetchHistoricalData();
+  GUI::LoadingScreen()->status("Starting currency update task.");
   startCurrencyUpdate();
   button_events = button_init(PIN_BIT(35) | PIN_BIT(0));
   GUI::LoadingScreen()->hide();
@@ -218,7 +222,7 @@ extern "C" void app_main() {
       GUI::LegacyScreen()->setCurrencySymbol(fiatDefinition.definition.symbol);
       GUI::LegacyScreen()->setName(cryptoDefinitions[i].definition.name);
       GUI::LegacyScreen()->setIcon(&cryptoDefinitions[i].image);
-      GUI::LegacyScreen()->setPlotRange(cryptoDefinitions[i].prices.minimum(), cryptoDefinitions[i].prices.maximum());
+      GUI::LegacyScreen()->setPlotRange(0, 1000);
       GUI::LegacyScreen()->setCurrentQuote(cryptoDefinitions[i].prices.latest());
       GUI::LegacyScreen()->setDailyDelta(cryptoDefinitions[i].delta24h.latest());
       for(int j = cryptoDefinitions[i].prices.length() - 1; j >= 0; j--) {

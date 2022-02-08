@@ -8,6 +8,8 @@ idf_component_register(
         "wifi/manager.cpp"
         ${CMAKE_CURRENT_SOURCE_DIR}/../../lib/gui/assets/btc_icon_60.c
         ${CMAKE_CURRENT_SOURCE_DIR}/../../lib/gui/assets/eth_icon_60.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../lib/gui/assets/ltc_icon_60.c
+        ${CMAKE_CURRENT_SOURCE_DIR}/../../lib/gui/assets/dge_icon_60.c
         ${CMAKE_CURRENT_SOURCE_DIR}/../../lib/gui/views/ticker/legacy.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/../../lib/gui/views/startup/provisioning.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/../../lib/gui/views/startup/loading.cpp

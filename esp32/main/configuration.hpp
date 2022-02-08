@@ -4,7 +4,8 @@
 #include <cstddef>
 #include <database/definitions/currencies.hpp>
 
-static const Currencies::Crypto enabledCurrencies[] = {Currencies::Crypto::BTC, Currencies::Crypto::ETH};
+static const Currencies::Crypto enabledCurrencies[] = {Currencies::Crypto::BTC, Currencies::Crypto::ETH, Currencies::Crypto::LTC,
+                                                       Currencies::Crypto::DOGE};
 static const Currencies::Fiat baseCurrency = Currencies::Fiat::AUD;
 constexpr size_t currencyCount() {
   return sizeof(enabledCurrencies) / sizeof(Currencies::Crypto);

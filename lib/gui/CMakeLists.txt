@@ -5,6 +5,8 @@ project(GUI DESCRIPTION "GUI components for embedded-crypto-ticker")
 SET(ASSETS
     ${CMAKE_CURRENT_SOURCE_DIR}/assets/btc_icon_60.c
     ${CMAKE_CURRENT_SOURCE_DIR}/assets/eth_icon_60.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/assets/ltc_icon_60.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/assets/dge_icon_60.c
 )
 
 set(SOURCES
