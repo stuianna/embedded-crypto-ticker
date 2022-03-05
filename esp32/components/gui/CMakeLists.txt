@@ -1,6 +1,5 @@
-# cmake_minimum_required(VERSION 3.9)
+cmake_minimum_required(VERSION 3.9)
 
-# project(GUI DESCRIPTION "GUI components for embedded-crypto-ticker")
 
 SET(ASSETS
     ${CMAKE_CURRENT_SOURCE_DIR}/assets/btc_icon_60.c
@@ -9,24 +8,35 @@ SET(ASSETS
     ${CMAKE_CURRENT_SOURCE_DIR}/assets/dge_icon_60.c
 )
 
-set(SOURCES
+set(GUI_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/views/ticker/legacy.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/views/startup/provisioning.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/views/startup/loading.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/hal/driver.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/lv_lib_qrcode/lv_qrcode.c
     ${CMAKE_CURRENT_SOURCE_DIR}/lv_lib_qrcode/qrcodegen.c
     ${ASSETS}
 )
 
+set(ESP32_SOURCES
+    ${CMAKE_CURRENT_SOURCE_DIR}/hal/driver.cpp
+)
+
 if(ESP_PLATFORM)
-
-idf_component_register(SRCS ${SOURCES}
-                       INCLUDE_DIRS .
-                       REQUIRES main)
-
+    set(SOURCES
+        ${ASSETS}
+        ${GUI_SOURCES}
+        ${ESP32_SOURCES}
+    )
+    idf_component_register(SRCS ${SOURCES}
+                        INCLUDE_DIRS .
+                        REQUIRES main)
 else()
-    file(GLOB_RECURSE LVGL_SOURCES lvgl/src/*.c)
+    project(GUI DESCRIPTION "GUI components for embedded-crypto-ticker")
+
+    set(SOURCES
+        ${ASSETS}
+        ${GUI_SOURCES}
+    )
 
     add_library(gui SHARED
         ${LVGL_SOURCES}
@@ -34,9 +44,4 @@ else()
         ${SOURCES}
     )
 
-    target_include_directories(gui PUBLIC 
-        . 
-        "lvgl/src"
-        "lvgl"
-    )
 endif()
