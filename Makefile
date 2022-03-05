@@ -1,7 +1,8 @@
 DOCKER_IMAGE=espressif/idf:release-v4.4
 BOARD=esp32
 PORT=/dev/ttyUSB0
-DOCKER=docker run --rm --device=$(PORT) -v $(PWD):/project -w /project $(DOCKER_IMAGE)
+DOCKER=docker run --rm  -v $(PWD):/project -w /project $(DOCKER_IMAGE)
+DOCKER_WITH_DEVICE=docker run --rm --device=$(PORT) -v $(PWD):/project -w /project $(DOCKER_IMAGE)
 DOCKER_INTERACTIVE=docker run --rm -it --device=$(PORT) -v $(PWD):/project -w /project $(DOCKER_IMAGE)
 
 .PHONY: build flash run-image setup simulator x86_64
@@ -22,10 +23,10 @@ build:
 	$(DOCKER) idf.py -C esp32 build
 
 flash:
-	$(DOCKER) idf.py -C esp32 -p $(PORT) flash
+	$(DOCKER_WITH_DEVICE) idf.py -C esp32 -p $(PORT) flash
 
 erase:
-	$(DOCKER) idf.py -C esp32 -p $(PORT) erase-flash
+	$(DOCKER_WITH_DEVICE) idf.py -C esp32 -p $(PORT) erase-flash
 
 monitor:
 	screen $(PORT) 115200
