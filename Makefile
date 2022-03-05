@@ -35,8 +35,8 @@ clean:
 	$(DOCKER) rm -rf esp32/build
 	rm -rf x86_64/build
 
-simulator: x86_64
-	${PWD}/x86_64/build/embedded-crypto-ticker
+simulate_legacy_screen: x86_64
+	${PWD}/x86_64/build/simulate_legacy_screen
 
 x86_64: 
 	cmake -DCMAKE_BUILD_TYPE:STRING=Release -H$(PWD)/x86_64 -B$(PWD)/x86_64/build -G "Unix Makefiles"
