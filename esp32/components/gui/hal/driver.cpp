@@ -4,7 +4,7 @@
 #include <lvgl.h>
 #include <lvgl_helpers.h>
 
-#include <gui/hal/driver.hpp>
+#include "driver.hpp"
 
 using namespace GUI::HAL;
 

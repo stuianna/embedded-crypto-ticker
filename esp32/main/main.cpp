@@ -10,16 +10,15 @@
 // clang-format off
 #include <button.h>
 // clang-format on
-
 #include <algorithm>
-#include <crypto/data_sources/coin_gecko.hpp>
-#include <crypto/data_sources/sntp.hpp>
-#include <database/database.hpp>
-#include <database/definitions/currencies.hpp>
-#include <gui/hal/driver.hpp>
-#include <gui/views/startup/loading.hpp>
-#include <gui/views/startup/provisioning.hpp>
-#include <gui/views/ticker/legacy.hpp>
+#include <data_sources/coin_gecko.hpp>
+#include <data_sources/sntp.hpp>
+#include <database.hpp>
+#include <definitions/currencies.hpp>
+#include <hal/driver.hpp>
+#include <views/startup/loading.hpp>
+#include <views/startup/provisioning.hpp>
+#include <views/ticker/legacy.hpp>
 
 #include "configuration.hpp"
 #include "wifi/manager.hpp"

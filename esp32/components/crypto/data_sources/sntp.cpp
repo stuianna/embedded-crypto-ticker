@@ -3,7 +3,7 @@
 #include <sys/time.h>
 #include <time.h>
 
-#include <crypto/data_sources/sntp.hpp>
+#include "sntp.hpp"
 static const char* TAG = "sntp";
 using namespace Crypto::DataSources;
 

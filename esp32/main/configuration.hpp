@@ -2,7 +2,7 @@
 #define _CONFIGURATION_HPP
 
 #include <cstddef>
-#include <database/definitions/currencies.hpp>
+#include <definitions/currencies.hpp>
 
 static const Currencies::Crypto enabledCurrencies[] = {Currencies::Crypto::BTC, Currencies::Crypto::ETH, Currencies::Crypto::LTC,
                                                        Currencies::Crypto::DOGE};
