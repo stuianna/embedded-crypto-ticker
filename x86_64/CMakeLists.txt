@@ -12,6 +12,8 @@ set(COMMON_SOURCES
 )
 
 set(COMMON_INCLUDES
+    ${PROJECT_ROOT}/esp32/components/database
+    ${PROJECT_ROOT}/esp32/main
     ${PROJECT_ROOT}/esp32/components/lvgl
     ${PROJECT_ROOT}/esp32/components/gui/
     ${PROJECT_ROOT}/esp32/components
