@@ -55,9 +55,9 @@ void Requests::init() {
     return;
   }
   TaskHandle_t httpTaskHandle;
-  xTaskCreatePinnedToCore(&https_task, "http_task", 4096 * 2, NULL, 5, &httpTaskHandle, 0);
   getQueue = xQueueCreate(1, sizeof(Requests::GetRequest));
   responseQueue = xQueueCreate(1, sizeof(uint32_t));
+  xTaskCreatePinnedToCore(&https_task, "http_task", 4096 * 2, NULL, 5, &httpTaskHandle, 0);
 
   if(!getQueue || !responseQueue || !httpTaskHandle) {
     ESP_LOGE(LOG_TAG, "Failed to allocate memeory for HTTP task, halting.");

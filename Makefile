@@ -29,7 +29,7 @@ erase:
 	$(DOCKER_WITH_DEVICE) idf.py -C esp32 -p $(PORT) erase-flash
 
 monitor:
-	screen $(PORT) 115200
+	$(DOCKER_INTERACTIVE) idf.py -C esp32 -p $(PORT) monitor
 
 clean:
 	$(DOCKER) rm -rf esp32/build
