@@ -28,4 +28,8 @@ add_executable(simulate_legacy_screen ${COMMON_SOURCES} ${CMAKE_CURRENT_SOURCE_D
 include_directories(simulate_legacy_screen PUBLIC ${COMMON_INCLUDES})
 target_link_libraries(simulate_legacy_screen PUBLIC ${COMMON_LINK_LIBS})
 
+add_executable(simulate_provisioning_screen ${COMMON_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/provisioning_screen.cpp)
+include_directories(simulate_provisioning_screen PUBLIC ${COMMON_INCLUDES})
+target_link_libraries(simulate_provisioning_screen PUBLIC ${COMMON_LINK_LIBS})
+
 add_subdirectory(${PROJECT_ROOT}/esp32/components/gui ${CMAKE_CURRENT_BINARY_DIR}/gui)
