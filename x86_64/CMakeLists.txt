@@ -36,4 +36,8 @@ add_executable(simulate_loading_screen ${COMMON_SOURCES} ${CMAKE_CURRENT_SOURCE_
 include_directories(simulate_loading_screen PUBLIC ${COMMON_INCLUDES})
 target_link_libraries(simulate_loading_screen PUBLIC ${COMMON_LINK_LIBS})
 
+add_executable(simulate_main ${COMMON_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
+include_directories(simulate_main PUBLIC ${COMMON_INCLUDES})
+target_link_libraries(simulate_main PUBLIC ${COMMON_LINK_LIBS})
+
 add_subdirectory(${PROJECT_ROOT}/esp32/components/gui ${CMAKE_CURRENT_BINARY_DIR}/gui)
