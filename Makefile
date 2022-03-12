@@ -37,6 +37,7 @@ monitor:
 clean:
 	rm -rf esp32/build
 	rm -rf x86_64/build
+	rm -rf tests/build
 	cd esp32/components/esp32-button && git restore .
 	cd esp32/components/lvgl_esp32_drivers && git restore .
 
@@ -54,4 +55,9 @@ simulate_main: build-x86_64
 
 build-x86_64: 
 	cmake -DCMAKE_BUILD_TYPE:STRING=Release -H$(PWD)/x86_64 -B$(PWD)/x86_64/build -G "Unix Makefiles"
-	cmake --build $(PWD)/x86_64/build --config MinSizeRel --target all -j 18 --
+	cmake --build $(PWD)/x86_64/build --config Release --target all -j 18 --
+
+test:
+	cmake -DCMAKE_BUILD_TYPE:STRING=Release -H$(PWD)/tests -B$(PWD)/tests/build -G "Unix Makefiles"
+	cmake --build $(PWD)/tests/build --config Release --target all -j 18 --
+	cmake --build $(PWD)/tests/build --config Release --target test -j 18 -- 
