@@ -1,0 +1,30 @@
+name: build-esp32
+
+on:
+  push:
+    branches: 
+      - 'master'
+      - 'develop'
+      - 'feature/github-actions'
+   
+  pull_request:
+    branches: 
+      - 'master'
+      - 'develop'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: 
+      image: espressif/idf:release-v4.4
+      options: --entrypoint /bin/bash
+    steps:
+    - uses: actions/checkout@v2
+    - name: Initialise submodules
+      run: git submodule update --init --recursive
+    - name: Apply ESP32 Patches
+      run: make configure
+    - name: Build ESP32 App
+      run: |
+        . $IDF_PATH/export.sh
+        make build-esp32
