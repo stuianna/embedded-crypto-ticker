@@ -1,0 +1,26 @@
+name: build-x86_64-simulator
+
+on:
+  push:
+    branches: 
+      - 'master'
+      - 'develop'
+      - 'feature/github-actions'
+   
+  pull_request:
+    branches: 
+      - 'master'
+      - 'develop'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: 
+      image: tsukisuperior/sdl2-docker
+    steps:
+    - uses: actions/checkout@v2
+    - name: Initialise submodules
+      run: git submodule update --init --recursive
+    - name: Build x86_64 simulator
+      run: |
+        make build-x86_64

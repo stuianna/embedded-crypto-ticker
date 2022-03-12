@@ -1,10 +1,12 @@
-DOCKER_IMAGE=espressif/idf:release-v4.4
+ESP32_DOCKER_IMAGE=espressif/idf:release-v4.4
+SDL2_DOCKER_IMAGE=tsukisuperior/sdl2-docker
 PORT=/dev/ttyUSB0
-DOCKER_INTERACTIVE=docker run --rm -it --device=$(PORT) -v $(PWD):/project -w /project $(DOCKER_IMAGE)
+DOCKER_ESP32=docker run --rm -it --device=$(PORT) -v $(PWD):/project -w /project $(ESP32_DOCKER_IMAGE)
+DOCKER_SDL2=docker run --rm -it -v $(PWD):/project -w /project -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$(DISPLAY) -h $$HOSTNAME -v $(HOME)/.Xauthority:/root/.Xauthority $(SDL2_DOCKER_IMAGE)
 
 .PHONY: build configure menuconfig build-esp32 erase monitor flash run-image configure simulator build-x86_64
 
-all: build
+all: build-esp32
 
 configure:
 	git apply patches/ttgo-t-display.patch --directory  esp32/components/lvgl_esp32_drivers
@@ -13,8 +15,11 @@ configure:
 menuconfig:
 	idf.py -C esp32 menuconfig
 
-run-image:
-	$(DOCKER_INTERACTIVE) /bin/bash
+run-image-esp32:
+	$(DOCKER_ESP32) /bin/bash
+
+run-image-sdl2:
+	$(DOCKER_SDL2) /bin/bash
 
 build-esp32:
 	idf.py -C esp32 build

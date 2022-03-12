@@ -20,7 +20,6 @@ using namespace GUI::HAL;
 
 #include <condition_variable>
 #include <mutex>
-#include <semaphore>
 #include <thread>
 
 static void hal_init(void);
