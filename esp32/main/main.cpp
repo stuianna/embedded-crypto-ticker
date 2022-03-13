@@ -13,62 +13,39 @@
 #include <algorithm>
 #include <data_sources/coin_gecko.hpp>
 #include <data_sources/sntp.hpp>
-#include <database.hpp>
-#include <definitions/currencies.hpp>
 #include <hal/driver.hpp>
 #include <views/startup/loading.hpp>
 #include <views/startup/provisioning.hpp>
 #include <views/ticker/legacy.hpp>
 
 #include "configuration.hpp"
+#include "containers/crypto.hpp"
 #include "wifi/manager.hpp"
 #define LOG_TAG "main"
 
 using namespace Crypto::DataSources;
 
-LV_IMG_DECLARE(btc_icon_60);
-LV_IMG_DECLARE(eth_icon_60);
-LV_IMG_DECLARE(ltc_icon_60);
-LV_IMG_DECLARE(dge_icon_60);
-
 QueueHandle_t button_events = NULL;
-
-struct {
-  Currencies::Definition definition;
-  const char* id;
-  const char* ticker;
-  const lv_img_dsc_t image;
-  Database::Database<float, 288> prices;
-  Database::Database<float, 1> delta24h;
-  size_t latestUpdate;
-} cryptoDefinitions[currencyCount()]{{Currencies::getDefinition(Currencies::Crypto::BTC), "bitcoin", "BTC", btc_icon_60, {}, {}, 0},
-                                     {Currencies::getDefinition(Currencies::Crypto::ETH), "ethereum", "ETH", eth_icon_60, {}, {}, 0},
-                                     {Currencies::getDefinition(Currencies::Crypto::LTC), "litecoin", "LTC", ltc_icon_60, {}, {}, 0},
-                                     {Currencies::getDefinition(Currencies::Crypto::DOGE), "dogecoin", "DOGE", dge_icon_60, {}, {}, 0}};
-
-const struct {
-  Currencies::Definition definition;
-  const char* id;
-  const char* ticker;
-} fiatDefinition{Currencies::getDefinition(Currencies::Fiat::AUD), "aud", "AUD"};
 
 void task_currencyUpdate(void* pvParameters) {
   (void)pvParameters;
   while(1) {
-    for(auto i = 0; i < currencyCount(); i++) {
+    auto fiat = Crypto::getDefinition(Crypto::baseCurrency);
+    for(auto i = 0; i < Crypto::currencyCount(); i++) {
       size_t startTime = Crypto::SNTP()->unixTime();
-      CoinGecko::SimplePrice currentData = CoinGecko().simplePrice(cryptoDefinitions[i].id, fiatDefinition.id, false, false, true);
+      auto crypto = &Crypto::Table[i];
+      CoinGecko::SimplePrice currentData = CoinGecko().simplePrice(crypto->coin.geckoName, fiat.geckoName, false, false, true);
       if(currentData.status == 200) {
-        cryptoDefinitions[i].prices.add(currentData.price);
-        cryptoDefinitions[i].delta24h.add(currentData.change24h);
-        cryptoDefinitions[i].latestUpdate = startTime;
+        crypto->pricesDB.add(currentData.price);
+        crypto->delta24hDB.add(currentData.change24h);
+        crypto->latestUpdate = startTime;
       }
       else {
         ESP_LOGE(LOG_TAG, "Response code %d", currentData.status);
       }
       size_t endTime = Crypto::SNTP()->unixTime();
       uint32_t secondsDelta = endTime - startTime;
-      uint32_t secondsWait = (currencyUpdatePeriodSeconds / currencyCount()) - secondsDelta;
+      uint32_t secondsWait = (currencyUpdatePeriodSeconds / Crypto::currencyCount()) - secondsDelta;
       ESP_LOGI(LOG_TAG, "Seconds to next request %d", secondsWait);
       for(int j = 0; j < secondsWait; j++) {
         vTaskDelay(pdMS_TO_TICKS(1000));
@@ -79,10 +56,12 @@ void task_currencyUpdate(void* pvParameters) {
 
 void fetchHistoricalData() {
   GUI::LoadingScreen()->status("Fetching historical prices");
-  for(size_t i = 0; i < currencyCount(); i++) {
+  auto fiat = Crypto::getDefinition(Crypto::baseCurrency);
+  for(size_t i = 0; i < Crypto::currencyCount(); i++) {
+    auto crypto = &Crypto::Table[i];
     uint32_t currentTimestamp = Crypto::SNTP()->unixTime();
     auto historical =
-    CoinGecko().marketChartRange24h(cryptoDefinitions[i].id, fiatDefinition.id, currentTimestamp - (60 * 60 * 24), currentTimestamp);
+    CoinGecko().marketChartRange24h(crypto->coin.geckoName, fiat.geckoName, currentTimestamp - (60 * 60 * 24), currentTimestamp);
 
     if(historical.first != 200) {
       GUI::LoadingScreen()->status("Failed fetching data", GUI::Widgets::Severity::BAD);
@@ -93,15 +72,15 @@ void fetchHistoricalData() {
 
     for(auto price: historical.second) {
       if(price != 0.0f) {
-        cryptoDefinitions[i].prices.add(price);
+        crypto->pricesDB.add(price);
       }
     }
 
-    CoinGecko::SimplePrice currentData = CoinGecko().simplePrice(cryptoDefinitions[i].id, fiatDefinition.id, false, false, true);
+    CoinGecko::SimplePrice currentData = CoinGecko().simplePrice(crypto->coin.geckoName, fiat.geckoName, false, false, true);
     if(currentData.status == 200) {
-      cryptoDefinitions[i].prices.add(currentData.price);
-      cryptoDefinitions[i].delta24h.add(currentData.change24h);
-      cryptoDefinitions[i].latestUpdate = Crypto::SNTP()->unixTime();
+      crypto->pricesDB.add(currentData.price);
+      crypto->delta24hDB.add(currentData.change24h);
+      crypto->latestUpdate = Crypto::SNTP()->unixTime();
     }
     else {
       ESP_LOGE(LOG_TAG, "Response code %d", currentData.status);
@@ -212,20 +191,22 @@ void waitForNextUpdate() {
 
 extern "C" void app_main() {
   initialise();
-  GUI::LegacyScreen()->setPlotPointCount(cryptoDefinitions[0].prices.length());
+  GUI::LegacyScreen()->setPlotPointCount(Crypto::Table[0].pricesDB.length());
+  auto fiat = Crypto::getDefinition(Crypto::baseCurrency);
 
   while(1) {
-    for(size_t i = 0; i < currencyCount(); i++) {
+    for(size_t i = 0; i < Crypto::currencyCount(); i++) {
+      auto crypto = &Crypto::Table[i];
       GUI::LegacyScreen()->hide();
       GUI::LegacyScreen()->clearPlot();
-      GUI::LegacyScreen()->setCurrencySymbol(fiatDefinition.definition.symbol);
-      GUI::LegacyScreen()->setName(cryptoDefinitions[i].definition.name);
-      GUI::LegacyScreen()->setIcon(&cryptoDefinitions[i].image);
+      GUI::LegacyScreen()->setCurrencySymbol(fiat.symbol);
+      GUI::LegacyScreen()->setName(crypto->coin.name);
+      GUI::LegacyScreen()->setIcon(&crypto->icon);
       GUI::LegacyScreen()->setPlotRange(0, 1000);
-      GUI::LegacyScreen()->setCurrentQuote(cryptoDefinitions[i].prices.latest());
-      GUI::LegacyScreen()->setDailyDelta(cryptoDefinitions[i].delta24h.latest());
-      for(int j = cryptoDefinitions[i].prices.length() - 1; j >= 0; j--) {
-        GUI::LegacyScreen()->plotValue(cryptoDefinitions[i].prices.at(j));
+      GUI::LegacyScreen()->setCurrentQuote(crypto->pricesDB.latest());
+      GUI::LegacyScreen()->setDailyDelta(crypto->delta24hDB.latest());
+      for(int j = crypto->pricesDB.length() - 1; j >= 0; j--) {
+        GUI::LegacyScreen()->plotValue(crypto->pricesDB.at(j));
       }
       GUI::LegacyScreen()->show();
       waitForNextUpdate();

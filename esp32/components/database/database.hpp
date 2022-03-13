@@ -5,8 +5,6 @@
 #include <array>
 #include <cstddef>
 
-#include "definitions/currencies.hpp"
-
 namespace Database {
   template<typename T, size_t _length>
   class Database {
