@@ -34,7 +34,7 @@ void task_currencyUpdate(void* pvParameters) {
     for(auto i = 0; i < Crypto::currencyCount(); i++) {
       size_t startTime = Crypto::SNTP()->unixTime();
       auto crypto = &Crypto::Table[i];
-      CoinGecko::SimplePrice currentData = CoinGecko().simplePrice(crypto->coin.geckoName, fiat.geckoName, false, false, true);
+      CoinGecko::SimplePrice currentData = CoinGecko().simplePrice(crypto->params.geckoName, fiat.geckoName, false, false, true);
       if(currentData.status == 200) {
         crypto->pricesDB.add(currentData.price);
         crypto->delta24hDB.add(currentData.change24h);
@@ -61,7 +61,7 @@ void fetchHistoricalData() {
     auto crypto = &Crypto::Table[i];
     uint32_t currentTimestamp = Crypto::SNTP()->unixTime();
     auto historical =
-    CoinGecko().marketChartRange24h(crypto->coin.geckoName, fiat.geckoName, currentTimestamp - (60 * 60 * 24), currentTimestamp);
+    CoinGecko().marketChartRange24h(crypto->params.geckoName, fiat.geckoName, currentTimestamp - (60 * 60 * 24), currentTimestamp);
 
     if(historical.first != 200) {
       GUI::LoadingScreen()->status("Failed fetching data", GUI::Widgets::Severity::BAD);
@@ -76,7 +76,7 @@ void fetchHistoricalData() {
       }
     }
 
-    CoinGecko::SimplePrice currentData = CoinGecko().simplePrice(crypto->coin.geckoName, fiat.geckoName, false, false, true);
+    CoinGecko::SimplePrice currentData = CoinGecko().simplePrice(crypto->params.geckoName, fiat.geckoName, false, false, true);
     if(currentData.status == 200) {
       crypto->pricesDB.add(currentData.price);
       crypto->delta24hDB.add(currentData.change24h);
@@ -203,7 +203,7 @@ extern "C" void app_main() {
       GUI::LegacyScreen()->hide();
       GUI::LegacyScreen()->clearPlot();
       GUI::LegacyScreen()->setCurrencySymbol(fiat.symbol);
-      GUI::LegacyScreen()->setName(crypto->coin.name);
+      GUI::LegacyScreen()->setName(crypto->params.name);
       GUI::LegacyScreen()->setIcon(&crypto->icon);
       GUI::LegacyScreen()->setPlotRange(0, 1000);
       GUI::LegacyScreen()->setCurrentQuote(crypto->pricesDB.latest());
