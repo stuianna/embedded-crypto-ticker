@@ -197,6 +197,9 @@ extern "C" void app_main() {
   while(1) {
     for(size_t i = 0; i < Crypto::currencyCount(); i++) {
       auto crypto = &Crypto::Table[i];
+      if(!crypto->enabled) {
+        continue;
+      }
       GUI::LegacyScreen()->hide();
       GUI::LegacyScreen()->clearPlot();
       GUI::LegacyScreen()->setCurrencySymbol(fiat.symbol);
