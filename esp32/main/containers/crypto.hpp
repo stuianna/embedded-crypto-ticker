@@ -10,6 +10,9 @@ LV_IMG_DECLARE(eth_icon_60);
 LV_IMG_DECLARE(ltc_icon_60);
 LV_IMG_DECLARE(dge_icon_60);
 
+/**
+ * @brief Namespace for Cryptocurrency related attributes and structures.
+ */
 namespace Crypto {
   /**
    * @brief Enumeration for all cryptocurrency definitions.
@@ -44,20 +47,20 @@ namespace Crypto {
   static constexpr Fiat availableFiat[] = {Fiat::AUD};
 
   /**
-   * @brief Evaluates to the length of #availableCurrencies()
-   * @return constexpr size_t The length of #availableCurrencies()
+   * @brief Evaluates to the length of availableCurrencies()
+   * @return constexpr size_t The length of availableCurrencies()
    */
   constexpr size_t currencyCount() { return sizeof(availableCurrencies) / sizeof(Currency); }
 
   /**
-   * @brief Evaluates to the length of #availableFiat()
-   * @return constexpr size_t The length of #availableFiat()
+   * @brief Evaluates to the length of availableFiat()
+   * @return constexpr size_t The length of availableFiat()
    */
   constexpr size_t fiatCount() { return sizeof(availableFiat) / sizeof(Fiat); }
 
   /**
-   * @brief Structure which can be used to describe either #Fiat or #Crypto enumerations.
-   * @details Use #getDefinition(X) to retrieve information on a passed currency.
+   * @brief Structure which can be used to describe either Fiat or Currency enumerations.
+   * @details Use getDefinition(X) to retrieve information on a passed currency.
    */
   struct Definition {
     const char* name;       ///< The name of the currency. E.g. Australian Dollar
@@ -67,7 +70,7 @@ namespace Crypto {
   };
 
   /**
-   * @brief Get the #Definition for a given cyrptocurrency
+   * @brief Get the Definition for a given cyrptocurrency
    *
    * @param currency The currency to retrieve the definition.
    * @return constexpr Definition
@@ -83,9 +86,9 @@ namespace Crypto {
   };
 
   /**
-   * @brief Get the #Definition for a given fiat currency
+   * @brief Get the Definition for a given fiat currency
    *
-   * @param currency The currency to retrieve the definition.
+   * @param fiat The fiat to retrieve the definition.
    * @return constexpr Definition
    */
   constexpr Definition getDefinition(const Fiat fiat) {

@@ -4,7 +4,7 @@ PORT=/dev/ttyUSB0
 DOCKER_ESP32=docker run --rm -it --device=$(PORT) -v $(PWD):/project -w /project $(ESP32_DOCKER_IMAGE)
 DOCKER_SDL2=docker run --rm -it -v $(PWD):/project -w /project -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$(DISPLAY) -h $$HOSTNAME -v $(HOME)/.Xauthority:/root/.Xauthority $(SDL2_DOCKER_IMAGE)
 
-.PHONY: build configure menuconfig build-esp32 erase monitor flash run-image configure simulator build-x86_64
+.PHONY: build configure menuconfig build-esp32 erase monitor flash run-image configure simulator build-x86_64 docs
 
 all: build-esp32
 
@@ -40,6 +40,18 @@ clean:
 	rm -rf tests/build
 	cd esp32/components/esp32-button && git restore .
 	cd esp32/components/lvgl_esp32_drivers && git restore .
+	rm -rf docs/html
+
+docs:
+	doxygen
+	# Try to open the docs with the browser environmental variable.
+	# Otherwise default to brave.
+	if [ -z "$$BROWSER" ]; \
+	then \
+		brave docs/html/index.html; \
+	else \
+		echo "Yes"; \
+	fi;
 
 simulate_legacy_screen: build-x86_64
 	${PWD}/x86_64/build/simulate_legacy_screen
@@ -60,4 +72,4 @@ build-x86_64:
 test:
 	cmake -DCMAKE_BUILD_TYPE:STRING=Release -H$(PWD)/tests -B$(PWD)/tests/build -G "Unix Makefiles"
 	cmake --build $(PWD)/tests/build --config Release --target all -j 18 --
-	cmake --build $(PWD)/tests/build --config Release --target test -j 18 -- 
+	find -type d -exec run-parts \{\} \;
