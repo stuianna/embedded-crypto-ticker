@@ -32,6 +32,7 @@ QueueHandle_t button_events = NULL;
 void fetchHistoricalData() {
   GUI::LoadingScreen()->status("Fetching historical prices");
   for(auto& entry: Crypto::Table) {
+    ESP_LOGI(LOG_TAG, "Request historical update of %s", entry.params.name);
     size_t rc = Tasks::CurrencyUpdate()->updateHistorical(entry.currency);
     if(!rc) {
       continue;
@@ -59,6 +60,7 @@ void initialise() {
     vTaskDelay(pdMS_TO_TICKS(3000));
     GUI::LoadingScreen()->hide();
 
+    ESP_LOGI(LOG_TAG, "QR payload: %s", payload);
     GUI::ProvisioningScreen()->setQR(payload);
     GUI::ProvisioningScreen()->show();
 
@@ -153,6 +155,9 @@ extern "C" void app_main() {
       if(!crypto->enabled) {
         continue;
       }
+
+      ESP_LOGI(LOG_TAG, "Switch legacy GUI to currency: %s", crypto->params.name);
+      ESP_LOGI(LOG_TAG, "Lastest currency update %d seconds ago", Crypto::SNTP()->unixTime() - crypto->latestUpdate);
       GUI::LegacyScreen()->hide();
       GUI::LegacyScreen()->clearPlot();
       GUI::LegacyScreen()->setCurrencySymbol(fiat.symbol);

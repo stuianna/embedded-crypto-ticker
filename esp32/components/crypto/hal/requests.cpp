@@ -20,26 +20,26 @@ constexpr const char* LOG_TAG = "Requests";
 esp_err_t _http_event_handler(esp_http_client_event_t* evt) {
   static size_t dataPosition = 0;
   switch(evt->event_id) {
-    case HTTP_EVENT_ERROR: ESP_LOGI(LOG_TAG, "HTTP_EVENT_ERROR"); break;
-    case HTTP_EVENT_ON_CONNECTED: ESP_LOGI(LOG_TAG, "HTTP_EVENT_ON_CONNECTED"); break;
-    case HTTP_EVENT_HEADER_SENT: ESP_LOGI(LOG_TAG, "HTTP_EVENT_HEADER_SENT"); break;
+    case HTTP_EVENT_ERROR: ESP_LOGD(LOG_TAG, "HTTP_EVENT_ERROR"); break;
+    case HTTP_EVENT_ON_CONNECTED: ESP_LOGD(LOG_TAG, "HTTP_EVENT_ON_CONNECTED"); break;
+    case HTTP_EVENT_HEADER_SENT: ESP_LOGD(LOG_TAG, "HTTP_EVENT_HEADER_SENT"); break;
     case HTTP_EVENT_ON_HEADER:
-      ESP_LOGI(LOG_TAG, "HTTP_EVENT_ON_HEADER, key=%s, value=%s", evt->header_key, evt->header_value);
+      ESP_LOGD(LOG_TAG, "HTTP_EVENT_ON_HEADER, key=%s, value=%s", evt->header_key, evt->header_value);
       dataPosition = 0;
       break;
     case HTTP_EVENT_ON_DATA:
-      ESP_LOGI(LOG_TAG, "HTTP_EVENT_ON_DATA, len=%d", evt->data_len);
+      ESP_LOGD(LOG_TAG, "HTTP_EVENT_ON_DATA, len=%d", evt->data_len);
       memcpy(static_cast<char*>(evt->user_data) + dataPosition, evt->data, evt->data_len);
       dataPosition += evt->data_len;
       break;
-    case HTTP_EVENT_ON_FINISH: ESP_LOGI(LOG_TAG, "HTTP_EVENT_ON_FINISH"); break;
+    case HTTP_EVENT_ON_FINISH: ESP_LOGD(LOG_TAG, "HTTP_EVENT_ON_FINISH"); break;
     case HTTP_EVENT_DISCONNECTED:
-      ESP_LOGI(LOG_TAG, "HTTP_EVENT_DISCONNECTED");
+      ESP_LOGD(LOG_TAG, "HTTP_EVENT_DISCONNECTED");
       int mbedtls_err = 0;
       esp_err_t err = esp_tls_get_and_clear_last_error((esp_tls_error_handle_t)evt->data, &mbedtls_err, NULL);
       if(err != 0) {
-        ESP_LOGI(LOG_TAG, "Last esp error code: 0x%x", err);
-        ESP_LOGI(LOG_TAG, "Last mbedtls failure: 0x%x", mbedtls_err);
+        ESP_LOGD(LOG_TAG, "Last esp error code: 0x%x", err);
+        ESP_LOGD(LOG_TAG, "Last mbedtls failure: 0x%x", mbedtls_err);
       }
       break;
   }
@@ -60,7 +60,7 @@ void Requests::init() {
   xTaskCreatePinnedToCore(&https_task, "http_task", 4096 * 2, NULL, 5, &httpTaskHandle, 0);
 
   if(!getQueue || !responseQueue || !httpTaskHandle) {
-    ESP_LOGE(LOG_TAG, "Failed to allocate memeory for HTTP task, halting.");
+    ESP_LOGE(LOG_TAG, "Failed to allocate memory for HTTP task, halting.");
     while(1) {};
   }
   _initialised = true;
@@ -68,7 +68,7 @@ void Requests::init() {
 
 size_t Requests::get(GetRequest& request) {
   init();
-  ESP_LOGI(LOG_TAG, "Allocating %d bytes for reqeust", request.length);
+  ESP_LOGI(LOG_TAG, "Allocating %d bytes for request", request.length);
   request.data = (char*)pvPortMalloc(sizeof(char) * request.length);
 
   if(!request.data) {
@@ -83,7 +83,7 @@ size_t Requests::get(GetRequest& request) {
   }
   size_t rc = 0;
   bool received = _status(rc, request.timeout);
-  ESP_LOGI(LOG_TAG, "Received = %d", received);
+  ESP_LOGI(LOG_TAG, "Received = %s", received ? "true" : "false");
   ESP_LOGI(LOG_TAG, "rc = %d", rc);
   return received ? rc : 0;
 }
