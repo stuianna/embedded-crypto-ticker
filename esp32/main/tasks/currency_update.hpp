@@ -19,8 +19,8 @@ namespace Tasks {
     static CurrencyUpdateTask* instance();
     /**
      * @brief Start the currency update task. Quotes (prices) will be fetch and added to the currencies Crypto::Table data structure.
-     * @details Currencies are fetched in the order defined Crypto::Table. The currency's data is always updated, even if the enabled field
-     * is set to false.
+     * @details Currencies are fetched in the order defined Crypto::Table. The currency's data is only updated if the enabled field in
+     * Crypto::Table is set to true.
      */
     void start();
     /**
@@ -30,12 +30,18 @@ namespace Tasks {
      */
     void stop();
     /**
-     * @brief Get the current currency being updated. Only relevent during historical update.
-     * @details A currency is considered updated from the start of the request, during the request, and while waiting for the next
-     * currencies turn to update.
-     * @return Crypto::Currency
+     * @brief Update the pricesDB database with historical data.
+     * @details This function fetches the historical prices at an interval of 5 minutes. The number of historical points fetched is equal to
+     * the number of entries available in the database. E.g, with 288 points = (288 / 12) = 24 hours. The update can take a long time,
+     * around 15 seconds per currency.
+     *
+     * The currency is not updated if its enabled field in Cyrpto::Table is not set to true. In this case, the fuction returns 0
+     * @param currency The target currency to update.
+     * @warning All current entries located in the database will be overwritten.
+     * @return size_t http status code for requests. 200 = success. 0 is returned if the currency's Crypto::Table enable field is set to
+     * false.
      */
-    Crypto::Currency currentCurrency();
+    size_t updateHistorical(Crypto::Currency currency);
     /**
      * @brief Query if the currency update task is running;
      * @return true Task is running.
@@ -58,7 +64,6 @@ namespace Tasks {
    private:
     CurrencyUpdateTask();
     size_t _updatePeriod;
-    Crypto::Currency _currentCurrency;
     bool _active;
 
     // Disable copy and move assignment operators and constructors.

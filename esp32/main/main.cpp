@@ -31,38 +31,19 @@ QueueHandle_t button_events = NULL;
 
 void fetchHistoricalData() {
   GUI::LoadingScreen()->status("Fetching historical prices");
-  auto fiat = Crypto::getDefinition(Crypto::baseCurrency);
-  for(size_t i = 0; i < Crypto::currencyCount(); i++) {
-    auto crypto = &Crypto::Table[i];
-    uint32_t currentTimestamp = Crypto::SNTP()->unixTime();
-    auto historical =
-    CoinGecko().marketChartRange24h(crypto->params.geckoName, fiat.geckoName, currentTimestamp - (60 * 60 * 24), currentTimestamp);
-
-    if(historical.first != 200) {
-      GUI::LoadingScreen()->status("Failed fetching data", GUI::Widgets::Severity::BAD);
+  for(auto& entry: Crypto::Table) {
+    size_t rc = Tasks::CurrencyUpdate()->updateHistorical(entry.currency);
+    if(!rc) {
+      continue;
+    }
+    if(rc != 200) {
+      GUI::LoadingScreen()->status("Failed fetching historical data", GUI::Widgets::Severity::BAD);
       while(1) {
         vTaskDelay(pdMS_TO_TICKS(1000));
       }
     }
-
-    for(auto price: historical.second) {
-      if(price != 0.0f) {
-        crypto->pricesDB.add(price);
-      }
-    }
-
-    CoinGecko::SimplePrice currentData = CoinGecko().simplePrice(crypto->params.geckoName, fiat.geckoName, false, false, true);
-    if(currentData.status == 200) {
-      crypto->pricesDB.add(currentData.price);
-      crypto->delta24hDB.add(currentData.change24h);
-      crypto->latestUpdate = Crypto::SNTP()->unixTime();
-    }
-    else {
-      ESP_LOGE(LOG_TAG, "Response code %d", currentData.status);
-    }
   }
 }
-
 
 void initialise() {
   GUI::HAL::LVGL()->init();

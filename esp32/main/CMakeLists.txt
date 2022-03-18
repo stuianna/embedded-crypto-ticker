@@ -4,6 +4,7 @@ idf_component_register(
         "main.cpp"
         "wifi/manager.cpp"
         "tasks/currency_update.cpp"
+        "containers/crypto.cpp"
     INCLUDE_DIRS 
         "."
 )
