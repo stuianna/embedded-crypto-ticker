@@ -79,6 +79,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structCrypto_1_1Definition.html">Definition</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure which can be used to describe either Fiat or Currency enumerations.  <a href="structCrypto_1_1Definition.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structCrypto_1_1Entry.html">Entry</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lookup table correlating each Currency's definition, databases, configuration and assets.  <a href="structCrypto_1_1Entry.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -102,128 +105,28 @@ Functions</h2></td></tr>
 <tr class="memitem:a210984d92b93e1a0745c80f590ec7ffb"><td class="memItemLeft" align="right" valign="top">constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceCrypto.html#a210984d92b93e1a0745c80f590ec7ffb">fiatCount</a> ()</td></tr>
 <tr class="memdesc:a210984d92b93e1a0745c80f590ec7ffb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Evaluates to the length of availableFiat()  <a href="namespaceCrypto.html#a210984d92b93e1a0745c80f590ec7ffb">More...</a><br /></td></tr>
 <tr class="separator:a210984d92b93e1a0745c80f590ec7ffb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac33f6131c12fc354d3b00ad51bc72297"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="structCrypto_1_1Definition.html">Definition</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceCrypto.html#ac33f6131c12fc354d3b00ad51bc72297">getDefinition</a> (const <a class="el" href="namespaceCrypto.html#a273dd5ff1461b8b5ed231465b1d48aa6">Currency</a> <a class="el" href="namespaceCrypto.html#a95767ea7c8c6a370a2e12b3d6d30d78f">currency</a>)</td></tr>
+<tr class="memitem:ac33f6131c12fc354d3b00ad51bc72297"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="structCrypto_1_1Definition.html">Definition</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceCrypto.html#ac33f6131c12fc354d3b00ad51bc72297">getDefinition</a> (const <a class="el" href="namespaceCrypto.html#a273dd5ff1461b8b5ed231465b1d48aa6">Currency</a> currency)</td></tr>
 <tr class="memdesc:ac33f6131c12fc354d3b00ad51bc72297"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="structCrypto_1_1Definition.html" title="Structure which can be used to describe either Fiat or Currency enumerations.">Definition</a> for a given cyrptocurrency.  <a href="namespaceCrypto.html#ac33f6131c12fc354d3b00ad51bc72297">More...</a><br /></td></tr>
 <tr class="separator:ac33f6131c12fc354d3b00ad51bc72297"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aff45528f65165d43ef8ff5cd9070d933"><td class="memItemLeft" align="right" valign="top">constexpr <a class="el" href="structCrypto_1_1Definition.html">Definition</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceCrypto.html#aff45528f65165d43ef8ff5cd9070d933">getDefinition</a> (const <a class="el" href="namespaceCrypto.html#a3f9694361e50cbf204ddd84cc3b6fa25">Fiat</a> fiat)</td></tr>
 <tr class="memdesc:aff45528f65165d43ef8ff5cd9070d933"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the <a class="el" href="structCrypto_1_1Definition.html" title="Structure which can be used to describe either Fiat or Currency enumerations.">Definition</a> for a given fiat currency.  <a href="namespaceCrypto.html#aff45528f65165d43ef8ff5cd9070d933">More...</a><br /></td></tr>
 <tr class="separator:aff45528f65165d43ef8ff5cd9070d933"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d8f00b8474be4477eb2f117a17b887d"><td class="memItemLeft" ><a id="a5d8f00b8474be4477eb2f117a17b887d" name="a5d8f00b8474be4477eb2f117a17b887d"></a>
-struct {</td></tr>
-<tr class="memitem:aa656014bc74295f1010f8b115f21c679"><td class="memItemLeft" >
-&#160;&#160;&#160;<a class="el" href="namespaceCrypto.html#a273dd5ff1461b8b5ed231465b1d48aa6">Currency</a>&#160;&#160;&#160;<b>currency</b></td></tr>
-<tr class="memdesc:aa656014bc74295f1010f8b115f21c679"><td class="mdescLeft">&#160;</td><td class="mdescRight">The currency represented by the table's entry. <br /></td></tr>
-<tr class="separator:aa656014bc74295f1010f8b115f21c679"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8004c08869cee8cb1adada0fc8f4547a"><td class="memItemLeft" >
-&#160;&#160;&#160;<a class="el" href="structCrypto_1_1Definition.html">Definition</a>&#160;&#160;&#160;<b>params</b></td></tr>
-<tr class="memdesc:a8004c08869cee8cb1adada0fc8f4547a"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structCrypto_1_1Definition.html" title="Structure which can be used to describe either Fiat or Currency enumerations.">Definition</a> describing the currency's parameters. <br /></td></tr>
-<tr class="separator:a8004c08869cee8cb1adada0fc8f4547a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9780a8374234a5a61209a65731fc06a"><td class="memItemLeft" >
-&#160;&#160;&#160;const lv_img_dsc_t&#160;&#160;&#160;<b>icon</b></td></tr>
-<tr class="memdesc:ad9780a8374234a5a61209a65731fc06a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The icon (image) used by the currency. <br /></td></tr>
-<tr class="separator:ad9780a8374234a5a61209a65731fc06a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e0404f443a842ba1c8c409eca3d56d4"><td class="memItemLeft" >
-&#160;&#160;&#160;Database::Database&lt; float, 288 &gt;&#160;&#160;&#160;<b>pricesDB</b></td></tr>
-<tr class="separator:a3e0404f443a842ba1c8c409eca3d56d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef7ec23b03f4ed02b18060d6035bd5d9"><td class="memItemLeft" >
-&#160;&#160;&#160;Database::Database&lt; float, 1 &gt;&#160;&#160;&#160;<b>delta24hDB</b></td></tr>
-<tr class="separator:aef7ec23b03f4ed02b18060d6035bd5d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1222043934a257270ca7dff776a4c9bf"><td class="memItemLeft" >
-&#160;&#160;&#160;size_t&#160;&#160;&#160;<b>latestUpdate</b></td></tr>
-<tr class="separator:a1222043934a257270ca7dff776a4c9bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb59a82d2541933664fbbd4b55950110"><td class="memItemLeft" >
-&#160;&#160;&#160;bool&#160;&#160;&#160;<b>enabled</b></td></tr>
-<tr class="separator:aeb59a82d2541933664fbbd4b55950110"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5d8f00b8474be4477eb2f117a17b887d"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>getDefinition</b> (<a class="el" href="namespaceCrypto.html#a273dd5ff1461b8b5ed231465b1d48aa6a4b9169eb3e07e0e885eb62f7bfc41a33">Currency::BTC</a>)</td></tr>
-<tr class="separator:a5d8f00b8474be4477eb2f117a17b887d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d4963842689778be58202b6eae00896"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceCrypto.html#a9d4963842689778be58202b6eae00896">enabledCurrencyCount</a> ()</td></tr>
+<tr class="memdesc:a9d4963842689778be58202b6eae00896"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the number of currencies which are enabled.  <a href="namespaceCrypto.html#a9d4963842689778be58202b6eae00896">More...</a><br /></td></tr>
+<tr class="separator:a9d4963842689778be58202b6eae00896"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a490f29c93f8fb2d7913b5ca2931b67ea"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceCrypto.html#a490f29c93f8fb2d7913b5ca2931b67ea">currencyIndex</a> (<a class="el" href="namespaceCrypto.html#a273dd5ff1461b8b5ed231465b1d48aa6">Currency</a> currency)</td></tr>
+<tr class="memdesc:a490f29c93f8fb2d7913b5ca2931b67ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the index of the selected currency in <a class="el" href="namespaceCrypto.html#ae1e5269c5a175e3b564bcfab5312a894" title="The main lookuptable for each supported currency.">Crypto::Table</a>.  <a href="namespaceCrypto.html#a490f29c93f8fb2d7913b5ca2931b67ea">More...</a><br /></td></tr>
+<tr class="separator:a490f29c93f8fb2d7913b5ca2931b67ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a52500861aad90214cb97dd5727dd713f"><td class="memItemLeft" ><a id="a52500861aad90214cb97dd5727dd713f" name="a52500861aad90214cb97dd5727dd713f"></a>
-struct {</td></tr>
-<tr class="memitem:aa656014bc74295f1010f8b115f21c679"><td class="memItemLeft" >
-&#160;&#160;&#160;<a class="el" href="namespaceCrypto.html#a273dd5ff1461b8b5ed231465b1d48aa6">Currency</a>&#160;&#160;&#160;<b>currency</b></td></tr>
-<tr class="memdesc:aa656014bc74295f1010f8b115f21c679"><td class="mdescLeft">&#160;</td><td class="mdescRight">The currency represented by the table's entry. <br /></td></tr>
-<tr class="separator:aa656014bc74295f1010f8b115f21c679"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8004c08869cee8cb1adada0fc8f4547a"><td class="memItemLeft" >
-&#160;&#160;&#160;<a class="el" href="structCrypto_1_1Definition.html">Definition</a>&#160;&#160;&#160;<b>params</b></td></tr>
-<tr class="memdesc:a8004c08869cee8cb1adada0fc8f4547a"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structCrypto_1_1Definition.html" title="Structure which can be used to describe either Fiat or Currency enumerations.">Definition</a> describing the currency's parameters. <br /></td></tr>
-<tr class="separator:a8004c08869cee8cb1adada0fc8f4547a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9780a8374234a5a61209a65731fc06a"><td class="memItemLeft" >
-&#160;&#160;&#160;const lv_img_dsc_t&#160;&#160;&#160;<b>icon</b></td></tr>
-<tr class="memdesc:ad9780a8374234a5a61209a65731fc06a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The icon (image) used by the currency. <br /></td></tr>
-<tr class="separator:ad9780a8374234a5a61209a65731fc06a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e0404f443a842ba1c8c409eca3d56d4"><td class="memItemLeft" >
-&#160;&#160;&#160;Database::Database&lt; float, 288 &gt;&#160;&#160;&#160;<b>pricesDB</b></td></tr>
-<tr class="separator:a3e0404f443a842ba1c8c409eca3d56d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef7ec23b03f4ed02b18060d6035bd5d9"><td class="memItemLeft" >
-&#160;&#160;&#160;Database::Database&lt; float, 1 &gt;&#160;&#160;&#160;<b>delta24hDB</b></td></tr>
-<tr class="separator:aef7ec23b03f4ed02b18060d6035bd5d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1222043934a257270ca7dff776a4c9bf"><td class="memItemLeft" >
-&#160;&#160;&#160;size_t&#160;&#160;&#160;<b>latestUpdate</b></td></tr>
-<tr class="separator:a1222043934a257270ca7dff776a4c9bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb59a82d2541933664fbbd4b55950110"><td class="memItemLeft" >
-&#160;&#160;&#160;bool&#160;&#160;&#160;<b>enabled</b></td></tr>
-<tr class="separator:aeb59a82d2541933664fbbd4b55950110"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a52500861aad90214cb97dd5727dd713f"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>BTC</b> [<a class="el" href="namespaceCrypto.html#af5f34510aafd61cf263cc199886e14c4">currencyCount</a>()]</td></tr>
-<tr class="memdesc:a52500861aad90214cb97dd5727dd713f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lookup table correlating each Currency's definition, databases, configuration and assets. <br /></td></tr>
-<tr class="separator:a52500861aad90214cb97dd5727dd713f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56740c49342db9920328e75632f8a3b1"><td class="memItemLeft" ><a id="a56740c49342db9920328e75632f8a3b1" name="a56740c49342db9920328e75632f8a3b1"></a>
-struct {</td></tr>
-<tr class="memitem:aa656014bc74295f1010f8b115f21c679"><td class="memItemLeft" >
-&#160;&#160;&#160;<a class="el" href="namespaceCrypto.html#a273dd5ff1461b8b5ed231465b1d48aa6">Currency</a>&#160;&#160;&#160;<b>currency</b></td></tr>
-<tr class="memdesc:aa656014bc74295f1010f8b115f21c679"><td class="mdescLeft">&#160;</td><td class="mdescRight">The currency represented by the table's entry. <br /></td></tr>
-<tr class="separator:aa656014bc74295f1010f8b115f21c679"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8004c08869cee8cb1adada0fc8f4547a"><td class="memItemLeft" >
-&#160;&#160;&#160;<a class="el" href="structCrypto_1_1Definition.html">Definition</a>&#160;&#160;&#160;<b>params</b></td></tr>
-<tr class="memdesc:a8004c08869cee8cb1adada0fc8f4547a"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structCrypto_1_1Definition.html" title="Structure which can be used to describe either Fiat or Currency enumerations.">Definition</a> describing the currency's parameters. <br /></td></tr>
-<tr class="separator:a8004c08869cee8cb1adada0fc8f4547a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9780a8374234a5a61209a65731fc06a"><td class="memItemLeft" >
-&#160;&#160;&#160;const lv_img_dsc_t&#160;&#160;&#160;<b>icon</b></td></tr>
-<tr class="memdesc:ad9780a8374234a5a61209a65731fc06a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The icon (image) used by the currency. <br /></td></tr>
-<tr class="separator:ad9780a8374234a5a61209a65731fc06a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e0404f443a842ba1c8c409eca3d56d4"><td class="memItemLeft" >
-&#160;&#160;&#160;Database::Database&lt; float, 288 &gt;&#160;&#160;&#160;<b>pricesDB</b></td></tr>
-<tr class="separator:a3e0404f443a842ba1c8c409eca3d56d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef7ec23b03f4ed02b18060d6035bd5d9"><td class="memItemLeft" >
-&#160;&#160;&#160;Database::Database&lt; float, 1 &gt;&#160;&#160;&#160;<b>delta24hDB</b></td></tr>
-<tr class="separator:aef7ec23b03f4ed02b18060d6035bd5d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1222043934a257270ca7dff776a4c9bf"><td class="memItemLeft" >
-&#160;&#160;&#160;size_t&#160;&#160;&#160;<b>latestUpdate</b></td></tr>
-<tr class="separator:a1222043934a257270ca7dff776a4c9bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb59a82d2541933664fbbd4b55950110"><td class="memItemLeft" >
-&#160;&#160;&#160;bool&#160;&#160;&#160;<b>enabled</b></td></tr>
-<tr class="separator:aeb59a82d2541933664fbbd4b55950110"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a56740c49342db9920328e75632f8a3b1"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>btc_icon_60</b></td></tr>
-<tr class="separator:a56740c49342db9920328e75632f8a3b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2d1d21eb694cf26a02e61607720ada4"><td class="memItemLeft" ><a id="af2d1d21eb694cf26a02e61607720ada4" name="af2d1d21eb694cf26a02e61607720ada4"></a>
-struct {</td></tr>
-<tr class="memitem:aa656014bc74295f1010f8b115f21c679"><td class="memItemLeft" >
-&#160;&#160;&#160;<a class="el" href="namespaceCrypto.html#a273dd5ff1461b8b5ed231465b1d48aa6">Currency</a>&#160;&#160;&#160;<b>currency</b></td></tr>
-<tr class="memdesc:aa656014bc74295f1010f8b115f21c679"><td class="mdescLeft">&#160;</td><td class="mdescRight">The currency represented by the table's entry. <br /></td></tr>
-<tr class="separator:aa656014bc74295f1010f8b115f21c679"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8004c08869cee8cb1adada0fc8f4547a"><td class="memItemLeft" >
-&#160;&#160;&#160;<a class="el" href="structCrypto_1_1Definition.html">Definition</a>&#160;&#160;&#160;<b>params</b></td></tr>
-<tr class="memdesc:a8004c08869cee8cb1adada0fc8f4547a"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="structCrypto_1_1Definition.html" title="Structure which can be used to describe either Fiat or Currency enumerations.">Definition</a> describing the currency's parameters. <br /></td></tr>
-<tr class="separator:a8004c08869cee8cb1adada0fc8f4547a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad9780a8374234a5a61209a65731fc06a"><td class="memItemLeft" >
-&#160;&#160;&#160;const lv_img_dsc_t&#160;&#160;&#160;<b>icon</b></td></tr>
-<tr class="memdesc:ad9780a8374234a5a61209a65731fc06a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The icon (image) used by the currency. <br /></td></tr>
-<tr class="separator:ad9780a8374234a5a61209a65731fc06a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3e0404f443a842ba1c8c409eca3d56d4"><td class="memItemLeft" >
-&#160;&#160;&#160;Database::Database&lt; float, 288 &gt;&#160;&#160;&#160;<b>pricesDB</b></td></tr>
-<tr class="separator:a3e0404f443a842ba1c8c409eca3d56d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aef7ec23b03f4ed02b18060d6035bd5d9"><td class="memItemLeft" >
-&#160;&#160;&#160;Database::Database&lt; float, 1 &gt;&#160;&#160;&#160;<b>delta24hDB</b></td></tr>
-<tr class="separator:aef7ec23b03f4ed02b18060d6035bd5d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1222043934a257270ca7dff776a4c9bf"><td class="memItemLeft" >
-&#160;&#160;&#160;size_t&#160;&#160;&#160;<b>latestUpdate</b></td></tr>
-<tr class="separator:a1222043934a257270ca7dff776a4c9bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb59a82d2541933664fbbd4b55950110"><td class="memItemLeft" >
-&#160;&#160;&#160;bool&#160;&#160;&#160;<b>enabled</b></td></tr>
-<tr class="separator:aeb59a82d2541933664fbbd4b55950110"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af2d1d21eb694cf26a02e61607720ada4"><td class="memItemLeft" valign="top">}&#160;</td><td class="memItemRight" valign="bottom"><b>true</b></td></tr>
-<tr class="separator:af2d1d21eb694cf26a02e61607720ada4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68d962d8f1121b37bf400df8c1bba771"><td class="memItemLeft" align="right" valign="top"><a id="a68d962d8f1121b37bf400df8c1bba771" name="a68d962d8f1121b37bf400df8c1bba771"></a>
+<a class="el" href="namespaceCrypto.html#a3f9694361e50cbf204ddd84cc3b6fa25">Fiat</a>&#160;</td><td class="memItemRight" valign="bottom"><b>baseCurrency</b> = <a class="el" href="namespaceCrypto.html#a3f9694361e50cbf204ddd84cc3b6fa25abfab7c49998f5863fb8d10c7f0ed8873">Fiat::AUD</a></td></tr>
+<tr class="memdesc:a68d962d8f1121b37bf400df8c1bba771"><td class="mdescLeft">&#160;</td><td class="mdescRight">The currently used base currency. Cryptocurrency quotes are given relative to this. <br /></td></tr>
+<tr class="separator:a68d962d8f1121b37bf400df8c1bba771"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1e5269c5a175e3b564bcfab5312a894"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structCrypto_1_1Entry.html">Entry</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceCrypto.html#ae1e5269c5a175e3b564bcfab5312a894">Table</a> [<a class="el" href="namespaceCrypto.html#af5f34510aafd61cf263cc199886e14c4">currencyCount</a>()]</td></tr>
+<tr class="memdesc:ae1e5269c5a175e3b564bcfab5312a894"><td class="mdescLeft">&#160;</td><td class="mdescRight">The main lookuptable for each supported currency.  <a href="namespaceCrypto.html#ae1e5269c5a175e3b564bcfab5312a894">More...</a><br /></td></tr>
+<tr class="separator:ae1e5269c5a175e3b564bcfab5312a894"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Namespace for Cryptocurrency related attributes and structures. </p>
@@ -316,6 +219,53 @@ struct {</td></tr>
 
 <p>Evaluates to the length of availableCurrencies() </p>
 <dl class="section return"><dt>Returns</dt><dd>constexpr size_t The length of availableCurrencies() </dd></dl>
+
+</div>
+</div>
+<a id="a490f29c93f8fb2d7913b5ca2931b67ea" name="a490f29c93f8fb2d7913b5ca2931b67ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a490f29c93f8fb2d7913b5ca2931b67ea">&#9670;&nbsp;</a></span>currencyIndex()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t Crypto::currencyIndex </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespaceCrypto.html#a273dd5ff1461b8b5ed231465b1d48aa6">Currency</a>&#160;</td>
+          <td class="paramname"><em>currency</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the index of the selected currency in <a class="el" href="namespaceCrypto.html#ae1e5269c5a175e3b564bcfab5312a894" title="The main lookuptable for each supported currency.">Crypto::Table</a>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">currency</td><td>The currency to query. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>size_t The position of the currency. </dd></dl>
+
+</div>
+</div>
+<a id="a9d4963842689778be58202b6eae00896" name="a9d4963842689778be58202b6eae00896"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d4963842689778be58202b6eae00896">&#9670;&nbsp;</a></span>enabledCurrencyCount()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t Crypto::enabledCurrencyCount </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the number of currencies which are enabled. </p>
+<p >A currency is considered enabled. If its 'enabled' field in <a class="el" href="namespaceCrypto.html#ae1e5269c5a175e3b564bcfab5312a894" title="The main lookuptable for each supported currency.">Crypto::Table</a> is set to true. </p><dl class="section return"><dt>Returns</dt><dd>size_t The number of enabled currencies. </dd></dl>
 
 </div>
 </div>
@@ -414,6 +364,36 @@ struct {</td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>constexpr <a class="el" href="structCrypto_1_1Definition.html" title="Structure which can be used to describe either Fiat or Currency enumerations.">Definition</a> </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="ae1e5269c5a175e3b564bcfab5312a894" name="ae1e5269c5a175e3b564bcfab5312a894"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1e5269c5a175e3b564bcfab5312a894">&#9670;&nbsp;</a></span>Table</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structCrypto_1_1Entry.html">Entry</a> Crypto::Table</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">extern</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">{{Currency::BTC, <a class="code hl_function" href="namespaceCrypto.html#ac33f6131c12fc354d3b00ad51bc72297">getDefinition</a>(Currency::BTC), btc_icon_60, {}, {}, 0, <span class="keyword">true</span>},</div>
+<div class="line">                                     {Currency::ETH, <a class="code hl_function" href="namespaceCrypto.html#ac33f6131c12fc354d3b00ad51bc72297">getDefinition</a>(Currency::ETH), eth_icon_60, {}, {}, 0, <span class="keyword">true</span>},</div>
+<div class="line">                                     {Currency::LTC, <a class="code hl_function" href="namespaceCrypto.html#ac33f6131c12fc354d3b00ad51bc72297">getDefinition</a>(Currency::LTC), ltc_icon_60, {}, {}, 0, <span class="keyword">true</span>},</div>
+<div class="line">                                     {Currency::DOGE, <a class="code hl_function" href="namespaceCrypto.html#ac33f6131c12fc354d3b00ad51bc72297">getDefinition</a>(Currency::DOGE), dge_icon_60, {}, {}, 0, <span class="keyword">true</span>}}</div>
+<div class="ttc" id="anamespaceCrypto_html_ac33f6131c12fc354d3b00ad51bc72297"><div class="ttname"><a href="namespaceCrypto.html#ac33f6131c12fc354d3b00ad51bc72297">Crypto::getDefinition</a></div><div class="ttdeci">constexpr Definition getDefinition(const Currency currency)</div><div class="ttdoc">Get the Definition for a given cyrptocurrency.</div><div class="ttdef"><b>Definition:</b> crypto.hpp:78</div></div>
+</div><!-- fragment -->
+<p>The main lookuptable for each supported currency. </p>
 
 </div>
 </div>

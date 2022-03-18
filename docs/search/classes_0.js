@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['definition_0',['Definition',['../structCrypto_1_1Definition.html',1,'Crypto']]]
+  ['currencyupdatetask_0',['CurrencyUpdateTask',['../classTasks_1_1CurrencyUpdateTask.html',1,'Tasks']]]
 ];

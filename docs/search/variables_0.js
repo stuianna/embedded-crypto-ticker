@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['btc_0',['BTC',['../namespaceCrypto.html#a52500861aad90214cb97dd5727dd713f',1,'Crypto']]]
+  ['basecurrency_0',['baseCurrency',['../namespaceCrypto.html#a68d962d8f1121b37bf400df8c1bba771',1,'Crypto']]]
 ];
