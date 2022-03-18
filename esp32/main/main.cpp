@@ -14,6 +14,7 @@
 #include <data_sources/coin_gecko.hpp>
 #include <data_sources/sntp.hpp>
 #include <hal/driver.hpp>
+#include <tasks/currency_update.hpp>
 #include <views/startup/loading.hpp>
 #include <views/startup/provisioning.hpp>
 #include <views/ticker/legacy.hpp>
@@ -27,69 +28,21 @@ using namespace Crypto::DataSources;
 
 QueueHandle_t button_events = NULL;
 
-void task_currencyUpdate(void* pvParameters) {
-  (void)pvParameters;
-  while(1) {
-    auto fiat = Crypto::getDefinition(Crypto::baseCurrency);
-    for(auto i = 0; i < Crypto::currencyCount(); i++) {
-      size_t startTime = Crypto::SNTP()->unixTime();
-      auto crypto = &Crypto::Table[i];
-      CoinGecko::SimplePrice currentData = CoinGecko().simplePrice(crypto->params.geckoName, fiat.geckoName, false, false, true);
-      if(currentData.status == 200) {
-        crypto->pricesDB.add(currentData.price);
-        crypto->delta24hDB.add(currentData.change24h);
-        crypto->latestUpdate = startTime;
-      }
-      else {
-        ESP_LOGE(LOG_TAG, "Response code %d", currentData.status);
-      }
-      size_t endTime = Crypto::SNTP()->unixTime();
-      uint32_t secondsDelta = endTime - startTime;
-      uint32_t secondsWait = (currencyUpdatePeriodSeconds / Crypto::currencyCount()) - secondsDelta;
-      ESP_LOGI(LOG_TAG, "Seconds to next request %d", secondsWait);
-      for(int j = 0; j < secondsWait; j++) {
-        vTaskDelay(pdMS_TO_TICKS(1000));
-      }
-    }
-  }
-}
 
 void fetchHistoricalData() {
   GUI::LoadingScreen()->status("Fetching historical prices");
-  auto fiat = Crypto::getDefinition(Crypto::baseCurrency);
-  for(size_t i = 0; i < Crypto::currencyCount(); i++) {
-    auto crypto = &Crypto::Table[i];
-    uint32_t currentTimestamp = Crypto::SNTP()->unixTime();
-    auto historical =
-    CoinGecko().marketChartRange24h(crypto->params.geckoName, fiat.geckoName, currentTimestamp - (60 * 60 * 24), currentTimestamp);
-
-    if(historical.first != 200) {
-      GUI::LoadingScreen()->status("Failed fetching data", GUI::Widgets::Severity::BAD);
+  for(auto& entry: Crypto::Table) {
+    size_t rc = Tasks::CurrencyUpdate()->updateHistorical(entry.currency);
+    if(!rc) {
+      continue;
+    }
+    if(rc != 200) {
+      GUI::LoadingScreen()->status("Failed fetching historical data", GUI::Widgets::Severity::BAD);
       while(1) {
         vTaskDelay(pdMS_TO_TICKS(1000));
       }
     }
-
-    for(auto price: historical.second) {
-      if(price != 0.0f) {
-        crypto->pricesDB.add(price);
-      }
-    }
-
-    CoinGecko::SimplePrice currentData = CoinGecko().simplePrice(crypto->params.geckoName, fiat.geckoName, false, false, true);
-    if(currentData.status == 200) {
-      crypto->pricesDB.add(currentData.price);
-      crypto->delta24hDB.add(currentData.change24h);
-      crypto->latestUpdate = Crypto::SNTP()->unixTime();
-    }
-    else {
-      ESP_LOGE(LOG_TAG, "Response code %d", currentData.status);
-    }
   }
-}
-
-void startCurrencyUpdate() {
-  xTaskCreatePinnedToCore(task_currencyUpdate, "Data Update Task", 4096, NULL, 3, NULL, 0);
 }
 
 void initialise() {
@@ -172,7 +125,7 @@ void initialise() {
   }
   fetchHistoricalData();
   GUI::LoadingScreen()->status("Starting currency update task.");
-  startCurrencyUpdate();
+  Tasks::CurrencyUpdate()->start();
   button_events = button_init(PIN_BIT(35) | PIN_BIT(0));
   GUI::LoadingScreen()->hide();
 }

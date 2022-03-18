@@ -7,6 +7,7 @@ file(GLOB_RECURSE LVGL_DRIVERS ${CMAKE_CURRENT_SOURCE_DIR}/lv_drivers/*.c)
 file(GLOB_RECURSE LVGL_SOURCES ${PROJECT_ROOT}/esp32/components/lvgl/*.c)
 
 set(COMMON_SOURCES
+    ${PROJECT_ROOT}/esp32/main/containers/crypto.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/gui/hal/driver.cpp
     ${LVGL_DRIVERS}
 )
