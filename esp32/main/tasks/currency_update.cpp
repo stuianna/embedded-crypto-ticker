@@ -34,7 +34,7 @@ static void task_currencyUpdate(void* pvParameters) {
         if(currentData.status == 200) {
           crypto->pricesDB.add(currentData.price);
           crypto->delta24hDB.add(currentData.change24h);
-          crypto->latestUpdate = startTime;
+          crypto->latestUpdate = Crypto::SNTP()->unixTime();
           break;
         }
         else {
@@ -64,36 +64,56 @@ size_t CurrencyUpdateTask::updateHistorical(Crypto::Currency currency) {
   auto fiat = Crypto::getDefinition(Crypto::baseCurrency);
   auto index = Crypto::currencyIndex(currency);
   auto crypto = &Crypto::Table[index];
+  const uint8_t maxAttempts = 3;
   ESP_LOGI(LOG_TAG, "Fetch historical for currency %s, index %d", crypto->params.name, index);
 
   if(!crypto->enabled) {
     return 0;
   }
   uint32_t currentTimestamp = Crypto::SNTP()->unixTime();
-  auto historical =
-  CoinGecko().marketChartRange24h(crypto->params.geckoName, fiat.geckoName, currentTimestamp - (60 * 60 * 24), currentTimestamp);
 
-  if(historical.first != 200) {
-    ESP_LOGE(LOG_TAG, "Response code from historical update %d", historical.first);
-    return historical.first;
-  }
+  uint8_t attempt = 0;
+  do {
+    ESP_LOGI(LOG_TAG, "Historical currency update for %s, attempt %d", crypto->params.name, attempt);
+    auto historical =
+    CoinGecko().marketChartRange24h(crypto->params.geckoName, fiat.geckoName, currentTimestamp - (60 * 60 * 24), currentTimestamp);
 
-  for(const auto& price: historical.second) {
-    if(price != 0.0f) {
-      crypto->pricesDB.add(price);
+    if(historical.first == 200) {
+      for(const auto& price: historical.second) {
+        if(price != 0.0f) {
+          crypto->pricesDB.add(price);
+        }
+      }
+      break;
     }
-  }
+    else {
+      ESP_LOGE(LOG_TAG, "Response code from historical update %d", historical.first);
+      if(attempt == maxAttempts) {
+        return historical.first;
+      }
+      vTaskDelay(pdMS_TO_TICKS(5000));
+    }
+    attempt++;
+  } while(attempt < maxAttempts);
 
-  CoinGecko::SimplePrice currentData = CoinGecko().simplePrice(crypto->params.geckoName, fiat.geckoName, false, false, true);
-  if(currentData.status == 200) {
-    crypto->pricesDB.add(currentData.price);
-    crypto->delta24hDB.add(currentData.change24h);
-    crypto->latestUpdate = Crypto::SNTP()->unixTime();
-  }
-  else {
-    ESP_LOGE(LOG_TAG, "Response code %d", currentData.status);
-    return currentData.status;
-  }
+  attempt = 0;
+  do {
+    ESP_LOGI(LOG_TAG, "Initial quote and percent change request for %s, attempt %d", crypto->params.name, attempt);
+    CoinGecko::SimplePrice currentData = CoinGecko().simplePrice(crypto->params.geckoName, fiat.geckoName, false, false, true);
+    if(currentData.status == 200) {
+      crypto->pricesDB.add(currentData.price);
+      crypto->delta24hDB.add(currentData.change24h);
+      crypto->latestUpdate = Crypto::SNTP()->unixTime();
+      break;
+    }
+    else {
+      ESP_LOGE(LOG_TAG, "Response code %d", currentData.status);
+      if(attempt == maxAttempts) {
+        return currentData.status;
+      }
+    }
+    attempt++;
+  } while(attempt < maxAttempts);
   return 200;
 }
 
