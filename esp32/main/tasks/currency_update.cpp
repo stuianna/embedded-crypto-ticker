@@ -15,6 +15,7 @@ using namespace Crypto::DataSources;
 
 static void task_currencyUpdate(void* pvParameters) {
   (void)pvParameters;
+  const uint8_t maxAttempts = 3;
   while(1) {
     auto fiat = Crypto::getDefinition(Crypto::baseCurrency);
     for(auto i = 0; i < Crypto::currencyCount(); i++) {
@@ -26,15 +27,23 @@ static void task_currencyUpdate(void* pvParameters) {
       if(!crypto->enabled) {
         continue;
       }
-      CoinGecko::SimplePrice currentData = CoinGecko().simplePrice(crypto->params.geckoName, fiat.geckoName, false, false, true);
-      if(currentData.status == 200) {
-        crypto->pricesDB.add(currentData.price);
-        crypto->delta24hDB.add(currentData.change24h);
-        crypto->latestUpdate = startTime;
-      }
-      else {
-        ESP_LOGE(LOG_TAG, "Response code %d", currentData.status);
-      }
+      uint8_t attempt = 0;
+      do {
+        ESP_LOGI(LOG_TAG, "Update currency %s, attempt %d", crypto->params.name, attempt);
+        CoinGecko::SimplePrice currentData = CoinGecko().simplePrice(crypto->params.geckoName, fiat.geckoName, false, false, true);
+        if(currentData.status == 200) {
+          crypto->pricesDB.add(currentData.price);
+          crypto->delta24hDB.add(currentData.change24h);
+          crypto->latestUpdate = startTime;
+          break;
+        }
+        else {
+          ESP_LOGE(LOG_TAG, "Response code %d", currentData.status);
+          vTaskDelay(pdMS_TO_TICKS(5000));
+        }
+        attempt++;
+      } while(attempt < maxAttempts);
+
       size_t endTime = Crypto::SNTP()->unixTime();
       uint32_t secondsDelta = endTime - startTime;
       uint32_t secondsWait = (CurrencyUpdate()->updatePeriod() / Crypto::enabledCurrencyCount()) - secondsDelta;
