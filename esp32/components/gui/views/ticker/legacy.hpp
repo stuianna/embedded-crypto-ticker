@@ -25,6 +25,8 @@ namespace GUI {
       void clearCurrencySymbol() override;
       void setIcon(const lv_img_dsc_t* src) override;
       void clearIcon() override;
+      void setWarning(const lv_img_dsc_t* src) override;
+      void clearWarning() override;
       void plotValue(const float value) override;
       void clearPlot() override;
       void setPlotRange(const float min, const float max) override;

@@ -2,3 +2,5 @@ build*
 sdkconfig.old
 **/.vscode/*.log
 !.github/workflows/*
+docs/docs/*
+.vscode/settings.json

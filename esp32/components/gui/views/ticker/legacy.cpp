@@ -120,6 +120,15 @@ void Legacy::setIcon(const lv_img_dsc_t* src) {
 void Legacy::clearIcon() {
 }
 
+void Legacy::setWarning(const lv_img_dsc_t* src) {
+  LVGL()->aquireMutex(LVL_MUTEX_AQUISITION_MSEC);
+  _banner.setWarning(src);
+  LVGL()->releaseMutex();
+}
+
+void Legacy::clearWarning() {
+}
+
 void Legacy::plotValue(const float value) {
   LVGL()->aquireMutex(LVL_MUTEX_AQUISITION_MSEC);
   _chart.plot(value);

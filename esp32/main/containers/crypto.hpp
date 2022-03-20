@@ -9,6 +9,8 @@ LV_IMG_DECLARE(btc_icon_60);
 LV_IMG_DECLARE(eth_icon_60);
 LV_IMG_DECLARE(ltc_icon_60);
 LV_IMG_DECLARE(dge_icon_60);
+LV_IMG_DECLARE(black_60);
+LV_IMG_DECLARE(warning_30);
 
 /**
  * @brief Namespace for Cryptocurrency related attributes and structures.

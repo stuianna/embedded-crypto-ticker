@@ -48,9 +48,9 @@ docs:
 	# Otherwise default to brave.
 	if [ -z "$$BROWSER" ]; \
 	then \
-		brave docs/html/index.html; \
+		brave $(PWD)/docs/docs/index.html; \
 	else \
-		echo "Yes"; \
+		$$BROWSER $(pwd)/docs/docs/index.html; \
 	fi;
 
 simulate_legacy_screen: build-x86_64

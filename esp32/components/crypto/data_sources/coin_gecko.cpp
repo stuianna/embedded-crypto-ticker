@@ -13,6 +13,7 @@ using namespace Crypto::DataSources;
 using namespace Crypto::HAL;
 using namespace Crypto::Tools;
 
+static const char* TAG = "Coin Gecko";
 
 CoinGecko::CoinGecko() {
   Request()->init();
@@ -131,24 +132,28 @@ std::pair<size_t, std::array<float, 288>> CoinGecko::marketChartRange24h(const c
   size_t priceStart = find_key_value(request.data, "prices");
   if(!priceStart) {
     Request()->cleanup(request);
+    ESP_LOGE(TAG, "Failed finding JSON key \"prices\"");
     return std::make_pair(JSON_PARSING_FAILED, results);
   }
   size_t priceEnd = find_nested_array_end(&request.data[priceStart]);
   if(!priceEnd) {
     Request()->cleanup(request);
+    ESP_LOGE(TAG, "Failed finding end of JSON price array.");
     return std::make_pair(JSON_PARSING_FAILED, results);
   }
   request.data[priceStart + priceEnd] = 0;
+  ESP_LOGI(TAG, "Using price array %s", &request.data[priceStart]);
 
   DynamicJsonDocument doc(26384);
   DeserializationError error = deserializeJson(doc, &request.data[priceStart]);
   if(error) {
     Request()->cleanup(request);
+    ESP_LOGE(TAG, "Failed JSON decoding. Error %s", error.c_str());
     return std::make_pair(JSON_PARSING_FAILED, results);
   }
 
   pos = 0;
-  for(JsonVariant value: doc.as<JsonArray>()) {
+  for(const JsonVariant& value: doc.as<JsonArray>()) {
     results[pos++] = value.as<JsonArray>()[1];
   }
   Request()->cleanup(request);

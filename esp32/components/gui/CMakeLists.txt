@@ -6,6 +6,8 @@ SET(ASSETS
     ${CMAKE_CURRENT_SOURCE_DIR}/assets/eth_icon_60.c
     ${CMAKE_CURRENT_SOURCE_DIR}/assets/ltc_icon_60.c
     ${CMAKE_CURRENT_SOURCE_DIR}/assets/dge_icon_60.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/assets/warning_30.c
+    ${CMAKE_CURRENT_SOURCE_DIR}/assets/black_60.c
 )
 
 set(GUI_SOURCES
