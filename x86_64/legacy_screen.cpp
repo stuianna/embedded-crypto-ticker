@@ -30,10 +30,14 @@ int main(int, char**) {
 
       LegacyScreen()->setName(coin->params.name);
       LegacyScreen()->setIcon(&coin->icon);
+      LegacyScreen()->setWarning(&black_60);
       LegacyScreen()->setCurrencySymbol(fiat.symbol);
-
       LegacyScreen()->show();
-      usleep(3 * 1000 * 1000);
+
+      usleep(1.5 * 1000 * 1000);
+      LegacyScreen()->setWarning(&warning_30);
+
+      usleep(1.5 * 1000 * 1000);
       LegacyScreen()->hide();
       LegacyScreen()->clearPlot();
       LegacyScreen()->clearIcon();

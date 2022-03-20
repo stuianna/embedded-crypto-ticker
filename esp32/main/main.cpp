@@ -144,6 +144,14 @@ void waitForNextUpdate() {
   }
 }
 
+bool currencyOutOfDate(const Crypto::Entry* crypto) {
+  size_t lastUpdate = Crypto::SNTP()->unixTime() - crypto->latestUpdate;
+  if(lastUpdate > currencyUpdatePeriodSeconds * 1.5) {
+    return true;
+  }
+  return false;
+}
+
 extern "C" void app_main() {
   initialise();
   GUI::LegacyScreen()->setPlotPointCount(Crypto::Table[0].pricesDB.length());
@@ -168,6 +176,12 @@ extern "C" void app_main() {
       GUI::LegacyScreen()->setDailyDelta(crypto->delta24hDB.latest());
       for(int j = crypto->pricesDB.length() - 1; j >= 0; j--) {
         GUI::LegacyScreen()->plotValue(crypto->pricesDB.at(j));
+      }
+      if(currencyOutOfDate(crypto)) {
+        GUI::LegacyScreen()->setWarning(&warning_30);
+      }
+      else {
+        GUI::LegacyScreen()->setWarning(&black_60);
       }
       GUI::LegacyScreen()->show();
       waitForNextUpdate();
