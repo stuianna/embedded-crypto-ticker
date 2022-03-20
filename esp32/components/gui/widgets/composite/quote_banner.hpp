@@ -18,7 +18,9 @@ namespace GUI {
         _columnContainer(lv_cont_create(_rootObject, NULL)),
         _icon(_columnContainer),
         _rowContainer(lv_cont_create(_columnContainer, NULL)),
-        _label(_rowContainer),
+        _topRowContainer(lv_cont_create(_rowContainer, NULL)),
+        _label(_topRowContainer),
+        _warning(_topRowContainer),
         _textContainer(lv_cont_create(_rowContainer, NULL)),
         _price(_textContainer),
         _priceDelta(_textContainer) {
@@ -27,6 +29,7 @@ namespace GUI {
 
       void update() override { _draw(); }
       void setIcon(const lv_img_dsc_t* src) { _icon.setSource(src); }
+      void setWarning(const lv_img_dsc_t* src) { _warning.setSource(src); }
       void setQuote(float currentPrice) { _price.setValue(currentPrice); }
       void clearQuote() { _price.setText(""); }
       void setPercentChange(float percent) { _priceDelta.setValue(percent); }
@@ -42,6 +45,9 @@ namespace GUI {
         size_t infoWidth = getWidth() - iconWidth;
         size_t iconHeight = getHeight();
         size_t labelHeight = iconHeight * 0.45;
+        size_t labelWidth = getWidth() * 0.68;
+        size_t warningHeight = labelHeight;
+        size_t warningWidth = getWidth() * 0.1;
         size_t quoteHeight = getHeight() - labelHeight;
         size_t priceWidth = infoWidth * 0.7;
         size_t deltaWidth = infoWidth * 0.25;
@@ -56,7 +62,7 @@ namespace GUI {
         lv_obj_set_width(_rowContainer, infoWidth);
         lv_obj_set_height(_rowContainer, iconHeight);
 
-        _label.setWidth(infoWidth);
+        _label.setWidth(labelWidth);
         _label.setHeight(labelHeight);
         _label.setColor(currentTheme()->colorTextShowcase());
         _label.setAlignment(LV_ALIGN_IN_BOTTOM_LEFT);
@@ -64,6 +70,13 @@ namespace GUI {
         lv_cont_set_layout(_textContainer, LV_LAYOUT_ROW_BOTTOM);
         lv_obj_set_width(_textContainer, infoWidth);
         lv_obj_set_height(_textContainer, quoteHeight);
+
+        lv_cont_set_layout(_topRowContainer, LV_LAYOUT_ROW_BOTTOM);
+        lv_obj_set_width(_topRowContainer, infoWidth);
+        lv_obj_set_height(_topRowContainer, labelHeight);
+
+        _warning.setWidth(warningWidth);
+        _warning.setHeight(warningHeight);
 
         _price.setHeight(quoteHeight);
         _price.setWidth(priceWidth);
@@ -87,6 +100,7 @@ namespace GUI {
         lv_obj_add_style(_columnContainer, LV_CONT_PART_MAIN, &_innerContainerStyle);
         lv_obj_add_style(_rowContainer, LV_CONT_PART_MAIN, &_innerContainerStyle);
         lv_obj_add_style(_textContainer, LV_CONT_PART_MAIN, &_innerContainerStyle);
+        lv_obj_add_style(_topRowContainer, LV_CONT_PART_MAIN, &_innerContainerStyle);
 
         lv_obj_set_style_local_pad_inner(_columnContainer, LV_CHART_PART_BG, LV_STATE_DEFAULT, 4);
       };
@@ -94,7 +108,9 @@ namespace GUI {
       lv_obj_t* _columnContainer;
       Image _icon;
       lv_obj_t* _rowContainer;
+      lv_obj_t* _topRowContainer;
       Label<10> _label;
+      Image _warning;
       lv_obj_t* _textContainer;
       Price _price;
       Percentage _priceDelta;

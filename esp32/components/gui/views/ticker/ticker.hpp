@@ -34,6 +34,8 @@ namespace GUI {
       virtual void clearCurrencySymbol() = 0;
       virtual void setIcon(const lv_img_dsc_t* src) = 0;
       virtual void clearIcon() = 0;
+      virtual void setWarning(const lv_img_dsc_t* src) = 0;
+      virtual void clearWarning() = 0;
       virtual void plotValue(const float value) = 0;
       virtual void clearPlot() = 0;
       virtual void setPlotRange(const float min, const float max) = 0;
