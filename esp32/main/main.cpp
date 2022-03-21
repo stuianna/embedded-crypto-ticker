@@ -30,15 +30,19 @@ QueueHandle_t button_events = NULL;
 
 
 void fetchHistoricalData() {
-  GUI::LoadingScreen()->status("Fetching historical prices");
+  GUI::LoadingScreen()->status("Fetching historical prices...");
   for(auto& entry: Crypto::Table) {
+    GUI::LoadingScreen()->details(entry.params.name);
     ESP_LOGI(LOG_TAG, "Request historical update of %s", entry.params.name);
     size_t rc = Tasks::CurrencyUpdate()->updateHistorical(entry.currency);
     if(!rc) {
       continue;
     }
     if(rc != 200) {
+      char errorLine[24] = {0};
+      snprintf(errorLine, sizeof(errorLine), "Error code: %zu", rc);
       GUI::LoadingScreen()->status("Failed fetching historical data", GUI::Widgets::Severity::BAD);
+      GUI::LoadingScreen()->details(errorLine);
       while(1) {
         vTaskDelay(pdMS_TO_TICKS(1000));
       }
@@ -118,10 +122,9 @@ void initialise() {
   GUI::LoadingScreen()->status("Synchronising time with SNTP");
   bool gotNetworkTime = Crypto::SNTP()->syncronise();
   if(!gotNetworkTime) {
+    GUI::LoadingScreen()->status("Failed SNTP synchronisation", GUI::Widgets::Severity::BAD);
+    GUI::LoadingScreen()->details("Check network credentials", GUI::Widgets::Severity::BAD);
     while(1) {
-      GUI::LoadingScreen()->status("Failed SNTP synchronisation", GUI::Widgets::Severity::BAD);
-      vTaskDelay(pdMS_TO_TICKS(2000));
-      GUI::LoadingScreen()->status("Check network credentials", GUI::Widgets::Severity::BAD);
       vTaskDelay(pdMS_TO_TICKS(2000));
     }
   }

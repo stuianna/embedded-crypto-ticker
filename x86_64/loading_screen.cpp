@@ -11,6 +11,12 @@ const char* status_lines[] = {
   "Fetching",
   "Loading current data"
   };
+
+const char* detail_lines[] = {
+  "HTTP code 404", 
+  "Bitcoin",
+  "Feeding goats"
+  };
 // clang-format on
 
 int main(int, char**) {
@@ -18,9 +24,12 @@ int main(int, char**) {
   GUI::LoadingScreen()->show();
 
   while(1) {
-    for(auto line: status_lines) {
+    for(auto& line: status_lines) {
       GUI::LoadingScreen()->status(line);
-      usleep(1000 * 1000 * 2);
+      for(auto& details: detail_lines) {
+        GUI::LoadingScreen()->details(details);
+        usleep(1000 * 1000 * 1);
+      }
     }
   }
 }
