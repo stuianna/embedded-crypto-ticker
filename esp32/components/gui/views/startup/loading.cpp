@@ -23,7 +23,8 @@ Loading::Loading() :
   _empty(lv_obj_create(NULL, NULL)),
   _container(lv_cont_create(_screen, NULL)),
   _spinner(_container),
-  _status(_container) {
+  _status(_container),
+  _details(_container) {
   auto width = lv_obj_get_width(lv_scr_act());
   auto height = lv_obj_get_height(lv_scr_act());
 
@@ -38,7 +39,7 @@ Loading::Loading() :
   lv_cont_set_layout(_container, LV_LAYOUT_COLUMN_MID);
 
   lv_style_init(&_innerContainerStyle);
-  lv_style_set_pad_inner(&_innerContainerStyle, LV_STATE_DEFAULT, height / 10);
+  lv_style_set_pad_inner(&_innerContainerStyle, LV_STATE_DEFAULT, 5);
   lv_style_set_margin_all(&_innerContainerStyle, LV_STATE_DEFAULT, 0);
   lv_style_set_border_side(&_innerContainerStyle, LV_STATE_DEFAULT, LV_BORDER_SIDE_NONE);
   lv_style_set_bg_color(&_innerContainerStyle, LV_STATE_DEFAULT, currentTheme()->colorBackground());
@@ -46,11 +47,13 @@ Loading::Loading() :
   lv_obj_add_style(_container, LV_CONT_PART_MAIN, &_innerContainerStyle);
   lv_obj_add_style(_empty, LV_CONT_PART_MAIN, &_innerContainerStyle);
   lv_obj_add_style(_screen, LV_CONT_PART_MAIN, &_innerContainerStyle);
-  _spinner.setHeight(height / 2);
-  _spinner.setWidth(width / 2);
+  _spinner.setHeight(height / 2.0);
+  _spinner.setWidth(width / 2.0);
   _spinner.colour(currentTheme()->colorTextNormal());
   _status.setWidth(width);
   _status.setHeight(16);
+  _details.setWidth(width);
+  _details.setHeight(16);
 }
 
 void Loading::show() {
@@ -69,5 +72,12 @@ void Loading::status(const char* text, Widgets::Severity level) {
   LVGL()->aquireMutex(LVL_MUTEX_AQUISITION_MSEC);
   _status.setText(text);
   _status.setColor(level);
+  LVGL()->releaseMutex();
+}
+
+void Loading::details(const char* text, Widgets::Severity level) {
+  LVGL()->aquireMutex(LVL_MUTEX_AQUISITION_MSEC);
+  _details.setText(text);
+  _details.setColor(level);
   LVGL()->releaseMutex();
 }
