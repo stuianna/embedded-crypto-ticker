@@ -18,6 +18,7 @@ namespace GUI {
       void show() override;
       void hide() override;
       void status(const char* text, Widgets::Severity level = Widgets::Severity::NORMAL);
+      void details(const char* text, Widgets::Severity level = Widgets::Severity::NORMAL);
       static Loading* instance();
 
      private:
@@ -27,6 +28,7 @@ namespace GUI {
       lv_obj_t* _container;
       Widgets::Spinner _spinner;
       Widgets::Label<24> _status;
+      Widgets::Label<24> _details;
       lv_style_t _innerContainerStyle;
     };
 
