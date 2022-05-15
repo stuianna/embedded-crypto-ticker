@@ -3,7 +3,7 @@
 
 #include <lvgl.h>
 
-#include <database.hpp>
+#include <lib/tools/volatile_database.hpp>
 
 LV_IMG_DECLARE(btc_icon_60);
 LV_IMG_DECLARE(eth_icon_60);
@@ -109,13 +109,13 @@ namespace Crypto {
    * @brief Lookup table correlating each Currency's definition, databases, configuration and assets.
    */
   struct Entry {
-    Currency currency;                        ///< The currency represented by the table's entry.
-    Definition params;                        ///< Definition describing the currency's parameters.
-    const lv_img_dsc_t icon;                  ///< The icon (image) used by the currency.
-    Database::Database<float, 288> pricesDB;  // The database used to store historical and current prices (quotes).
-    Database::Database<float, 1> delta24hDB;  // The database used to store the change in 24 hour price.
-    size_t latestUpdate;                      // Unix time stamp for the latest time the currency was updated.
-    bool enabled;                             // Set to true if the currency is enabled.
+    Currency currency;                      ///< The currency represented by the table's entry.
+    Definition params;                      ///< Definition describing the currency's parameters.
+    const lv_img_dsc_t icon;                ///< The icon (image) used by the currency.
+    VolatileDatabase<float, 288> pricesDB;  // The database used to store historical and current prices (quotes).
+    VolatileDatabase<float, 1> delta24hDB;  // The database used to store the change in 24 hour price.
+    size_t latestUpdate;                    // Unix time stamp for the latest time the currency was updated.
+    bool enabled;                           // Set to true if the currency is enabled.
   };
 
   /**
