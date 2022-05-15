@@ -12,8 +12,8 @@
 // clang-format on
 #include <algorithm>
 #include <data_sources/coin_gecko.hpp>
-#include <data_sources/sntp.hpp>
 #include <hal/driver.hpp>
+#include <lib/sntp.hpp>
 #include <tasks/currency_update.hpp>
 #include <views/startup/loading.hpp>
 #include <views/startup/provisioning.hpp>
@@ -120,7 +120,7 @@ void initialise() {
   GUI::LoadingScreen()->status("WiFi connected");
   vTaskDelay(pdMS_TO_TICKS(500));
   GUI::LoadingScreen()->status("Synchronising time with SNTP");
-  bool gotNetworkTime = Crypto::SNTP()->syncronise();
+  bool gotNetworkTime = HAL::SNTP()->syncronise();
   if(!gotNetworkTime) {
     GUI::LoadingScreen()->status("Failed SNTP synchronisation", GUI::Widgets::Severity::BAD);
     GUI::LoadingScreen()->details("Check network credentials", GUI::Widgets::Severity::BAD);
@@ -148,7 +148,7 @@ void waitForNextUpdate() {
 }
 
 bool currencyOutOfDate(const Crypto::Entry* crypto) {
-  size_t lastUpdate = Crypto::SNTP()->unixTime() - crypto->latestUpdate;
+  size_t lastUpdate = HAL::SNTP()->unixTime() - crypto->latestUpdate;
   if(lastUpdate > currencyUpdatePeriodSeconds * 1.5) {
     return true;
   }
@@ -168,7 +168,7 @@ extern "C" void app_main() {
       }
 
       ESP_LOGI(LOG_TAG, "Switch legacy GUI to currency: %s", crypto->params.name);
-      ESP_LOGI(LOG_TAG, "Lastest currency update %d seconds ago", Crypto::SNTP()->unixTime() - crypto->latestUpdate);
+      ESP_LOGI(LOG_TAG, "Lastest currency update %d seconds ago", HAL::SNTP()->unixTime() - crypto->latestUpdate);
       GUI::LegacyScreen()->hide();
       GUI::LegacyScreen()->clearPlot();
       GUI::LegacyScreen()->setCurrencySymbol(fiat.symbol);

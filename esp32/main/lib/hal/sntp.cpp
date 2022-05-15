@@ -1,25 +1,26 @@
+#include "sntp.hpp"
+
 #include <esp_log.h>
 #include <esp_sntp.h>
 #include <sys/time.h>
 #include <time.h>
 
-#include "sntp.hpp"
 static const char* TAG = "sntp";
-using namespace Crypto::DataSources;
+using namespace HAL;
 
 static void time_sync_notification_cb(struct timeval* tv) {
   ESP_LOGI(TAG, "Received time synchronization event");
 }
 
-SNTP::SNTP() {
+_SNTP::_SNTP() {
 }
 
-SNTP* SNTP::instance() {
-  static SNTP _instance;
+_SNTP* _SNTP::instance() {
+  static _SNTP _instance;
   return &_instance;
 }
 
-bool SNTP::syncronise() {
+bool _SNTP::syncronise() {
   _initialise_sntp();
   time_t now = 0;
   struct tm timeinfo = {0};
@@ -40,13 +41,13 @@ bool SNTP::syncronise() {
   return true;
 }
 
-uint32_t SNTP::unixTime() {
+uint32_t _SNTP::unixTime() {
   struct timeval tv;
   gettimeofday(&tv, NULL);
   return tv.tv_sec;
 }
 
-void SNTP::_initialise_sntp() {
+void _SNTP::_initialise_sntp() {
   ESP_LOGI(TAG, "Initializing SNTP");
   sntp_setoperatingmode(SNTP_OPMODE_POLL);
 
