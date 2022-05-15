@@ -2,16 +2,15 @@
 
 #include <esp_log.h>
 #include <freertos/FreeRTOS.h>
+#include <third_party/ArduinoJson-v6.17.3.h>
 
+#include <lib/hal/requests.hpp>
+#include <lib/tools/json_parsing.hpp>
 #include <utility>
 
-#include "../ArduinoJson-v6.17.3.h"
-#include "../hal/requests.hpp"
-#include "../tools//json_parsing.hpp"
-
-using namespace Crypto::DataSources;
-using namespace Crypto::HAL;
-using namespace Crypto::Tools;
+using namespace Crypto;
+using namespace HAL;
+using namespace Tools;
 
 static const char* TAG = "Coin Gecko";
 

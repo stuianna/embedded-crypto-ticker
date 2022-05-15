@@ -10,7 +10,7 @@ static void https_task(void* pvParameters);
 static QueueHandle_t getQueue;
 static QueueHandle_t responseQueue;
 
-using namespace Crypto::HAL;
+using namespace HAL;
 
 Requests Requests::_instance;
 

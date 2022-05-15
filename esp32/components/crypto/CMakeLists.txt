@@ -1,7 +1,4 @@
 set(SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/data_sources/coin_gecko.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/data_sources/sntp.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/hal/requests.cpp
 )
 
 if(ESP_PLATFORM)

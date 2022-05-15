@@ -11,9 +11,9 @@
 #include <button.h>
 // clang-format on
 #include <algorithm>
-#include <data_sources/coin_gecko.hpp>
 #include <hal/driver.hpp>
-#include <lib/sntp.hpp>
+#include <lib/crypto/coin_gecko.hpp>
+#include <lib/hal/sntp.hpp>
 #include <tasks/currency_update.hpp>
 #include <views/startup/loading.hpp>
 #include <views/startup/provisioning.hpp>
@@ -24,7 +24,7 @@
 #include "wifi/manager.hpp"
 #define LOG_TAG "main"
 
-using namespace Crypto::DataSources;
+using namespace Crypto;
 
 QueueHandle_t button_events = NULL;
 

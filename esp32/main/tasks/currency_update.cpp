@@ -4,13 +4,13 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 
+#include <lib/crypto/coin_gecko.hpp>
 #include <lib/hal/sntp.hpp>
 
 #define LOG_TAG "currency_update"
 
 using namespace Tasks;
 using namespace Crypto;
-using namespace Crypto::DataSources;
 
 static void delaySeconds(size_t seconds) {
   for(int i = 0; i < seconds; i++) {
