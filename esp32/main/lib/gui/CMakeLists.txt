@@ -19,19 +19,20 @@ set(GUI_SOURCES
     ${ASSETS}
 )
 
-set(ESP32_SOURCES
-    ${CMAKE_CURRENT_SOURCE_DIR}/hal/driver.cpp
-)
+# set(ESP32_SOURCES
+#     ${CMAKE_CURRENT_SOURCE_DIR}/hal/driver.cpp
+# )
 
 if(ESP_PLATFORM)
-    set(SOURCES
-        ${ASSETS}
-        ${GUI_SOURCES}
-        ${ESP32_SOURCES}
-    )
-    idf_component_register(SRCS ${SOURCES}
-                        INCLUDE_DIRS .
-                        REQUIRES main)
+    set(GUI_SOURCES ${GUI_SOURCES} PARENT_SCOPE)
+    # set(SOURCES
+    #     ${ASSETS}
+    #     ${GUI_SOURCES}
+    #     # ${ESP32_SOURCES}
+    # )
+    # idf_component_register(SRCS ${SOURCES}
+    #                     INCLUDE_DIRS .
+    #                     REQUIRES main)
 else()
     project(GUI DESCRIPTION "GUI components for embedded-crypto-ticker")
 

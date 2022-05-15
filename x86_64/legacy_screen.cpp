@@ -5,11 +5,11 @@
 #include <containers/crypto.hpp>
 #include <cstdio>
 #include <cstdlib>
-#include <gui/hal/driver.hpp>
+#include <hal/lvgl_driver.hpp>
 #include <gui/views/ticker/legacy.hpp>
 
 using namespace GUI;
-using namespace GUI::HAL;
+using namespace HAL;
 
 int main(int, char**) {
   LVGL()->init();

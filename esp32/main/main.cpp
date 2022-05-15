@@ -11,13 +11,13 @@
 #include <button.h>
 // clang-format on
 #include <algorithm>
-#include <hal/driver.hpp>
+#include <hal/lvgl_driver.hpp>
 #include <lib/crypto/coin_gecko.hpp>
+#include <lib/gui/views/startup/loading.hpp>
+#include <lib/gui/views/startup/provisioning.hpp>
+#include <lib/gui/views/ticker/legacy.hpp>
 #include <lib/hal/sntp.hpp>
 #include <tasks/currency_update.hpp>
-#include <views/startup/loading.hpp>
-#include <views/startup/provisioning.hpp>
-#include <views/ticker/legacy.hpp>
 
 #include "configuration.hpp"
 #include "containers/crypto.hpp"
@@ -51,7 +51,7 @@ void fetchHistoricalData() {
 }
 
 void initialise() {
-  GUI::HAL::LVGL()->init();
+  HAL::LVGL()->init();
   GUI::LoadingScreen()->status("Connecting to WIFI..");
   GUI::LoadingScreen()->show();
 

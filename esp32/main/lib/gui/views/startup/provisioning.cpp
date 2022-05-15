@@ -1,10 +1,11 @@
 #include "provisioning.hpp"
 
-#include "../../hal/driver.hpp"
+#include <hal/lvgl_driver.hpp>
+
 #include "../../lv_lib_qrcode/lv_qrcode.h"
 
 using namespace GUI::Views;
-using namespace GUI::HAL;
+using namespace HAL;
 
 Provisioning* Provisioning::instance() {
   LVGL()->aquireMutex(LVL_MUTEX_AQUISITION_MSEC);

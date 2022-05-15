@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include <gui/hal/driver.hpp>
+#include <hal/lvgl_driver.hpp>
 #define SDL_MAIN_HANDLED    /*To fix SDL's "undefined reference to WinMain" \
                                issue*/
 #include <SDL2/SDL.h>
@@ -16,7 +16,7 @@
 #include "lv_drivers/indev/mousewheel.h"
 #include "lvgl/lvgl.h"
 
-using namespace GUI::HAL;
+using namespace HAL;
 
 #include <condition_variable>
 #include <mutex>

@@ -1,9 +1,9 @@
 #include "legacy.hpp"
 
-#include "../../hal/driver.hpp"
+#include <hal/lvgl_driver.hpp>
 
 using namespace GUI::Views;
-using namespace GUI::HAL;
+using namespace HAL;
 
 Legacy* Legacy::instance() {
   LVGL()->aquireMutex(LVL_MUTEX_AQUISITION_MSEC);

@@ -4,9 +4,9 @@
 #include <lvgl.h>
 #include <lvgl_helpers.h>
 
-#include "driver.hpp"
+#include "lvgl_driver.hpp"
 
-using namespace GUI::HAL;
+using namespace HAL;
 
 #ifndef LV_TICK_PERIOD_MS
   #define LV_TICK_PERIOD_MS 1

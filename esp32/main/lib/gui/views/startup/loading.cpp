@@ -1,9 +1,9 @@
 #include "loading.hpp"
 
-#include "../../hal/driver.hpp"
+#include <hal/lvgl_driver.hpp>
 
 using namespace GUI::Views;
-using namespace GUI::HAL;
+using namespace HAL;
 
 Loading* Loading::instance() {
   LVGL()->aquireMutex(LVL_MUTEX_AQUISITION_MSEC);

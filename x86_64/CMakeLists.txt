@@ -8,17 +8,19 @@ file(GLOB_RECURSE LVGL_SOURCES ${PROJECT_ROOT}/esp32/components/lvgl/*.c)
 
 set(COMMON_SOURCES
     ${PROJECT_ROOT}/esp32/main/containers/crypto.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/gui/hal/driver.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/hal/lvgl_driver.cpp
     ${LVGL_DRIVERS}
 )
 
 set(COMMON_INCLUDES
     ${PROJECT_ROOT}/esp32/components/database
     ${PROJECT_ROOT}/esp32/main
+    ${PROJECT_ROOT}/esp32/main/lib
     ${PROJECT_ROOT}/esp32/components/lvgl
-    ${PROJECT_ROOT}/esp32/components/gui/
+    ${PROJECT_ROOT}/esp32/main/lib//gui/
     ${PROJECT_ROOT}/esp32/components
     ${CMAKE_CURRENT_SOURCE_DIR}/
+    "."
 )
 
 set(COMMON_LINK_LIBS
@@ -41,4 +43,4 @@ add_executable(simulate_main ${COMMON_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/main.
 include_directories(simulate_main PUBLIC ${COMMON_INCLUDES})
 target_link_libraries(simulate_main PUBLIC ${COMMON_LINK_LIBS})
 
-add_subdirectory(${PROJECT_ROOT}/esp32/components/gui ${CMAKE_CURRENT_BINARY_DIR}/gui)
+add_subdirectory(${PROJECT_ROOT}/esp32/main/lib/gui ${CMAKE_CURRENT_BINARY_DIR}/gui)
