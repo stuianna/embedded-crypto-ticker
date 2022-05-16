@@ -25,6 +25,7 @@ idf_component_register(
         "tasks/currency_update.cpp"
         "containers/crypto.cpp"
         "lib/crypto/coin_gecko.cpp"
+        "lib/hal/button.cpp"
         "lib/hal/lvgl_driver.cpp"
         "lib/hal/requests.cpp"
         "lib/hal/sntp.cpp"

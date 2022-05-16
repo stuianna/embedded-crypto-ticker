@@ -7,15 +7,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-// clang-format off
-#include <button.h>
-// clang-format on
 #include <algorithm>
 #include <hal/lvgl_driver.hpp>
 #include <lib/crypto/coin_gecko.hpp>
 #include <lib/gui/views/startup/loading.hpp>
 #include <lib/gui/views/startup/provisioning.hpp>
 #include <lib/gui/views/ticker/legacy.hpp>
+#include <lib/hal/button.hpp>
 #include <lib/hal/sntp.hpp>
 #include <lib/hal/wifi.hpp>
 #include <tasks/currency_update.hpp>
@@ -25,9 +23,6 @@
 #define LOG_TAG "main"
 
 using namespace Crypto;
-
-QueueHandle_t button_events = NULL;
-
 
 void fetchHistoricalData() {
   GUI::LoadingScreen()->status("Fetching historical prices...");
@@ -131,17 +126,14 @@ void initialise() {
   fetchHistoricalData();
   GUI::LoadingScreen()->status("Starting currency update task.");
   Tasks::CurrencyUpdate()->start();
-  button_events = button_init(PIN_BIT(35) | PIN_BIT(0));
   GUI::LoadingScreen()->hide();
 }
 
 void waitForNextUpdate() {
-  button_event_t ev;
   for(size_t j = 0; j < (60 * 5); j++) {
-    if(xQueueReceive(button_events, &ev, 10)) {
-      if((ev.pin == 35) && (ev.event == BUTTON_UP)) {
-        return;
-      }
+    auto event = HAL::Button()->getEvent(10);
+    if((event.pin == BUTTON_A) && (event.type == HAL::Button()->EventType::UP)) {
+      return;
     }
     vTaskDelay(pdMS_TO_TICKS(200));
   }
