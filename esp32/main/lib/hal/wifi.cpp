@@ -1,4 +1,4 @@
-#include "manager.hpp"
+#include "wifi.hpp"
 
 #include <esp_event.h>
 #include <esp_log.h>
@@ -8,20 +8,20 @@
 #include <wifi_provisioning/manager.h>
 #include <wifi_provisioning/scheme_softap.h>
 
-#define TAG                   "WIFI_MANAGER"
+#define TAG                   "WIFI"
 #define PROV_QR_VERSION       "v1"
 #define PROV_TRANSPORT_SOFTAP "softap"
 
-using namespace WIFI;
+using namespace HAL;
 
-static ConnectionState _state;
+static WiFiConnectionState _state;
 
 static void event_handler(void* arg, esp_event_base_t event_base, int32_t event_id, void* event_data) {
   if(event_base == WIFI_PROV_EVENT) {
     switch(event_id) {
       case WIFI_PROV_START:
         ESP_LOGI(TAG, "WIFI provisioning started");
-        _state = ConnectionState::PROVISIONING_STARTED;
+        _state = WiFiConnectionState::PROVISIONING_STARTED;
         break;
       case WIFI_PROV_CRED_RECV: {
         wifi_sta_config_t* wifi_sta_cfg = (wifi_sta_config_t*)event_data;
@@ -29,7 +29,7 @@ static void event_handler(void* arg, esp_event_base_t event_base, int32_t event_
                  "Received Wi-Fi credentials"
                  "\n\tSSID     : %s\n\tPassword : %s",
                  (const char*)wifi_sta_cfg->ssid, (const char*)wifi_sta_cfg->password);
-        _state = ConnectionState::PROVISIONING_RECEVIED_CREDENTIALS;
+        _state = WiFiConnectionState::PROVISIONING_RECEVIED_CREDENTIALS;
         break;
       }
       case WIFI_PROV_CRED_FAIL: {
@@ -39,14 +39,14 @@ static void event_handler(void* arg, esp_event_base_t event_base, int32_t event_
                  "\n\tPlease reset to factory and retry provisioning",
                  (*reason == WIFI_PROV_STA_AUTH_ERROR) ? "Wi-Fi station authentication failed" : "Wi-Fi access-point not found");
         _state =
-        *reason == WIFI_PROV_STA_AUTH_ERROR ? ConnectionState::PROVISIONING_BAD_CREDENTIALS : ConnectionState::PROVISIONING_AP_LOST;
+        *reason == WIFI_PROV_STA_AUTH_ERROR ? WiFiConnectionState::PROVISIONING_BAD_CREDENTIALS : WiFiConnectionState::PROVISIONING_AP_LOST;
         break;
       }
       case WIFI_PROV_CRED_SUCCESS:
         ESP_LOGI(TAG, "Provisioning successful");
-        _state = ConnectionState::PROVISIONING_SUCCESS;
+        _state = WiFiConnectionState::PROVISIONING_SUCCESS;
         break;
-      case WIFI_PROV_END: _state = ConnectionState::PROVISIONING_COMPLETE; break;
+      case WIFI_PROV_END: _state = WiFiConnectionState::PROVISIONING_COMPLETE; break;
       default: break;
     }
   }
@@ -57,20 +57,20 @@ static void event_handler(void* arg, esp_event_base_t event_base, int32_t event_
     ip_event_got_ip_t* event = (ip_event_got_ip_t*)event_data;
     ESP_LOGI(TAG, "Connected with IP Address:" IPSTR, IP2STR(&event->ip_info.ip));
     /* Signal main application to continue execution */
-    _state = ConnectionState::CONNECTED;
+    _state = WiFiConnectionState::CONNECTED;
   }
   else if(event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {
     ESP_LOGI(TAG, "Disconnected. Connecting to the AP again...");
-    _state = ConnectionState::LOST_CONNECTION;
+    _state = WiFiConnectionState::LOST_CONNECTION;
     esp_wifi_connect();
   }
 }
 
-Manager::Manager() {
+Wifi::Wifi() {
   _init();
 }
 
-void Manager::_init() {
+void Wifi::_init() {
   esp_err_t ret = nvs_flash_init();
 
   if(ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
@@ -104,42 +104,42 @@ void Manager::_init() {
   bool provisioned = false;
 
   ESP_ERROR_CHECK(wifi_prov_mgr_is_provisioned(&provisioned));
-  _state = provisioned ? ConnectionState::PROVISIONED : ConnectionState::NOT_PROVISIONED;
+  _state = provisioned ? WiFiConnectionState::PROVISIONED : WiFiConnectionState::NOT_PROVISIONED;
 }
 
-void Manager::startProvisioning(const char* ssid, const char* password, const char* pop_code) {
+void Wifi::startProvisioning(const char* ssid, const char* password, const char* pop_code) {
   ESP_LOGI(TAG, "Starting provisioning");
   wifi_prov_security_t security = WIFI_PROV_SECURITY_1;
 
   ESP_ERROR_CHECK(wifi_prov_mgr_start_provisioning(security, pop_code, ssid, password));
 }
 
-void Manager::stopProvisioning() {
+void Wifi::stopProvisioning() {
   wifi_prov_mgr_deinit();
 }
 
-void Manager::resetProvisioningCredentials() {
+void Wifi::resetProvisioningCredentials() {
   wifi_prov_mgr_reset_sm_state_on_failure();
 }
 
-void Manager::getQRCodeData(char* buffer, size_t maxLength, const char* ssid, const char* popCode) {
+void Wifi::getQRCodeData(char* buffer, size_t maxLength, const char* ssid, const char* popCode) {
   snprintf(buffer, maxLength,
            "{\"ver\":\"%s\",\"name\":\"%s\""
            ",\"pop\":\"%s\",\"transport\":\"%s\"}",
            PROV_QR_VERSION, ssid, popCode, PROV_TRANSPORT_SOFTAP);
 }
 
-ConnectionState Manager::status() {
+WiFiConnectionState Wifi::status() {
   return _state;
 }
 
-void Manager::connect() {
+void Wifi::connect() {
   stopProvisioning();
   ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
   ESP_ERROR_CHECK(esp_wifi_start());
-  _state = ConnectionState::CONNECTING;
+  _state = WiFiConnectionState::CONNECTING;
 }
 
-void Manager::disconnect() {
+void Wifi::disconnect() {
   esp_wifi_disconnect();
 }

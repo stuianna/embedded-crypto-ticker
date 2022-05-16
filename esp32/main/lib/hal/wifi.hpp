@@ -1,10 +1,10 @@
-#ifndef __WIFI_MANAGER_HPP
-#define __WIFI_MANAGER_HPP
+#ifndef __HAL_WIFI_HPP
+#define __HAL_WIFI_HPP
 
 #include <cstddef>
 
-namespace WIFI {
-  enum ConnectionState {
+namespace HAL {
+  enum WiFiConnectionState {
     CONNECTING,
     CONNECTED,
     LOST_CONNECTION,
@@ -18,14 +18,14 @@ namespace WIFI {
     PROVISIONING_COMPLETE,
   };
 
-  class Manager {
+  class Wifi {
    public:
-    Manager(const Manager&) = delete;
-    Manager(Manager&&) = delete;
-    Manager& operator=(const Manager&) = delete;
-    Manager& operator=(Manager&&) = delete;
+    Wifi(const Wifi&) = delete;
+    Wifi(Wifi&&) = delete;
+    Wifi& operator=(const Wifi&) = delete;
+    Wifi& operator=(Wifi&&) = delete;
 
-    ConnectionState status();
+    WiFiConnectionState status();
     void connect();
     void disconnect();
     void startProvisioning(const char* ssid, const char* password, const char* popCode);
@@ -33,16 +33,16 @@ namespace WIFI {
     void resetProvisioningCredentials();
     void getQRCodeData(char* buffer, size_t maxLength, const char* ssid, const char* popCode);
 
-    static Manager* instance() {
-      static Manager _instance;
+    static Wifi* instance() {
+      static Wifi _instance;
       return &_instance;
     }
 
    private:
-    Manager();
+    Wifi();
     void _init();
   };
-  constexpr auto controller = Manager::instance;
-};  // namespace WIFI
+  constexpr auto WiFi = Wifi::instance;
+};  // namespace HAL
 
-#endif  // __WIFI_MANAGER_HPP
+#endif  // __HAL_WIFI_HPP

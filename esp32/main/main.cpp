@@ -17,11 +17,11 @@
 #include <lib/gui/views/startup/provisioning.hpp>
 #include <lib/gui/views/ticker/legacy.hpp>
 #include <lib/hal/sntp.hpp>
+#include <lib/hal/wifi.hpp>
 #include <tasks/currency_update.hpp>
 
 #include "configuration.hpp"
 #include "containers/crypto.hpp"
-#include "wifi/manager.hpp"
 #define LOG_TAG "main"
 
 using namespace Crypto;
@@ -55,12 +55,12 @@ void initialise() {
   GUI::LoadingScreen()->status("Connecting to WIFI..");
   GUI::LoadingScreen()->show();
 
-  if(WIFI::controller()->status() == WIFI::ConnectionState::NOT_PROVISIONED) {
+  if(HAL::WiFi()->status() == HAL::WiFiConnectionState::NOT_PROVISIONED) {
     GUI::LoadingScreen()->status("Device needs provisioning");
-    WIFI::controller()->startProvisioning(Provisioning::SSID, NULL, Provisioning::popCode);
+    HAL::WiFi()->startProvisioning(Provisioning::SSID, NULL, Provisioning::popCode);
 
     char payload[150] = {0};
-    WIFI::controller()->getQRCodeData(payload, sizeof(payload), Provisioning::SSID, Provisioning::popCode);
+    HAL::WiFi()->getQRCodeData(payload, sizeof(payload), Provisioning::SSID, Provisioning::popCode);
     vTaskDelay(pdMS_TO_TICKS(3000));
     GUI::LoadingScreen()->hide();
 
@@ -68,48 +68,48 @@ void initialise() {
     GUI::ProvisioningScreen()->setQR(payload);
     GUI::ProvisioningScreen()->show();
 
-    while(WIFI::controller()->status() != WIFI::ConnectionState::PROVISIONING_COMPLETE) {
-      switch(WIFI::controller()->status()) {
-        case WIFI::ConnectionState::PROVISIONING_STARTED:
-        case WIFI::ConnectionState::NOT_PROVISIONED: break;
-        case WIFI::ConnectionState::PROVISIONING_RECEVIED_CREDENTIALS:
+    while(HAL::WiFi()->status() != HAL::WiFiConnectionState::PROVISIONING_COMPLETE) {
+      switch(HAL::WiFi()->status()) {
+        case HAL::WiFiConnectionState::PROVISIONING_STARTED:
+        case HAL::WiFiConnectionState::NOT_PROVISIONED: break;
+        case HAL::WiFiConnectionState::PROVISIONING_RECEVIED_CREDENTIALS:
           GUI::ProvisioningScreen()->hide();
           GUI::LoadingScreen()->show();
           GUI::LoadingScreen()->status("Received WiFi credentials");
           break;
-        case WIFI::ConnectionState::PROVISIONING_AP_LOST:
-        case WIFI::ConnectionState::LOST_CONNECTION:
+        case HAL::WiFiConnectionState::PROVISIONING_AP_LOST:
+        case HAL::WiFiConnectionState::LOST_CONNECTION:
           GUI::LoadingScreen()->status("Lost connection, Restarting..", GUI::Widgets::Severity::BAD);
           vTaskDelay(pdMS_TO_TICKS(2000));
           GUI::LoadingScreen()->hide();
           GUI::ProvisioningScreen()->show();
-          WIFI::controller()->resetProvisioningCredentials();
+          HAL::WiFi()->resetProvisioningCredentials();
           break;
-        case WIFI::ConnectionState::PROVISIONING_BAD_CREDENTIALS:
+        case HAL::WiFiConnectionState::PROVISIONING_BAD_CREDENTIALS:
           GUI::LoadingScreen()->status("Bad credentials, Restarting..", GUI::Widgets::Severity::BAD);
           vTaskDelay(pdMS_TO_TICKS(2000));
           GUI::LoadingScreen()->hide();
           GUI::ProvisioningScreen()->show();
-          WIFI::controller()->resetProvisioningCredentials();
+          HAL::WiFi()->resetProvisioningCredentials();
           break;
-        case WIFI::ConnectionState::CONNECTING: GUI::LoadingScreen()->status("Connecting"); break;
-        case WIFI::ConnectionState::PROVISIONING_SUCCESS: GUI::LoadingScreen()->status("Device provisioned"); break;
+        case HAL::WiFiConnectionState::CONNECTING: GUI::LoadingScreen()->status("Connecting"); break;
+        case HAL::WiFiConnectionState::PROVISIONING_SUCCESS: GUI::LoadingScreen()->status("Device provisioned"); break;
         default: break;
       }
       vTaskDelay(pdMS_TO_TICKS(100));
     }
 
-    WIFI::controller()->stopProvisioning();
+    HAL::WiFi()->stopProvisioning();
   }
   else {
-    WIFI::controller()->connect();
-    while(WIFI::controller()->status() != WIFI::ConnectionState::CONNECTED) {
-      switch(WIFI::controller()->status()) {
-        case WIFI::ConnectionState::CONNECTED:
-        case WIFI::ConnectionState::CONNECTING: break;
+    HAL::WiFi()->connect();
+    while(HAL::WiFi()->status() != HAL::WiFiConnectionState::CONNECTED) {
+      switch(HAL::WiFi()->status()) {
+        case HAL::WiFiConnectionState::CONNECTED:
+        case HAL::WiFiConnectionState::CONNECTING: break;
         default:
           char buffer[32] = {0};
-          snprintf(buffer, 32, "Unexpected WiFi status: %d", WIFI::controller()->status());
+          snprintf(buffer, 32, "Unexpected WiFi status: %d", HAL::WiFi()->status());
           GUI::LoadingScreen()->status(buffer);
           break;
       }
