@@ -23,8 +23,8 @@ idf_component_register(
     SRCS 
         "main.cpp"
         "tasks/currency_update.cpp"
-        "containers/crypto.cpp"
         "lib/crypto/coin_gecko.cpp"
+        "lib/crypto/data_table.cpp"
         "lib/hal/button.cpp"
         "lib/hal/lvgl_driver.cpp"
         "lib/hal/requests.cpp"

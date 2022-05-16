@@ -19,7 +19,6 @@
 #include <tasks/currency_update.hpp>
 
 #include "configuration.hpp"
-#include "containers/crypto.hpp"
 #define LOG_TAG "main"
 
 using namespace Crypto;
