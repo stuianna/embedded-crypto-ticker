@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['start_0',['start',['../classTasks_1_1CurrencyUpdateTask.html#abd63a787cad6ee7a8f61dd78a0f112df',1,'Tasks::CurrencyUpdateTask']]],
-  ['stop_1',['stop',['../classTasks_1_1CurrencyUpdateTask.html#a04f8faf81b92f5fa2e43e84af673c8db',1,'Tasks::CurrencyUpdateTask']]],
-  ['symbol_2',['symbol',['../structCrypto_1_1Definition.html#a5edbfe6a2838e0f2b362524534bca641',1,'Crypto::Definition']]]
+  ['params_0',['params',['../structCrypto_1_1Entry.html#a3ff21816ce86b1b6eb65aee255015b49',1,'Crypto::Entry']]],
+  ['percentage_1',['Percentage',['../classGUI_1_1Widgets_1_1Percentage.html',1,'GUI::Widgets']]],
+  ['pin_2',['pin',['../structHAL_1_1__Button_1_1Event.html#a58e2f2ca80788497b601ae8d4b72bc7d',1,'HAL::_Button::Event']]],
+  ['price_3',['Price',['../classGUI_1_1Widgets_1_1Price.html',1,'GUI::Widgets']]],
+  ['provisioning_4',['Provisioning',['../classGUI_1_1Views_1_1Provisioning.html',1,'GUI::Views']]]
 ];

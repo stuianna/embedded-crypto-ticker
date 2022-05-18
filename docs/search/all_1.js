@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['basecurrency_0',['baseCurrency',['../namespaceCrypto.html#a68d962d8f1121b37bf400df8c1bba771',1,'Crypto']]],
-  ['btc_1',['BTC',['../namespaceCrypto.html#a273dd5ff1461b8b5ed231465b1d48aa6a4b9169eb3e07e0e885eb62f7bfc41a33',1,'Crypto']]]
+  ['aud_0',['AUD',['../namespaceCrypto.html#a3f9694361e50cbf204ddd84cc3b6fa25abfab7c49998f5863fb8d10c7f0ed8873',1,'Crypto']]]
 ];
