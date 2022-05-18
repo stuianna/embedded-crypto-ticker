@@ -2,11 +2,11 @@
 #include <unistd.h>
 
 #include <configuration.hpp>
-#include <containers/crypto.hpp>
+#include <crypto/data_table.hpp>
 #include <cstdio>
 #include <cstdlib>
-#include <hal/lvgl_driver.hpp>
 #include <gui/views/ticker/legacy.hpp>
+#include <hal/lvgl_driver.hpp>
 
 using namespace GUI;
 using namespace HAL;
