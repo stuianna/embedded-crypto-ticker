@@ -1,7 +1,7 @@
 #ifndef __TASKS_CURRENCY_UPDATE_HPP
 #define __TASKS_CURRENCY_UPDATE_HPP
 
-#include <containers/crypto.hpp>
+#include <lib/crypto/data_table.hpp>
 
 namespace Tasks {
   /**

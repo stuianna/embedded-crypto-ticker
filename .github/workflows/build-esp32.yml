@@ -19,6 +19,8 @@ jobs:
       image: espressif/idf:release-v4.4
       options: --entrypoint /bin/bash
     steps:
+    - name: work around permission issue
+      run: git config --global --add safe.directory /__w/embedded-crypto-ticker/embedded-crypto-ticker
     - uses: actions/checkout@v2
     - name: Initialise submodules
       run: git submodule update --init --recursive

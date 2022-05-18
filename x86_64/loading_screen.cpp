@@ -2,7 +2,7 @@
 #include <unistd.h>
 
 #include <cstdio>
-#include <gui/hal/driver.hpp>
+#include <hal/lvgl_driver.hpp>
 #include <gui/views/startup/loading.hpp>
 
 // clang-format off
@@ -20,7 +20,7 @@ const char* detail_lines[] = {
 // clang-format on
 
 int main(int, char**) {
-  GUI::HAL::LVGL()->init();
+  HAL::LVGL()->init();
   GUI::LoadingScreen()->show();
 
   while(1) {

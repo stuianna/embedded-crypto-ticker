@@ -1,6 +1,6 @@
 #include <doctest.h>
 
-#include <crypto.hpp>
+#include <crypto/data_table.hpp>
 
 using namespace Crypto;
 

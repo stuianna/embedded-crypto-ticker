@@ -4,14 +4,13 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 
-#include <data_sources/coin_gecko.hpp>
-#include <data_sources/sntp.hpp>
+#include <lib/crypto/coin_gecko.hpp>
+#include <lib/hal/sntp.hpp>
 
 #define LOG_TAG "currency_update"
 
 using namespace Tasks;
 using namespace Crypto;
-using namespace Crypto::DataSources;
 
 static void delaySeconds(size_t seconds) {
   for(int i = 0; i < seconds; i++) {
@@ -24,7 +23,7 @@ static size_t singleUpdate(Crypto::Entry& crypto, const Crypto::Definition fiat)
   if(currentData.status == 200) {
     crypto.pricesDB.add(currentData.price);
     crypto.delta24hDB.add(currentData.change24h);
-    crypto.latestUpdate = Crypto::SNTP()->unixTime();
+    crypto.latestUpdate = HAL::SNTP()->unixTime();
   }
   else {
     ESP_LOGW(LOG_TAG, "Response code %d received", currentData.status);
@@ -54,7 +53,7 @@ static size_t updateCurrency(Crypto::Entry& crypto, const Crypto::Definition& fi
 }
 
 static size_t secondsToNextUpdate(const size_t startSeconds) {
-  const size_t endSeconds = Crypto::SNTP()->unixTime();
+  const size_t endSeconds = HAL::SNTP()->unixTime();
   uint32_t secondsDelta = endSeconds - startSeconds;
   int32_t secondsWait = (CurrencyUpdate()->updatePeriod() / Crypto::enabledCurrencyCount()) - secondsDelta;
   return secondsWait < 0 ? 0 : secondsWait;
@@ -87,7 +86,7 @@ static size_t fetchHistoricalData(Crypto::Entry& crypto, const Crypto::Definitio
 
   do {
     ESP_LOGI(LOG_TAG, "Historical currency update for %s, attempt %d", crypto.params.name, attempt);
-    uint32_t nowSeconds = Crypto::SNTP()->unixTime();
+    uint32_t nowSeconds = HAL::SNTP()->unixTime();
     size_t fromSeconds = nowSeconds - secondsPerDay;
 
     auto historical = CoinGecko().marketChartRange24h(cryptoGeckoName, fiatGeckoName, fromSeconds, nowSeconds);
@@ -117,7 +116,7 @@ static void task_currencyUpdate(void* pvParameters) {
         continue;
       }
 
-      size_t startSeconds = Crypto::SNTP()->unixTime();
+      size_t startSeconds = HAL::SNTP()->unixTime();
       updateCurrency(crypto, fiat);
       size_t secondsWait = secondsToNextUpdate(startSeconds);
 

@@ -7,27 +7,21 @@
 #include <stdlib.h>
 #include <string.h>
 
-// clang-format off
-#include <button.h>
-// clang-format on
 #include <algorithm>
-#include <data_sources/coin_gecko.hpp>
-#include <data_sources/sntp.hpp>
-#include <hal/driver.hpp>
+#include <hal/lvgl_driver.hpp>
+#include <lib/crypto/coin_gecko.hpp>
+#include <lib/gui/views/startup/loading.hpp>
+#include <lib/gui/views/startup/provisioning.hpp>
+#include <lib/gui/views/ticker/legacy.hpp>
+#include <lib/hal/button.hpp>
+#include <lib/hal/sntp.hpp>
+#include <lib/hal/wifi.hpp>
 #include <tasks/currency_update.hpp>
-#include <views/startup/loading.hpp>
-#include <views/startup/provisioning.hpp>
-#include <views/ticker/legacy.hpp>
 
 #include "configuration.hpp"
-#include "containers/crypto.hpp"
-#include "wifi/manager.hpp"
 #define LOG_TAG "main"
 
-using namespace Crypto::DataSources;
-
-QueueHandle_t button_events = NULL;
-
+using namespace Crypto;
 
 void fetchHistoricalData() {
   GUI::LoadingScreen()->status("Fetching historical prices...");
@@ -51,16 +45,16 @@ void fetchHistoricalData() {
 }
 
 void initialise() {
-  GUI::HAL::LVGL()->init();
+  HAL::LVGL()->init();
   GUI::LoadingScreen()->status("Connecting to WIFI..");
   GUI::LoadingScreen()->show();
 
-  if(WIFI::controller()->status() == WIFI::ConnectionState::NOT_PROVISIONED) {
+  if(HAL::WiFi()->status() == HAL::WiFiConnectionState::NOT_PROVISIONED) {
     GUI::LoadingScreen()->status("Device needs provisioning");
-    WIFI::controller()->startProvisioning(Provisioning::SSID, NULL, Provisioning::popCode);
+    HAL::WiFi()->startProvisioning(Provisioning::SSID, NULL, Provisioning::popCode);
 
     char payload[150] = {0};
-    WIFI::controller()->getQRCodeData(payload, sizeof(payload), Provisioning::SSID, Provisioning::popCode);
+    HAL::WiFi()->getQRCodeData(payload, sizeof(payload), Provisioning::SSID, Provisioning::popCode);
     vTaskDelay(pdMS_TO_TICKS(3000));
     GUI::LoadingScreen()->hide();
 
@@ -68,48 +62,48 @@ void initialise() {
     GUI::ProvisioningScreen()->setQR(payload);
     GUI::ProvisioningScreen()->show();
 
-    while(WIFI::controller()->status() != WIFI::ConnectionState::PROVISIONING_COMPLETE) {
-      switch(WIFI::controller()->status()) {
-        case WIFI::ConnectionState::PROVISIONING_STARTED:
-        case WIFI::ConnectionState::NOT_PROVISIONED: break;
-        case WIFI::ConnectionState::PROVISIONING_RECEVIED_CREDENTIALS:
+    while(HAL::WiFi()->status() != HAL::WiFiConnectionState::PROVISIONING_COMPLETE) {
+      switch(HAL::WiFi()->status()) {
+        case HAL::WiFiConnectionState::PROVISIONING_STARTED:
+        case HAL::WiFiConnectionState::NOT_PROVISIONED: break;
+        case HAL::WiFiConnectionState::PROVISIONING_RECEVIED_CREDENTIALS:
           GUI::ProvisioningScreen()->hide();
           GUI::LoadingScreen()->show();
           GUI::LoadingScreen()->status("Received WiFi credentials");
           break;
-        case WIFI::ConnectionState::PROVISIONING_AP_LOST:
-        case WIFI::ConnectionState::LOST_CONNECTION:
+        case HAL::WiFiConnectionState::PROVISIONING_AP_LOST:
+        case HAL::WiFiConnectionState::LOST_CONNECTION:
           GUI::LoadingScreen()->status("Lost connection, Restarting..", GUI::Widgets::Severity::BAD);
           vTaskDelay(pdMS_TO_TICKS(2000));
           GUI::LoadingScreen()->hide();
           GUI::ProvisioningScreen()->show();
-          WIFI::controller()->resetProvisioningCredentials();
+          HAL::WiFi()->resetProvisioningCredentials();
           break;
-        case WIFI::ConnectionState::PROVISIONING_BAD_CREDENTIALS:
+        case HAL::WiFiConnectionState::PROVISIONING_BAD_CREDENTIALS:
           GUI::LoadingScreen()->status("Bad credentials, Restarting..", GUI::Widgets::Severity::BAD);
           vTaskDelay(pdMS_TO_TICKS(2000));
           GUI::LoadingScreen()->hide();
           GUI::ProvisioningScreen()->show();
-          WIFI::controller()->resetProvisioningCredentials();
+          HAL::WiFi()->resetProvisioningCredentials();
           break;
-        case WIFI::ConnectionState::CONNECTING: GUI::LoadingScreen()->status("Connecting"); break;
-        case WIFI::ConnectionState::PROVISIONING_SUCCESS: GUI::LoadingScreen()->status("Device provisioned"); break;
+        case HAL::WiFiConnectionState::CONNECTING: GUI::LoadingScreen()->status("Connecting"); break;
+        case HAL::WiFiConnectionState::PROVISIONING_SUCCESS: GUI::LoadingScreen()->status("Device provisioned"); break;
         default: break;
       }
       vTaskDelay(pdMS_TO_TICKS(100));
     }
 
-    WIFI::controller()->stopProvisioning();
+    HAL::WiFi()->stopProvisioning();
   }
   else {
-    WIFI::controller()->connect();
-    while(WIFI::controller()->status() != WIFI::ConnectionState::CONNECTED) {
-      switch(WIFI::controller()->status()) {
-        case WIFI::ConnectionState::CONNECTED:
-        case WIFI::ConnectionState::CONNECTING: break;
+    HAL::WiFi()->connect();
+    while(HAL::WiFi()->status() != HAL::WiFiConnectionState::CONNECTED) {
+      switch(HAL::WiFi()->status()) {
+        case HAL::WiFiConnectionState::CONNECTED:
+        case HAL::WiFiConnectionState::CONNECTING: break;
         default:
           char buffer[32] = {0};
-          snprintf(buffer, 32, "Unexpected WiFi status: %d", WIFI::controller()->status());
+          snprintf(buffer, 32, "Unexpected WiFi status: %d", HAL::WiFi()->status());
           GUI::LoadingScreen()->status(buffer);
           break;
       }
@@ -120,7 +114,7 @@ void initialise() {
   GUI::LoadingScreen()->status("WiFi connected");
   vTaskDelay(pdMS_TO_TICKS(500));
   GUI::LoadingScreen()->status("Synchronising time with SNTP");
-  bool gotNetworkTime = Crypto::SNTP()->syncronise();
+  bool gotNetworkTime = HAL::SNTP()->syncronise();
   if(!gotNetworkTime) {
     GUI::LoadingScreen()->status("Failed SNTP synchronisation", GUI::Widgets::Severity::BAD);
     GUI::LoadingScreen()->details("Check network credentials", GUI::Widgets::Severity::BAD);
@@ -131,24 +125,21 @@ void initialise() {
   fetchHistoricalData();
   GUI::LoadingScreen()->status("Starting currency update task.");
   Tasks::CurrencyUpdate()->start();
-  button_events = button_init(PIN_BIT(35) | PIN_BIT(0));
   GUI::LoadingScreen()->hide();
 }
 
 void waitForNextUpdate() {
-  button_event_t ev;
   for(size_t j = 0; j < (60 * 5); j++) {
-    if(xQueueReceive(button_events, &ev, 10)) {
-      if((ev.pin == 35) && (ev.event == BUTTON_UP)) {
-        return;
-      }
+    auto event = HAL::Button()->getEvent(10);
+    if((event.pin == BUTTON_A) && (event.type == HAL::Button()->EventType::UP)) {
+      return;
     }
     vTaskDelay(pdMS_TO_TICKS(200));
   }
 }
 
 bool currencyOutOfDate(const Crypto::Entry* crypto) {
-  size_t lastUpdate = Crypto::SNTP()->unixTime() - crypto->latestUpdate;
+  size_t lastUpdate = HAL::SNTP()->unixTime() - crypto->latestUpdate;
   if(lastUpdate > currencyUpdatePeriodSeconds * 1.5) {
     return true;
   }
@@ -168,7 +159,7 @@ extern "C" void app_main() {
       }
 
       ESP_LOGI(LOG_TAG, "Switch legacy GUI to currency: %s", crypto->params.name);
-      ESP_LOGI(LOG_TAG, "Lastest currency update %d seconds ago", Crypto::SNTP()->unixTime() - crypto->latestUpdate);
+      ESP_LOGI(LOG_TAG, "Lastest currency update %d seconds ago", HAL::SNTP()->unixTime() - crypto->latestUpdate);
       GUI::LegacyScreen()->hide();
       GUI::LegacyScreen()->clearPlot();
       GUI::LegacyScreen()->setCurrencySymbol(fiat.symbol);
