@@ -2,7 +2,7 @@
 # Unfortunately due to the currency configuration of the crypto container, the image sources also need to be added to the tests.
 add_executable(test_crypto 
   test_crypto.cpp
-  ../../../../esp32/main/containers/crypto.cpp
+  ../../../../esp32/main/lib/crypto/data_table.cpp
   ../../../../esp32/main/lib/gui/assets/btc_icon_60.c
   ../../../../esp32/main/lib/gui/assets/eth_icon_60.c
   ../../../../esp32/main/lib/gui/assets/ltc_icon_60.c
@@ -17,6 +17,7 @@ target_include_directories(test_crypto PUBLIC
   ../../../../esp32/components/lvgl
   ../../../../esp32/components
   ../../../../esp32/main
+  ../../../../esp32/main/lib
   ../../../../esp32/components/crypto
   ../../../../esp32/components/database
   ../../../../x86_64
