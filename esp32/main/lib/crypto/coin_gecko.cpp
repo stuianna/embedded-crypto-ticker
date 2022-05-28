@@ -86,7 +86,7 @@ CoinGecko::SimplePrice CoinGecko::simplePrice(const char* ids, const char* vsCur
   request.host = "api.coingecko.com";
   request.path = path;
   request.length = 256;
-  request.timeout = 5000;
+  request.timeout = 10000;
 
   size_t rc = Request()->get(request);
   SimplePrice response = _parse_simple_price(request.data, rc, vsCurrency, ids);

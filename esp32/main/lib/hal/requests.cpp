@@ -125,11 +125,11 @@ void https_task(void* pvParameters) {
 
     if(err == ESP_OK) {
       ESP_LOGI(LOG_TAG, "HTTPS Status = %d, data = %s", status, currentRequest.data);
-      xQueueSend(responseQueue, (void*)(&status), pdMS_TO_TICKS(50));
     }
     else {
       ESP_LOGE(LOG_TAG, "Error perform http request %s", esp_err_to_name(err));
     }
+    xQueueSend(responseQueue, (void*)(&status), pdMS_TO_TICKS(50));
     esp_http_client_cleanup(client);
   }
 }
