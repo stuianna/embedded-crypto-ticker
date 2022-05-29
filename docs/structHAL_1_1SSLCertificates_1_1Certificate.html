@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.4"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Embedded Crypto Ticker: esp32/main/lib/hal Directory Reference</title>
+<title>Embedded Crypto Ticker: HAL::SSLCertificates::Certificate Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -62,29 +62,38 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_59e7f8d29184d0656f3182488763fc33.html">esp32</a></li><li class="navelem"><a class="el" href="dir_5beb22e403792e8b31f970b67e49ab74.html">main</a></li><li class="navelem"><a class="el" href="dir_162a1b8fa5e11d2404f574a0a2042d49.html">lib</a></li><li class="navelem"><a class="el" href="dir_6201fab415eb27567bffbfa1a988eadc.html">hal</a></li>  </ul>
+<li class="navelem"><b>HAL</b></li><li class="navelem"><b>SSLCertificates</b></li><li class="navelem"><a class="el" href="structHAL_1_1SSLCertificates_1_1Certificate.html">Certificate</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
-  <div class="headertitle"><div class="title">hal Directory Reference</div></div>
+  <div class="summary">
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="structHAL_1_1SSLCertificates_1_1Certificate-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">HAL::SSLCertificates::Certificate Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p><a class="el" href="structHAL_1_1SSLCertificates_1_1Certificate.html" title="Certificate raw bytes and length.">Certificate</a> raw bytes and length.  
+ <a href="structHAL_1_1SSLCertificates_1_1Certificate.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="ssl__certificate_8hpp_source.html">ssl_certificate.hpp</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="files" name="files"></a>
-Files</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><b>button.hpp</b> <a href="button_8hpp_source.html">[code]</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><b>lvgl_driver.hpp</b> <a href="lvgl__driver_8hpp_source.html">[code]</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><b>requests.hpp</b> <a href="requests_8hpp_source.html">[code]</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><b>sntp.hpp</b> <a href="sntp_8hpp_source.html">[code]</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><b>ssl_certificate.hpp</b> <a href="ssl__certificate_8hpp_source.html">[code]</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">file &#160;</td><td class="memItemRight" valign="bottom"><b>wifi.hpp</b> <a href="wifi_8hpp_source.html">[code]</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a9f5df95760dad6de6c0926daab49ac44"><td class="memItemLeft" align="right" valign="top"><a id="a9f5df95760dad6de6c0926daab49ac44" name="a9f5df95760dad6de6c0926daab49ac44"></a>
+const char *&#160;</td><td class="memItemRight" valign="bottom"><b>certificate</b></td></tr>
+<tr class="memdesc:a9f5df95760dad6de6c0926daab49ac44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Raw certificate contents. <br /></td></tr>
+<tr class="separator:a9f5df95760dad6de6c0926daab49ac44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fa522a1ab3a6506e76841f836879ee9"><td class="memItemLeft" align="right" valign="top"><a id="a5fa522a1ab3a6506e76841f836879ee9" name="a5fa522a1ab3a6506e76841f836879ee9"></a>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><b>length</b></td></tr>
+<tr class="memdesc:a5fa522a1ab3a6506e76841f836879ee9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Length of the certificate. <br /></td></tr>
+<tr class="separator:a5fa522a1ab3a6506e76841f836879ee9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p ><a class="el" href="structHAL_1_1SSLCertificates_1_1Certificate.html" title="Certificate raw bytes and length.">Certificate</a> raw bytes and length. </p>
+</div><hr/>The documentation for this struct was generated from the following file:<ul>
+<li>esp32/main/lib/hal/<a class="el" href="ssl__certificate_8hpp_source.html">ssl_certificate.hpp</a></li>
+</ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
