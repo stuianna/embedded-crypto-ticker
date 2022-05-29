@@ -29,10 +29,12 @@ idf_component_register(
         "lib/hal/lvgl_driver.cpp"
         "lib/hal/requests.cpp"
         "lib/hal/sntp.cpp"
+        "lib/hal/ssl_certificate.cpp"
         "lib/hal/wifi.cpp"
         ${GUI_ASSETS}
         ${GUI_SOURCES}
     INCLUDE_DIRS 
         "."
         "./lib"
+    EMBED_TXTFILES certificate_store/coin_gecko_root_cert.pem
 )

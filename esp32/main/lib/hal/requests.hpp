@@ -13,6 +13,8 @@ namespace HAL {
       char* data = 0;
       size_t length;
       size_t timeout;
+      const char* sslCert;
+      size_t sslCertLength;
     };
 
     static Requests* instance() { return &_instance; }

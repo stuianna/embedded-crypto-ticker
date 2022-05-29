@@ -5,6 +5,7 @@
 #include <third_party/ArduinoJson-v6.17.3.h>
 
 #include <lib/hal/requests.hpp>
+#include <lib/hal/ssl_certificate.hpp>
 #include <lib/tools/json_parsing.hpp>
 #include <utility>
 
@@ -87,6 +88,8 @@ CoinGecko::SimplePrice CoinGecko::simplePrice(const char* ids, const char* vsCur
   request.path = path;
   request.length = 256;
   request.timeout = 10000;
+  request.sslCert = SSLCertificates::get(SSLCertificates::StoredCertificates::COIN_GECKO).certificate;
+  request.sslCertLength = SSLCertificates::get(SSLCertificates::StoredCertificates::COIN_GECKO).length;
 
   size_t rc = Request()->get(request);
   SimplePrice response = _parse_simple_price(request.data, rc, vsCurrency, ids);
@@ -118,6 +121,8 @@ std::pair<size_t, std::array<float, 288>> CoinGecko::marketChartRange24h(const c
   request.path = path;
   request.length = 45000;
   request.timeout = 10000;
+  request.sslCert = SSLCertificates::get(SSLCertificates::StoredCertificates::COIN_GECKO).certificate;
+  request.sslCertLength = SSLCertificates::get(SSLCertificates::StoredCertificates::COIN_GECKO).length;
 
   std::array<float, 288> results;
   size_t rc = Request()->get(request);

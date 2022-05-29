@@ -117,6 +117,8 @@ void https_task(void* pvParameters) {
     config.transport_type = HTTP_TRANSPORT_OVER_SSL;
     config.event_handler = _http_event_handler;
     config.user_data = currentRequest.data;
+    config.cert_pem = currentRequest.sslCert;
+    config.cert_len = currentRequest.sslCertLength;
 
     esp_http_client_handle_t client = esp_http_client_init(&config);
     esp_err_t err = esp_http_client_perform(client);
