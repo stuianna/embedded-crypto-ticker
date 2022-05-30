@@ -18,16 +18,23 @@ class VolatileDatabase {
   }
   size_t length() const { return _history.size(); }
   T at(const size_t position) const {
-    float max = maximum();
-    float min = minimum();
-    float delta = max - min;
-    if(delta) {
-      return 1000.0f * (_history[position] - min) / delta;
+    if(position >= _history.size()) {
+      return 0;
+    }
+    return _history[position];
+  }
+  T scaledAt(const size_t position, const T min, const T max) const {
+    float _max = maximum();
+    float _min = minimum();
+    float delta = _max - _min;
+    if(delta && position < _history.size()) {
+      return ((max - min) * (_history[position] - _min) / delta) + min;
     }
     else {
-      return 1;
+      return min;
     }
   }
+  static_assert(_length > 0, "Database maximum length (size) must be a positive integer.");
 
  private:
   std::array<T, _length> _history;

@@ -11,6 +11,7 @@ include_directories(
 add_library(doctest doctest/doctest.cpp)
 
 add_subdirectory(esp32/main/containers)
+add_subdirectory(esp32/main/lib/)
 
 add_executable(test_example example/test_example.cpp)
 target_link_libraries(test_example doctest)
