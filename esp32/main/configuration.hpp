@@ -10,4 +10,9 @@ namespace Provisioning {
   const char* popCode = "abcd1234";
 }  // namespace Provisioning
 
+namespace Configuration {
+  const size_t chartMaximumValue = 1000;
+  const size_t chartMinimumValue = 1;
+};  // namespace Configuration
+
 #endif  // _CONFIGURATION_HPP

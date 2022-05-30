@@ -165,11 +165,11 @@ extern "C" void app_main() {
       GUI::LegacyScreen()->setCurrencySymbol(fiat.symbol);
       GUI::LegacyScreen()->setName(crypto->params.name);
       GUI::LegacyScreen()->setIcon(&crypto->icon);
-      GUI::LegacyScreen()->setPlotRange(0, 1000);
+      GUI::LegacyScreen()->setPlotRange(Configuration::chartMinimumValue, Configuration::chartMaximumValue);
       GUI::LegacyScreen()->setCurrentQuote(crypto->pricesDB.latest());
       GUI::LegacyScreen()->setDailyDelta(crypto->delta24hDB.latest());
       for(int j = crypto->pricesDB.length() - 1; j >= 0; j--) {
-        GUI::LegacyScreen()->plotValue(crypto->pricesDB.at(j));
+        GUI::LegacyScreen()->plotValue(crypto->pricesDB.scaledAt(j, Configuration::chartMinimumValue, Configuration::chartMaximumValue));
       }
       if(currencyOutOfDate(crypto)) {
         GUI::LegacyScreen()->setWarning(&warning_30);
