@@ -65,12 +65,12 @@ class Semaphore {
 
 static Semaphore semaphore;
 
-Driver Driver::_instance;
+LVGLDriver LVGLDriver::_instance;
 
-Driver::Driver() {
+LVGLDriver::LVGLDriver() {
 }
 
-void Driver::init() {
+void LVGLDriver::init() {
   lv_init();
 
   /* Use the 'monitor' driver which creates window on PC's monitor to simulate a display*/
@@ -117,13 +117,13 @@ void Driver::init() {
   ut.detach();
 }
 
-bool Driver::aquireMutex(size_t timeoutMs) {
+bool LVGLDriver::aquireMutex(size_t timeoutMs) {
   (void)timeoutMs;
   semaphore.acquire();
   return true;
 }
 
-void Driver::releaseMutex() {
+void LVGLDriver::releaseMutex() {
   semaphore.release();
 }
 

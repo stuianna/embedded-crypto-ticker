@@ -4,25 +4,25 @@
 #include <cstdint>
 
 namespace HAL {
-  class Driver {
+  class LVGLDriver {
    public:
-    static Driver* instance() { return &_instance; }
+    static LVGLDriver* instance() { return &_instance; }
     void init();
     bool aquireMutex(size_t timeoutMs);
     void releaseMutex();
 
     // Disable copy and move constructors and operators.
-    Driver(const Driver&) = delete;
-    Driver(Driver&&) = delete;
+    LVGLDriver(const LVGLDriver&) = delete;
+    LVGLDriver(LVGLDriver&&) = delete;
 
-    Driver& operator=(const Driver&) = delete;
-    Driver& operator=(Driver&&) = delete;
+    LVGLDriver& operator=(const LVGLDriver&) = delete;
+    LVGLDriver& operator=(LVGLDriver&&) = delete;
 
    private:
-    Driver();
-    static Driver _instance;
+    LVGLDriver();
+    static LVGLDriver _instance;
   };
-  constexpr auto LVGL = Driver::instance;
+  constexpr auto LVGL = LVGLDriver::instance;
 }  // namespace HAL
 
 #endif  // __HAL_LVGL_DRIVER_HPP

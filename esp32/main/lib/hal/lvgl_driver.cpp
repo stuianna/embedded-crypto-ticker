@@ -21,24 +21,24 @@ static void task_GUI(void* pvParameter);
 
 static SemaphoreHandle_t xGuiSemaphore = NULL;
 
-Driver Driver::_instance;
+LVGLDriver LVGLDriver::_instance;
 
-Driver::Driver() {
+LVGLDriver::LVGLDriver() {
 }
 
-void Driver::init() {
+void LVGLDriver::init() {
   xTaskCreatePinnedToCore(task_GUI, "GUI", 4096 * 2, NULL, 6, NULL, 1);
 
   while((xGuiSemaphore == NULL) || (xSemaphoreTake(xGuiSemaphore, portMAX_DELAY) == pdFALSE)) {};
   xSemaphoreGive(xGuiSemaphore);
 }
 
-bool Driver::aquireMutex(size_t timeoutMs) {
+bool LVGLDriver::aquireMutex(size_t timeoutMs) {
   TickType_t ticks = timeoutMs ? pdMS_TO_TICKS(timeoutMs) : portMAX_DELAY;
   return xSemaphoreTake(xGuiSemaphore, ticks) == pdTRUE;
 }
 
-void Driver::releaseMutex() {
+void LVGLDriver::releaseMutex() {
   xSemaphoreGive(xGuiSemaphore);
 }
 
