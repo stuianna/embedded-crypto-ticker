@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['currencycount_0',['currencyCount',['../namespaceCrypto.html#af5f34510aafd61cf263cc199886e14c4',1,'Crypto']]],
-  ['currencyindex_1',['currencyIndex',['../namespaceCrypto.html#a490f29c93f8fb2d7913b5ca2931b67ea',1,'Crypto']]]
+  ['add_0',['add',['../classVolatileDatabase.html#a25daed8bb9b0aa845aa9d89743bd7a6a',1,'VolatileDatabase']]],
+  ['at_1',['at',['../classVolatileDatabase.html#af0009a90b1528fe870a4625d7d190055',1,'VolatileDatabase']]]
 ];

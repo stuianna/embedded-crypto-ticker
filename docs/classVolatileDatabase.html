@@ -68,28 +68,295 @@ $(function() {
   <div class="headertitle"><div class="title">VolatileDatabase&lt; T, _length &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Volatile (RAM based) database which acts as a statically defined queue container.  
+ <a href="classVolatileDatabase.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="volatile__database_8hpp_source.html">volatile_database.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab050632c5519e3c7b678282e6174e4b9"><td class="memItemLeft" align="right" valign="top"><a id="ab050632c5519e3c7b678282e6174e4b9" name="ab050632c5519e3c7b678282e6174e4b9"></a>
-T&#160;</td><td class="memItemRight" valign="bottom"><b>maximum</b> () const</td></tr>
+<tr class="memitem:ab050632c5519e3c7b678282e6174e4b9"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVolatileDatabase.html#ab050632c5519e3c7b678282e6174e4b9">maximum</a> () const</td></tr>
+<tr class="memdesc:ab050632c5519e3c7b678282e6174e4b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the maximum value stored in the database.  <a href="classVolatileDatabase.html#ab050632c5519e3c7b678282e6174e4b9">More...</a><br /></td></tr>
 <tr class="separator:ab050632c5519e3c7b678282e6174e4b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a393cc730af1e4c7c92c848c3c4985c53"><td class="memItemLeft" align="right" valign="top"><a id="a393cc730af1e4c7c92c848c3c4985c53" name="a393cc730af1e4c7c92c848c3c4985c53"></a>
-T&#160;</td><td class="memItemRight" valign="bottom"><b>minimum</b> () const</td></tr>
+<tr class="memitem:a393cc730af1e4c7c92c848c3c4985c53"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVolatileDatabase.html#a393cc730af1e4c7c92c848c3c4985c53">minimum</a> () const</td></tr>
+<tr class="memdesc:a393cc730af1e4c7c92c848c3c4985c53"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the minimum value stored in the database.  <a href="classVolatileDatabase.html#a393cc730af1e4c7c92c848c3c4985c53">More...</a><br /></td></tr>
 <tr class="separator:a393cc730af1e4c7c92c848c3c4985c53"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f4ea225be0a9a07e2512683899acc57"><td class="memItemLeft" align="right" valign="top"><a id="a5f4ea225be0a9a07e2512683899acc57" name="a5f4ea225be0a9a07e2512683899acc57"></a>
-T&#160;</td><td class="memItemRight" valign="bottom"><b>latest</b> () const</td></tr>
+<tr class="memitem:a5f4ea225be0a9a07e2512683899acc57"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVolatileDatabase.html#a5f4ea225be0a9a07e2512683899acc57">latest</a> () const</td></tr>
+<tr class="memdesc:a5f4ea225be0a9a07e2512683899acc57"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the latest, or first value stored in the database. This is equal to the latest entry added.  <a href="classVolatileDatabase.html#a5f4ea225be0a9a07e2512683899acc57">More...</a><br /></td></tr>
 <tr class="separator:a5f4ea225be0a9a07e2512683899acc57"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a25daed8bb9b0aa845aa9d89743bd7a6a"><td class="memItemLeft" align="right" valign="top"><a id="a25daed8bb9b0aa845aa9d89743bd7a6a" name="a25daed8bb9b0aa845aa9d89743bd7a6a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>add</b> (const T value)</td></tr>
+<tr class="memitem:a25daed8bb9b0aa845aa9d89743bd7a6a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVolatileDatabase.html#a25daed8bb9b0aa845aa9d89743bd7a6a">add</a> (const T value)</td></tr>
+<tr class="memdesc:a25daed8bb9b0aa845aa9d89743bd7a6a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Add an entry to the start of the database.  <a href="classVolatileDatabase.html#a25daed8bb9b0aa845aa9d89743bd7a6a">More...</a><br /></td></tr>
 <tr class="separator:a25daed8bb9b0aa845aa9d89743bd7a6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4eb9b8f66de4c9eea8576558398afb6f"><td class="memItemLeft" align="right" valign="top"><a id="a4eb9b8f66de4c9eea8576558398afb6f" name="a4eb9b8f66de4c9eea8576558398afb6f"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>length</b> () const</td></tr>
+<tr class="memitem:a4eb9b8f66de4c9eea8576558398afb6f"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVolatileDatabase.html#a4eb9b8f66de4c9eea8576558398afb6f">length</a> () const</td></tr>
+<tr class="memdesc:a4eb9b8f66de4c9eea8576558398afb6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the maximum length of the database. This should be equal to the template _length parameter.  <a href="classVolatileDatabase.html#a4eb9b8f66de4c9eea8576558398afb6f">More...</a><br /></td></tr>
 <tr class="separator:a4eb9b8f66de4c9eea8576558398afb6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0009a90b1528fe870a4625d7d190055"><td class="memItemLeft" align="right" valign="top"><a id="af0009a90b1528fe870a4625d7d190055" name="af0009a90b1528fe870a4625d7d190055"></a>
-T&#160;</td><td class="memItemRight" valign="bottom"><b>at</b> (const size_t position) const</td></tr>
+<tr class="memitem:af0009a90b1528fe870a4625d7d190055"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVolatileDatabase.html#af0009a90b1528fe870a4625d7d190055">at</a> (const size_t position) const</td></tr>
+<tr class="memdesc:af0009a90b1528fe870a4625d7d190055"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get an element of the database at a specified position.  <a href="classVolatileDatabase.html#af0009a90b1528fe870a4625d7d190055">More...</a><br /></td></tr>
 <tr class="separator:af0009a90b1528fe870a4625d7d190055"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4819f4d8950e92c4a183ecbe15318efe"><td class="memItemLeft" align="right" valign="top">T&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classVolatileDatabase.html#a4819f4d8950e92c4a183ecbe15318efe">scaledAt</a> (const size_t position, const T min, const T max) const</td></tr>
+<tr class="memdesc:a4819f4d8950e92c4a183ecbe15318efe"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get an element of the database, scaled between the from the minimum and maximum stored in the database, to the minimum and maximum parameters passed.  <a href="classVolatileDatabase.html#a4819f4d8950e92c4a183ecbe15318efe">More...</a><br /></td></tr>
+<tr class="separator:a4819f4d8950e92c4a183ecbe15318efe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename T, size_t _length&gt;<br />
+class VolatileDatabase&lt; T, _length &gt;</div><p >Volatile (RAM based) database which acts as a statically defined queue container. </p>
+<p >The data base is initialised to numeric 0, for the given type. Data is added to the front of the database. </p><dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>The type of data to store. Limited to numeric types. </td></tr>
+    <tr><td class="paramname">_length</td><td>The length of the static container. </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a25daed8bb9b0aa845aa9d89743bd7a6a" name="a25daed8bb9b0aa845aa9d89743bd7a6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25daed8bb9b0aa845aa9d89743bd7a6a">&#9670;&nbsp;</a></span>add()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t _length&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classVolatileDatabase.html">VolatileDatabase</a>&lt; T, _length &gt;::add </td>
+          <td>(</td>
+          <td class="paramtype">const T&#160;</td>
+          <td class="paramname"><em>value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Add an entry to the start of the database. </p>
+<p >All current entries are shifted back when an item is added. If the database if full, the last element is dropped. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>The value to add. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af0009a90b1528fe870a4625d7d190055" name="af0009a90b1528fe870a4625d7d190055"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0009a90b1528fe870a4625d7d190055">&#9670;&nbsp;</a></span>at()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t _length&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T <a class="el" href="classVolatileDatabase.html">VolatileDatabase</a>&lt; T, _length &gt;::at </td>
+          <td>(</td>
+          <td class="paramtype">const size_t&#160;</td>
+          <td class="paramname"><em>position</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get an element of the database at a specified position. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>The position of the element to query. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>T The value at the given position. Returns numeric zero if position is greater than the database length. </dd></dl>
+
+</div>
+</div>
+<a id="a5f4ea225be0a9a07e2512683899acc57" name="a5f4ea225be0a9a07e2512683899acc57"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f4ea225be0a9a07e2512683899acc57">&#9670;&nbsp;</a></span>latest()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t _length&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T <a class="el" href="classVolatileDatabase.html">VolatileDatabase</a>&lt; T, _length &gt;::latest </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the latest, or first value stored in the database. This is equal to the latest entry added. </p>
+<dl class="section return"><dt>Returns</dt><dd>T Latest (first) value. </dd></dl>
+
+</div>
+</div>
+<a id="a4eb9b8f66de4c9eea8576558398afb6f" name="a4eb9b8f66de4c9eea8576558398afb6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4eb9b8f66de4c9eea8576558398afb6f">&#9670;&nbsp;</a></span>length()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t _length&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t <a class="el" href="classVolatileDatabase.html">VolatileDatabase</a>&lt; T, _length &gt;::length </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the maximum length of the database. This should be equal to the template _length parameter. </p>
+<dl class="section return"><dt>Returns</dt><dd>size_t Maximum length of the database. </dd></dl>
+
+</div>
+</div>
+<a id="ab050632c5519e3c7b678282e6174e4b9" name="ab050632c5519e3c7b678282e6174e4b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab050632c5519e3c7b678282e6174e4b9">&#9670;&nbsp;</a></span>maximum()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t _length&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T <a class="el" href="classVolatileDatabase.html">VolatileDatabase</a>&lt; T, _length &gt;::maximum </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the maximum value stored in the database. </p>
+<dl class="section return"><dt>Returns</dt><dd>T Maximum value. </dd></dl>
+
+</div>
+</div>
+<a id="a393cc730af1e4c7c92c848c3c4985c53" name="a393cc730af1e4c7c92c848c3c4985c53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a393cc730af1e4c7c92c848c3c4985c53">&#9670;&nbsp;</a></span>minimum()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t _length&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T <a class="el" href="classVolatileDatabase.html">VolatileDatabase</a>&lt; T, _length &gt;::minimum </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the minimum value stored in the database. </p>
+<dl class="section return"><dt>Returns</dt><dd>T Minimum value. </dd></dl>
+
+</div>
+</div>
+<a id="a4819f4d8950e92c4a183ecbe15318efe" name="a4819f4d8950e92c4a183ecbe15318efe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4819f4d8950e92c4a183ecbe15318efe">&#9670;&nbsp;</a></span>scaledAt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t _length&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T <a class="el" href="classVolatileDatabase.html">VolatileDatabase</a>&lt; T, _length &gt;::scaledAt </td>
+          <td>(</td>
+          <td class="paramtype">const size_t&#160;</td>
+          <td class="paramname"><em>position</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T&#160;</td>
+          <td class="paramname"><em>min</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T&#160;</td>
+          <td class="paramname"><em>max</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get an element of the database, scaled between the from the minimum and maximum stored in the database, to the minimum and maximum parameters passed. </p>
+<p >The following formula is used: x = (minP - maxP) * (i - minI) / (maxI - minI) + minP where: x: returned value minP: The minimum value passed to the function maxP: The maximum value passed to the function i: The value of the item at the queried position. minI: The minimum value stored in the database. maxI: The maximum value stored in the database. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">position</td><td>The position to query. </td></tr>
+    <tr><td class="paramname">min</td><td>The minimum value to scale to. </td></tr>
+    <tr><td class="paramname">max</td><td>The maximum value to scale to. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>T The scaled value at the requested position. </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>esp32/main/lib/tools/<a class="el" href="volatile__database_8hpp_source.html">volatile_database.hpp</a></li>
 </ul>

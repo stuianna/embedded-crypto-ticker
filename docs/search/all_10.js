@@ -1,10 +1,9 @@
 var searchData=
 [
-  ['table_0',['Table',['../namespaceCrypto.html#ae1e5269c5a175e3b564bcfab5312a894',1,'Crypto']]],
-  ['theme_1',['Theme',['../classGUI_1_1Theme.html',1,'GUI']]],
-  ['themedark_2',['ThemeDark',['../classGUI_1_1ThemeDark.html',1,'GUI']]],
-  ['themefactory_3',['ThemeFactory',['../classGUI_1_1ThemeFactory.html',1,'GUI']]],
-  ['ticker_4',['Ticker',['../classGUI_1_1Views_1_1Ticker.html',1,'GUI::Views']]],
-  ['ticker_5',['ticker',['../structCrypto_1_1Definition.html#abf28e3f1d409f6ed40b2c87e589d0cb1',1,'Crypto::Definition']]],
-  ['type_6',['type',['../structHAL_1_1__Button_1_1Event.html#a2b49884bebc7069fc93a3330cba8ebcd',1,'HAL::_Button::Event']]]
+  ['scaledat_0',['scaledAt',['../classVolatileDatabase.html#a4819f4d8950e92c4a183ecbe15318efe',1,'VolatileDatabase']]],
+  ['simpleprice_1',['SimplePrice',['../structCrypto_1_1CoinGecko_1_1SimplePrice.html',1,'Crypto::CoinGecko']]],
+  ['spinner_2',['Spinner',['../classGUI_1_1Widgets_1_1Spinner.html',1,'GUI::Widgets']]],
+  ['start_3',['start',['../classTasks_1_1CurrencyUpdateTask.html#abd63a787cad6ee7a8f61dd78a0f112df',1,'Tasks::CurrencyUpdateTask']]],
+  ['stop_4',['stop',['../classTasks_1_1CurrencyUpdateTask.html#a04f8faf81b92f5fa2e43e84af673c8db',1,'Tasks::CurrencyUpdateTask']]],
+  ['symbol_5',['symbol',['../structCrypto_1_1Definition.html#a5edbfe6a2838e0f2b362524534bca641',1,'Crypto::Definition']]]
 ];

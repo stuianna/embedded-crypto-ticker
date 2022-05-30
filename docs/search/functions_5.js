@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['running_0',['running',['../classTasks_1_1CurrencyUpdateTask.html#aa2dadf3768bc5350c6acd4593ef07f68',1,'Tasks::CurrencyUpdateTask']]]
+  ['instance_0',['instance',['../classTasks_1_1CurrencyUpdateTask.html#a7ecac0f011255673e40d5e12a8034e95',1,'Tasks::CurrencyUpdateTask']]]
 ];

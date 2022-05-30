@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['enabledcurrencycount_0',['enabledCurrencyCount',['../namespaceCrypto.html#a9d4963842689778be58202b6eae00896',1,'Crypto']]]
+  ['currencycount_0',['currencyCount',['../namespaceCrypto.html#af5f34510aafd61cf263cc199886e14c4',1,'Crypto']]],
+  ['currencyindex_1',['currencyIndex',['../namespaceCrypto.html#a490f29c93f8fb2d7913b5ca2931b67ea',1,'Crypto']]]
 ];

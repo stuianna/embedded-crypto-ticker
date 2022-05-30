@@ -75,29 +75,29 @@ $(function() {
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;cstdint&gt;</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">namespace </span>HAL {</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="classHAL_1_1Driver.html">    7</a></span>  <span class="keyword">class </span><a class="code hl_class" href="classHAL_1_1Driver.html">Driver</a> {</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="classHAL_1_1LVGLDriver.html">    7</a></span>  <span class="keyword">class </span><a class="code hl_class" href="classHAL_1_1LVGLDriver.html">LVGLDriver</a> {</div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span>   <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    <span class="keyword">static</span> <a class="code hl_class" href="classHAL_1_1Driver.html">Driver</a>* instance() { <span class="keywordflow">return</span> &amp;_instance; }</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>    <span class="keyword">static</span> <a class="code hl_class" href="classHAL_1_1LVGLDriver.html">LVGLDriver</a>* instance() { <span class="keywordflow">return</span> &amp;_instance; }</div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>    <span class="keywordtype">void</span> init();</div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    <span class="keywordtype">bool</span> aquireMutex(<span class="keywordtype">size_t</span> timeoutMs);</div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="keywordtype">void</span> releaseMutex();</div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="comment">// Disable copy and move constructors and operators.</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <a class="code hl_class" href="classHAL_1_1Driver.html">Driver</a>(<span class="keyword">const</span> <a class="code hl_class" href="classHAL_1_1Driver.html">Driver</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <a class="code hl_class" href="classHAL_1_1Driver.html">Driver</a>(<a class="code hl_class" href="classHAL_1_1Driver.html">Driver</a>&amp;&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <a class="code hl_class" href="classHAL_1_1LVGLDriver.html">LVGLDriver</a>(<span class="keyword">const</span> <a class="code hl_class" href="classHAL_1_1LVGLDriver.html">LVGLDriver</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <a class="code hl_class" href="classHAL_1_1LVGLDriver.html">LVGLDriver</a>(<a class="code hl_class" href="classHAL_1_1LVGLDriver.html">LVGLDriver</a>&amp;&amp;) = <span class="keyword">delete</span>;</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <a class="code hl_class" href="classHAL_1_1Driver.html">Driver</a>&amp; operator=(<span class="keyword">const</span> <a class="code hl_class" href="classHAL_1_1Driver.html">Driver</a>&amp;) = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <a class="code hl_class" href="classHAL_1_1Driver.html">Driver</a>&amp; operator=(<a class="code hl_class" href="classHAL_1_1Driver.html">Driver</a>&amp;&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <a class="code hl_class" href="classHAL_1_1LVGLDriver.html">LVGLDriver</a>&amp; operator=(<span class="keyword">const</span> <a class="code hl_class" href="classHAL_1_1LVGLDriver.html">LVGLDriver</a>&amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <a class="code hl_class" href="classHAL_1_1LVGLDriver.html">LVGLDriver</a>&amp; operator=(<a class="code hl_class" href="classHAL_1_1LVGLDriver.html">LVGLDriver</a>&amp;&amp;) = <span class="keyword">delete</span>;</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>   <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <a class="code hl_class" href="classHAL_1_1Driver.html">Driver</a>();</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keyword">static</span> <a class="code hl_class" href="classHAL_1_1Driver.html">Driver</a> _instance;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <a class="code hl_class" href="classHAL_1_1LVGLDriver.html">LVGLDriver</a>();</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keyword">static</span> <a class="code hl_class" href="classHAL_1_1LVGLDriver.html">LVGLDriver</a> _instance;</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>  };</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>  <span class="keyword">constexpr</span> <span class="keyword">auto</span> LVGL = Driver::instance;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>  <span class="keyword">constexpr</span> <span class="keyword">auto</span> LVGL = LVGLDriver::instance;</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>}  <span class="comment">// namespace HAL</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#endif  </span><span class="comment">// __HAL_LVGL_DRIVER_HPP</span></div>
-<div class="ttc" id="aclassHAL_1_1Driver_html"><div class="ttname"><a href="classHAL_1_1Driver.html">HAL::Driver</a></div><div class="ttdef"><b>Definition:</b> lvgl_driver.hpp:7</div></div>
+<div class="ttc" id="aclassHAL_1_1LVGLDriver_html"><div class="ttname"><a href="classHAL_1_1LVGLDriver.html">HAL::LVGLDriver</a></div><div class="ttdef"><b>Definition:</b> lvgl_driver.hpp:7</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
