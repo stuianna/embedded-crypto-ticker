@@ -8,9 +8,9 @@
 template<typename T, size_t _length>
 class VolatileDatabase {
  public:
-  VolatileDatabase() { _history.fill(0.0f); };
-  T maximum() const { return *std::max_element(_history.begin(), std::find(_history.begin(), _history.end(), 0.0f)); }
-  T minimum() const { return *std::min_element(_history.begin(), std::find(_history.begin(), _history.end(), 0.0f)); }
+  VolatileDatabase() { _history.fill(static_cast<T>(0)); };
+  T maximum() const { return *std::max_element(_history.begin(), std::find(_history.begin(), _history.end(), static_cast<T>(0))); }
+  T minimum() const { return *std::min_element(_history.begin(), std::find(_history.begin(), _history.end(), static_cast<T>(0))); }
   T latest() const { return *_history.begin(); }
   void add(const T value) {
     std::rotate(_history.rbegin(), _history.rbegin() + 1, _history.rend());
@@ -19,7 +19,7 @@ class VolatileDatabase {
   size_t length() const { return _history.size(); }
   T at(const size_t position) const {
     if(position >= _history.size()) {
-      return 0;
+      return static_cast<T>(0);
     }
     return _history[position];
   }
