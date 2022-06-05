@@ -27,6 +27,7 @@ idf_component_register(
         "lib/crypto/data_table.cpp"
         "lib/hal/button.cpp"
         "lib/hal/lvgl_driver.cpp"
+        "lib/hal/nvs.cpp"
         "lib/hal/requests.cpp"
         "lib/hal/sntp.cpp"
         "lib/hal/ssl_certificate.cpp"

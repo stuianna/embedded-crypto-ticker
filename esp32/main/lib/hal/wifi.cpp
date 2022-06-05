@@ -8,6 +8,8 @@
 #include <wifi_provisioning/manager.h>
 #include <wifi_provisioning/scheme_softap.h>
 
+#include "nvs.hpp"
+
 #define TAG                   "WIFI"
 #define PROV_QR_VERSION       "v1"
 #define PROV_TRANSPORT_SOFTAP "softap"
@@ -71,16 +73,7 @@ Wifi::Wifi() {
 }
 
 void Wifi::_init() {
-  esp_err_t ret = nvs_flash_init();
-
-  if(ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NVS_NEW_VERSION_FOUND) {
-    /* NVS partition was truncated
-     * and needs to be erased */
-    ESP_ERROR_CHECK(nvs_flash_erase());
-
-    /* Retry nvs_flash_init */
-    ESP_ERROR_CHECK(nvs_flash_init());
-  }
+  NVS()->initialise();
 
   /* Initialize TCP/IP */
   ESP_ERROR_CHECK(esp_netif_init());
