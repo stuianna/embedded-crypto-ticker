@@ -4,6 +4,12 @@
 
 using namespace HAL;
 
+_NVS::Error _NVS::eraseAll() {
+  ESP_ERROR_CHECK(nvs_flash_erase());
+  _initialised = false;
+  return Error::NONE;
+}
+
 _NVS::Error _NVS::initialise() {
   if(!_initialised) {
     esp_err_t ret = nvs_flash_init();

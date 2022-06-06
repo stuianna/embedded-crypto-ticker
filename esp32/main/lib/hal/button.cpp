@@ -33,3 +33,8 @@ _Button::Event _Button::getEvent(const uint32_t timeout) {
   }
   return {.pin = 0, .type = EventType::NONE};
 }
+
+_Button::EventType _Button::state(const uint32_t pin) {
+  auto state = gpio_get_level(static_cast<gpio_num_t>(pin)) ? _Button::EventType::UP : _Button::EventType::DOWN;
+  return state;
+}

@@ -24,6 +24,12 @@ namespace HAL {
     static _NVS* instance();
 
     /**
+     * @brief Erase all segments of the NVS.
+     * @return Error Any error which occurred when erasing NVS.
+     */
+    Error eraseAll();
+
+    /**
      * @brief Initialise the NVS.
      * @details NVS is automatically initialised when the object is first called through instance.
      * @details This call exists as a convenience. Repeat call are ignored internally.

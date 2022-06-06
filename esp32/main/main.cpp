@@ -17,6 +17,7 @@
 #include <lib/hal/sntp.hpp>
 #include <lib/hal/wifi.hpp>
 #include <tasks/currency_update.hpp>
+#include <tasks/factory_reset.hpp>
 
 #include "configuration.hpp"
 #define LOG_TAG "main"
@@ -45,6 +46,10 @@ void fetchHistoricalData() {
 }
 
 void initialise() {
+  Tasks::FactoryReset()->setOneShotTimeout(3000);
+  Tasks::FactoryReset()->setFinalButtonState(HAL::Button()->EventType::DOWN);
+  Tasks::FactoryReset()->setTriggerButtonState(HAL::Button()->EventType::DOWN, BUTTON_A);
+  Tasks::FactoryReset()->startMonitor();
   HAL::LVGL()->init();
   GUI::LoadingScreen()->status("Connecting to WIFI..");
   GUI::LoadingScreen()->show();
