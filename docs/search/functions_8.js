@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['running_0',['running',['../classTasks_1_1CurrencyUpdateTask.html#aa2dadf3768bc5350c6acd4593ef07f68',1,'Tasks::CurrencyUpdateTask']]]
+  ['preform_0',['preform',['../classTasks_1_1FactoryResetTask.html#a639fedcd8d60ee7cb415c38cf98d4ad3',1,'Tasks::FactoryResetTask']]]
 ];

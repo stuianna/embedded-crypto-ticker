@@ -96,6 +96,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a90cca19beec8a756228a7730ba7971e7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structHAL_1_1__Button_1_1Event.html">Event</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHAL_1_1__Button.html#a90cca19beec8a756228a7730ba7971e7">getEvent</a> (const uint32_t timeout)</td></tr>
 <tr class="memdesc:a90cca19beec8a756228a7730ba7971e7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a single button event, if it has occurred.  <a href="classHAL_1_1__Button.html#a90cca19beec8a756228a7730ba7971e7">More...</a><br /></td></tr>
 <tr class="separator:a90cca19beec8a756228a7730ba7971e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f862c27887777f84e31777c9325d6b9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classHAL_1_1__Button.html#a9f7b0147395f2047799d1d05db4f707c">EventType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classHAL_1_1__Button.html#a8f862c27887777f84e31777c9325d6b9">state</a> (const uint32_t pin)</td></tr>
+<tr class="memdesc:a8f862c27887777f84e31777c9325d6b9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current state of a button.  <a href="classHAL_1_1__Button.html#a8f862c27887777f84e31777c9325d6b9">More...</a><br /></td></tr>
+<tr class="separator:a8f862c27887777f84e31777c9325d6b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -161,6 +164,33 @@ static <a class="el" href="classHAL_1_1__Button.html">_Button</a> *&#160;</td><t
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="structHAL_1_1__Button_1_1Event.html" title="Structure describing a single button event.">Event</a> Structure describing the event which occurred. </dd></dl>
+
+</div>
+</div>
+<a id="a8f862c27887777f84e31777c9325d6b9" name="a8f862c27887777f84e31777c9325d6b9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f862c27887777f84e31777c9325d6b9">&#9670;&nbsp;</a></span>state()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classHAL_1_1__Button.html#a9f7b0147395f2047799d1d05db4f707c">_Button::EventType</a> _Button::state </td>
+          <td>(</td>
+          <td class="paramtype">const uint32_t&#160;</td>
+          <td class="paramname"><em>pin</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the current state of a button. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pin</td><td>The pin (button) to query. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>EventType Can be one of either DOWN or UP. </dd></dl>
 
 </div>
 </div>

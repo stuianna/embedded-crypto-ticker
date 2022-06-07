@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['getrequest_0',['GetRequest',['../structHAL_1_1Requests_1_1GetRequest.html',1,'HAL::Requests']]]
+  ['factoryresettask_0',['FactoryResetTask',['../classTasks_1_1FactoryResetTask.html',1,'Tasks']]]
 ];

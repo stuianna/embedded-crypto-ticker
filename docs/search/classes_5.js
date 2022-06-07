@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['image_0',['Image',['../classGUI_1_1Widgets_1_1Image.html',1,'GUI::Widgets']]]
+  ['getrequest_0',['GetRequest',['../structHAL_1_1Requests_1_1GetRequest.html',1,'HAL::Requests']]]
 ];
