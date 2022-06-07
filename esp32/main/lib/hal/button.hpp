@@ -40,6 +40,13 @@ namespace HAL {
      */
     Event getEvent(const uint32_t timeout);
 
+    /**
+     * @brief Get the current state of a button.
+     * @param pin The pin (button) to query.
+     * @return EventType Can be one of either DOWN or UP.
+     */
+    EventType state(const uint32_t pin);
+
    private:
     _Button(const _Button&) = delete;
     _Button(_Button&&) = delete;
