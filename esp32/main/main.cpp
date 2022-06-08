@@ -14,6 +14,7 @@
 #include <lib/gui/views/startup/provisioning.hpp>
 #include <lib/gui/views/ticker/legacy.hpp>
 #include <lib/hal/button.hpp>
+#include <lib/hal/hardware_information.hpp>
 #include <lib/hal/sntp.hpp>
 #include <lib/hal/wifi.hpp>
 #include <tasks/currency_update.hpp>
@@ -46,6 +47,17 @@ void fetchHistoricalData() {
 }
 
 void initialise() {
+  ESP_LOGI(LOG_TAG, "%s %s", "SDK version:", HAL::HardwareInformation()->sdkVersion());
+  ESP_LOGI(LOG_TAG, "%s %s", "MAC:", HAL::HardwareInformation()->macAddress());
+  ESP_LOGI(LOG_TAG, "%s %s", "ESP CPU Model:", HAL::HardwareInformation()->chip());
+  ESP_LOGI(LOG_TAG, "%s %d", "ESP CPU Revision:", HAL::HardwareInformation()->chipRevision());
+  ESP_LOGI(LOG_TAG, "%s %d", "CPU Cores:", HAL::HardwareInformation()->cores());
+  ESP_LOGI(LOG_TAG, "%s %d", "Flash size:", HAL::HardwareInformation()->flashSize());
+  ESP_LOGI(LOG_TAG, "%s %s", "App version", HAL::HardwareInformation()->appVersion());
+  ESP_LOGI(LOG_TAG, "%s %s", "App compile time", HAL::HardwareInformation()->compileTime());
+  ESP_LOGI(LOG_TAG, "%s %s", "App compile date", HAL::HardwareInformation()->compileDate());
+  ESP_LOGI(LOG_TAG, "%s %s", "App sha256", HAL::HardwareInformation()->binarySHA256());
+
   Tasks::FactoryReset()->setOneShotTimeout(3000);
   Tasks::FactoryReset()->setFinalButtonState(HAL::Button()->EventType::DOWN);
   Tasks::FactoryReset()->setTriggerButtonState(HAL::Button()->EventType::DOWN, BUTTON_A);
