@@ -67,6 +67,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
 <a href="classTasks_1_1CurrencyUpdateTask-members.html">List of all members</a>  </div>
@@ -79,6 +80,12 @@ $(function() {
 
 <p><code>#include &lt;<a class="el" href="currency__update_8hpp_source.html">currency_update.hpp</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structTasks_1_1CurrencyUpdateTask_1_1FailedRequest.html">FailedRequest</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Structure used to describe a request which failed.  <a href="structTasks_1_1CurrencyUpdateTask_1_1FailedRequest.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:abd63a787cad6ee7a8f61dd78a0f112df"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTasks_1_1CurrencyUpdateTask.html#abd63a787cad6ee7a8f61dd78a0f112df">start</a> ()</td></tr>
@@ -99,6 +106,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a219e93e81172c2c16d41b3b4cc4f7427"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTasks_1_1CurrencyUpdateTask.html#a219e93e81172c2c16d41b3b4cc4f7427">updatePeriod</a> ()</td></tr>
 <tr class="memdesc:a219e93e81172c2c16d41b3b4cc4f7427"><td class="mdescLeft">&#160;</td><td class="mdescRight">Query the current update period being used.  <a href="classTasks_1_1CurrencyUpdateTask.html#a219e93e81172c2c16d41b3b4cc4f7427">More...</a><br /></td></tr>
 <tr class="separator:a219e93e81172c2c16d41b3b4cc4f7427"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a140a45d4eeee22defe6e3f8ec2382a0d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structTasks_1_1CurrencyUpdateTask_1_1FailedRequest.html">FailedRequest</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTasks_1_1CurrencyUpdateTask.html#a140a45d4eeee22defe6e3f8ec2382a0d">getLastFailedRequest</a> () const</td></tr>
+<tr class="memdesc:a140a45d4eeee22defe6e3f8ec2382a0d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get information on the last failed request.  <a href="classTasks_1_1CurrencyUpdateTask.html#a140a45d4eeee22defe6e3f8ec2382a0d">More...</a><br /></td></tr>
+<tr class="separator:a140a45d4eeee22defe6e3f8ec2382a0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a21a9a9115f76d1e24403908da6de942e"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTasks_1_1CurrencyUpdateTask.html#a21a9a9115f76d1e24403908da6de942e">totalRequestCount</a> () const</td></tr>
+<tr class="memdesc:a21a9a9115f76d1e24403908da6de942e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the total number of requests conducted.  <a href="classTasks_1_1CurrencyUpdateTask.html#a21a9a9115f76d1e24403908da6de942e">More...</a><br /></td></tr>
+<tr class="separator:a21a9a9115f76d1e24403908da6de942e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0d6109d871f32d070fcbe499027b973"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTasks_1_1CurrencyUpdateTask.html#ae0d6109d871f32d070fcbe499027b973">failedRequestCount</a> () const</td></tr>
+<tr class="memdesc:ae0d6109d871f32d070fcbe499027b973"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the total number of failed requests.  <a href="classTasks_1_1CurrencyUpdateTask.html#ae0d6109d871f32d070fcbe499027b973">More...</a><br /></td></tr>
+<tr class="separator:ae0d6109d871f32d070fcbe499027b973"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae53a3f1e6f5687049798a7ae4aa8e72d"><td class="memItemLeft" align="right" valign="top">size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classTasks_1_1CurrencyUpdateTask.html#ae53a3f1e6f5687049798a7ae4aa8e72d">lastRequestTimestamp</a> () const</td></tr>
+<tr class="memdesc:ae53a3f1e6f5687049798a7ae4aa8e72d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the unix timestamp for the latest request.  <a href="classTasks_1_1CurrencyUpdateTask.html#ae53a3f1e6f5687049798a7ae4aa8e72d">More...</a><br /></td></tr>
+<tr class="separator:ae53a3f1e6f5687049798a7ae4aa8e72d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -110,6 +129,46 @@ Static Public Member Functions</h2></td></tr>
 <div class="textblock"><p >Singleton class to control a single task designated to fetching and storing historical and current Cryptocurrency quotes. </p>
 <p >Cryptocurrency quotes are fetched from using the coin_gecko API, and stored in the currencies 'database', defined in the <a class="el" href="namespaceCrypto.html#ae1e5269c5a175e3b564bcfab5312a894" title="The main lookuptable for each supported currency.">Crypto::Table</a> data structure. The update period of a single currency is controlled by the update period. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="ae0d6109d871f32d070fcbe499027b973" name="ae0d6109d871f32d070fcbe499027b973"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0d6109d871f32d070fcbe499027b973">&#9670;&nbsp;</a></span>failedRequestCount()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t CurrencyUpdateTask::failedRequestCount </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the total number of failed requests. </p>
+<dl class="section return"><dt>Returns</dt><dd>size_t Failed request count. </dd></dl>
+
+</div>
+</div>
+<a id="a140a45d4eeee22defe6e3f8ec2382a0d" name="a140a45d4eeee22defe6e3f8ec2382a0d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a140a45d4eeee22defe6e3f8ec2382a0d">&#9670;&nbsp;</a></span>getLastFailedRequest()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structTasks_1_1CurrencyUpdateTask_1_1FailedRequest.html">CurrencyUpdateTask::FailedRequest</a> CurrencyUpdateTask::getLastFailedRequest </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get information on the last failed request. </p>
+<p >If a request has never failed, <a class="el" href="structTasks_1_1CurrencyUpdateTask_1_1FailedRequest.html#ac1dc69eab1ac0d551cc1bd7eb8117f51" title="The failed request structure is valid. All other fields are invalid if this field is set to false.">FailedRequest::valid</a> will be set to false. </p><dl class="section return"><dt>Returns</dt><dd><a class="el" href="structTasks_1_1CurrencyUpdateTask_1_1FailedRequest.html" title="Structure used to describe a request which failed.">FailedRequest</a> Description of failed request. </dd></dl>
+
+</div>
+</div>
 <a id="a7ecac0f011255673e40d5e12a8034e95" name="a7ecac0f011255673e40d5e12a8034e95"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a7ecac0f011255673e40d5e12a8034e95">&#9670;&nbsp;</a></span>instance()</h2>
 
@@ -135,6 +194,26 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Retrieve the singleton instance for the class. </p>
 <dl class="section return"><dt>Returns</dt><dd>CurrencyUpdateTask* </dd></dl>
+
+</div>
+</div>
+<a id="ae53a3f1e6f5687049798a7ae4aa8e72d" name="ae53a3f1e6f5687049798a7ae4aa8e72d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae53a3f1e6f5687049798a7ae4aa8e72d">&#9670;&nbsp;</a></span>lastRequestTimestamp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t CurrencyUpdateTask::lastRequestTimestamp </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the unix timestamp for the latest request. </p>
+<dl class="section return"><dt>Returns</dt><dd>size_t Latest request Unix timestamp </dd></dl>
 
 </div>
 </div>
@@ -197,6 +276,26 @@ false Task is not running. </dd></dl>
 
 <p>Stop the currency update task. </p>
 <p >The task can be restarted with <a class="el" href="classTasks_1_1CurrencyUpdateTask.html#abd63a787cad6ee7a8f61dd78a0f112df" title="Start the currency update task. Quotes (prices) will be fetch and added to the currencies Crypto::Tab...">start()</a>. However, there is no guarantee that the sequence is resumed from where it was stopped. </p>
+
+</div>
+</div>
+<a id="a21a9a9115f76d1e24403908da6de942e" name="a21a9a9115f76d1e24403908da6de942e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a21a9a9115f76d1e24403908da6de942e">&#9670;&nbsp;</a></span>totalRequestCount()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t CurrencyUpdateTask::totalRequestCount </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Get the total number of requests conducted. </p>
+<p >This count includes initial historical, periodic and failed requests. </p><dl class="section return"><dt>Returns</dt><dd>size_t Request count </dd></dl>
 
 </div>
 </div>

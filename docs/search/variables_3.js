@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['icon_0',['icon',['../structCrypto_1_1Entry.html#a56128108696c721e4e90a7c5b5ff8f93',1,'Crypto::Entry']]]
+  ['geckoname_0',['geckoName',['../structCrypto_1_1Definition.html#a196012a4551b45a3c7da237d5a4b4324',1,'Crypto::Definition']]]
 ];

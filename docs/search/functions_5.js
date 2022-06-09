@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['initialise_0',['initialise',['../classHAL_1_1__NVS.html#a25001c6388277f89d072654f475ead0e',1,'HAL::_NVS']]],
-  ['instance_1',['instance',['../classTasks_1_1CurrencyUpdateTask.html#a7ecac0f011255673e40d5e12a8034e95',1,'Tasks::CurrencyUpdateTask::instance()'],['../classTasks_1_1FactoryResetTask.html#a1fe4fd2d2781adc368ed9b83b18bd9ed',1,'Tasks::FactoryResetTask::instance()'],['../classHAL_1_1__NVS.html#ac01d517ed1c2c973afa35a0783f732c4',1,'HAL::_NVS::instance()']]]
+  ['getdefinition_0',['getDefinition',['../namespaceCrypto.html#ac33f6131c12fc354d3b00ad51bc72297',1,'Crypto::getDefinition(const Currency currency)'],['../namespaceCrypto.html#aff45528f65165d43ef8ff5cd9070d933',1,'Crypto::getDefinition(const Fiat fiat)']]],
+  ['getevent_1',['getEvent',['../classHAL_1_1__Button.html#a90cca19beec8a756228a7730ba7971e7',1,'HAL::_Button']]],
+  ['getfinalbuttonstate_2',['getFinalButtonState',['../classTasks_1_1FactoryResetTask.html#ae342b0f9794c4de5775af2e402d49ba4',1,'Tasks::FactoryResetTask']]],
+  ['getlastfailedrequest_3',['getLastFailedRequest',['../classTasks_1_1CurrencyUpdateTask.html#a140a45d4eeee22defe6e3f8ec2382a0d',1,'Tasks::CurrencyUpdateTask']]],
+  ['getpin_4',['getPin',['../classTasks_1_1FactoryResetTask.html#ab6de0e48611ebb0a51848757942d58de',1,'Tasks::FactoryResetTask']]]
 ];
