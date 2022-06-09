@@ -6,6 +6,7 @@
 #include <freertos/timers.h>
 
 #include <hal/nvs.hpp>
+#include <hal/system.hpp>
 
 #define LOG_TAG "factory_reset"
 
@@ -74,5 +75,5 @@ uint32_t FactoryResetTask::getPin() const {
 void FactoryResetTask::preform() {
   ESP_LOGI(LOG_TAG, "%s.", "Erasing NVS and preforming factory reset.");
   HAL::NVS()->eraseAll();
-  esp_restart();
+  HAL::System::reset();
 }
