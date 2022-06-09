@@ -33,6 +33,7 @@ idf_component_register(
         "lib/hal/requests.cpp"
         "lib/hal/sntp.cpp"
         "lib/hal/ssl_certificate.cpp"
+        "lib/hal/system.cpp"
         "lib/hal/wifi.cpp"
         ${GUI_ASSETS}
         ${GUI_SOURCES}
