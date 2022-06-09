@@ -12,6 +12,11 @@
 using namespace Tasks;
 using namespace Crypto;
 
+static size_t _totalRequestCount = 0;
+static size_t _failedRequestCount = 0;
+static CurrencyUpdateTask::FailedRequest _lastFailedRequest({false, "Undefined", "Undefined", 0, 0});
+static size_t _lastRequestTimestamp = 0;
+
 static void delaySeconds(size_t seconds) {
   for(int i = 0; i < seconds; i++) {
     vTaskDelay(pdMS_TO_TICKS(1000));
@@ -26,8 +31,16 @@ static size_t singleUpdate(Crypto::Entry& crypto, const Crypto::Definition fiat)
     crypto.latestUpdate = HAL::SNTP()->unixTime();
   }
   else {
+    _failedRequestCount++;
+    _lastFailedRequest.currency = crypto.params.name;
+    _lastFailedRequest.fiat = fiat.name;
+    _lastFailedRequest.returnCode = currentData.status;
+    _lastFailedRequest.unixTime = HAL::SNTP()->unixTime();
+    _lastFailedRequest.valid = true;
     ESP_LOGW(LOG_TAG, "Response code %d received", currentData.status);
   }
+  _totalRequestCount++;
+  _lastRequestTimestamp = HAL::SNTP()->unixTime();
   return currentData.status;
 }
 
@@ -91,18 +104,42 @@ static size_t fetchHistoricalData(Crypto::Entry& crypto, const Crypto::Definitio
 
     auto historical = CoinGecko().marketChartRange24h(cryptoGeckoName, fiatGeckoName, fromSeconds, nowSeconds);
     httpStatus = historical.first;
+    _lastRequestTimestamp = nowSeconds;
 
     if(httpStatus == 200) {
       updatePriceDatabase<historical.second.size()>(historical.second, crypto);
       return httpStatus;
     }
     else {
+      _failedRequestCount++;
+      _lastFailedRequest.currency = crypto.params.name;
+      _lastFailedRequest.fiat = fiat.name;
+      _lastFailedRequest.returnCode = httpStatus;
+      _lastFailedRequest.unixTime = HAL::SNTP()->unixTime();
+      _lastFailedRequest.valid = true;
       ESP_LOGW(LOG_TAG, "Response code from historical update %d", httpStatus);
       delaySeconds(attempt != maxAttempts ? secondsWaitOnRetry : 0);
     }
+    _totalRequestCount++;
   } while(++attempt < maxAttempts);
   ESP_LOGE(LOG_TAG, "Failed to update historical data for %s after %d attempts.", crypto.params.name, maxAttempts);
   return httpStatus;
+}
+
+CurrencyUpdateTask::FailedRequest CurrencyUpdateTask::getLastFailedRequest() const {
+  return _lastFailedRequest;
+}
+
+size_t CurrencyUpdateTask::totalRequestCount() const {
+  return _totalRequestCount;
+}
+
+size_t CurrencyUpdateTask::failedRequestCount() const {
+  return _failedRequestCount;
+}
+
+size_t CurrencyUpdateTask::lastRequestTimestamp() const {
+  return _lastRequestTimestamp;
 }
 
 static void task_currencyUpdate(void* pvParameters) {

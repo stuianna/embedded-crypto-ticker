@@ -59,6 +59,38 @@ namespace Tasks {
      * @return size_t The period in seconds.
      */
     size_t updatePeriod();
+    /**
+     * @brief Structure used to describe a request which failed.
+     */
+    struct FailedRequest {
+      bool valid;            ///< The failed request structure is valid. All other fields are invalid if this field is set to false.
+      const char* currency;  ///< The crypto currency used for the request.
+      const char* fiat;      ///< The Fiat currency used for the request.
+      size_t unixTime;       ///< The Unix time stamp at which the request occurred.
+      size_t returnCode;     ///< The return code. Usually this would be an HTTP status code. However, other values can exist.
+    };
+    /**
+     * @brief Get information on the last failed request.
+     * @details If a request has never failed, FailedRequest::valid will be set to false.
+     * @return FailedRequest Description of failed request.
+     */
+    FailedRequest getLastFailedRequest() const;
+    /**
+     * @brief Get the total number of requests conducted.
+     * @details This count includes initial historical, periodic and failed requests.
+     * @return size_t Request count
+     */
+    size_t totalRequestCount() const;
+    /**
+     * @brief Get the total number of failed requests.
+     * @return size_t Failed request count.
+     */
+    size_t failedRequestCount() const;
+    /**
+     * @brief Get the unix timestamp for the latest request.
+     * @return size_t Latest request Unix timestamp
+     */
+    size_t lastRequestTimestamp() const;
 
 
    private:
