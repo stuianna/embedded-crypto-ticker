@@ -27,6 +27,7 @@ namespace Crypto {
    private:
     void _append_boolean(bool value, char* buffer);
     SimplePrice _parse_simple_price(char* buffer, size_t httpStatus, const char* vsCurrency, const char* ids);
+    void _makeMarketChartRequest(char* buffer, size_t length, const char* ids, const char* vsCurrency, size_t from, size_t to);
   };
 };  // namespace Crypto
 
