@@ -18,6 +18,7 @@
 #include <lib/hal/sntp.hpp>
 #include <lib/hal/system.hpp>
 #include <lib/hal/wifi.hpp>
+#include <lib/rest_server/server.hpp>
 #include <tasks/currency_update.hpp>
 #include <tasks/factory_reset.hpp>
 
@@ -132,7 +133,7 @@ void initialise() {
       vTaskDelay(pdMS_TO_TICKS(100));
     }
   }
-
+  HAL::REST::Server()->start();
   GUI::LoadingScreen()->status("WiFi connected");
   vTaskDelay(pdMS_TO_TICKS(500));
   GUI::LoadingScreen()->status("Synchronising time with SNTP");
