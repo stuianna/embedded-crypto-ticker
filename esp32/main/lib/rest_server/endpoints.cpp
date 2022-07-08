@@ -2,6 +2,8 @@
 
 #include <third_party/ArduinoJson-v6.17.3.h>
 
+#include <hal/hardware_information.hpp>
+#include <hal/sntp.hpp>
 #include <hal/system.hpp>
 
 using namespace HAL::REST;
@@ -40,9 +42,23 @@ RestServer::Error REST::Endpoints::handleURI(const char* uri, char* buffer, size
 
 RestServer::Error REST::Endpoints::systemInformation(char* buffer, size_t length) {
   memset(buffer, 0, length);
-  StaticJsonDocument<128> doc;
-  // TODO actually populate the JSON with system information
-  doc["time"] = 12;
+  StaticJsonDocument<512> doc;
+  doc["uptime_ms"] = HAL::System::uptime();
+  doc["unix_time"] = HAL::SNTP()->unixTime();
+  doc["last_reset_reason"] = HAL::System::resetReason();
+  doc["heap_current_free"] = HAL::System::Heap::currentFree();
+  doc["heap_minimum_free"] = HAL::System::Heap::minimumFree();
+  doc["heap_largest_free_block"] = HAL::System::Heap::largestFreeBlock();
+  doc["sdk_version"] = HAL::HardwareInformation()->sdkVersion();
+  doc["app_version"] = HAL::HardwareInformation()->appVersion();
+  doc["binary_sha256"] = HAL::HardwareInformation()->binarySHA256();
+  doc["compile_time"] = HAL::HardwareInformation()->compileTime();
+  doc["compile_date"] = HAL::HardwareInformation()->compileDate();
+  doc["chip_name"] = HAL::HardwareInformation()->chip();
+  doc["chip_revision"] = HAL::HardwareInformation()->chipRevision();
+  doc["chip_cores"] = HAL::HardwareInformation()->cores();
+  doc["flash_size_bytes"] = HAL::HardwareInformation()->flashSize();
+  doc["wifi_mac_address"] = HAL::HardwareInformation()->macAddress();
   serializeJson(doc, buffer, length);
   return RestServer::Error::HTTP_200;
 }
