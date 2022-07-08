@@ -24,6 +24,7 @@ namespace HAL {
        */
       enum class Error {
         HTTP_200,  ///< No Error
+        HTTP_404,  ///< Not found
         HTTP_500   ///< Internal server error
       };
 

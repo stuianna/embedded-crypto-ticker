@@ -24,26 +24,46 @@ static httpd_handle_t server = NULL;
 static rest_server_context_t* rest_context = NULL;
 
 
+void send_httpd_response(httpd_req_t* req, RestServer::Error httpCode, const char* buffer) {
+  switch(httpCode) {
+    case RestServer::Error::HTTP_200: httpd_resp_sendstr(req, buffer); break;
+    case RestServer::Error::HTTP_404: httpd_resp_send_404(req); break;
+    case RestServer::Error::HTTP_500: httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, buffer); break;
+  }
+}
+
 static esp_err_t rest_common_get_handler(httpd_req_t* req) {
   httpd_resp_set_type(req, "application/json");
-  auto availableEndpoints = Endpoints::available();
   char buffer[1024];  // TODO This 1024 should be defined at compile time.
-
-  for(size_t i = 0; i < availableEndpoints.count; i++) {
-    auto endpoint = availableEndpoints.endpoints[i];
-    if(strcmp(req->uri, endpoint.uri) == 0) {
-      auto error = endpoint.handler(buffer, 1024);
-      // TODO  Handle error
-    }
-  }
-  // TODO  Handle not found
-
-  httpd_resp_sendstr(req, static_cast<const char*>(buffer));
+  auto error = Endpoints::handleURI(req->uri, buffer, 1024);
+  send_httpd_response(req, error, static_cast<const char*>(buffer));
   return ESP_OK;
 }
 
-// TODO Add handler for common POST style endpoints
+static esp_err_t rest_common_post_handler(httpd_req_t* req) {
+  int total_len = req->content_len;
+  int cur_len = 0;
+  char* buffer = (static_cast<rest_server_context_t*>(req->user_ctx))->scratch;
+  if(total_len >= SCRATCH_BUFSIZE) {
+    // Respond with 500 Internal Server Error
+    httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "Post content too long");
+    return ESP_FAIL;
+  }
+  while(cur_len < total_len) {
+    int received = httpd_req_recv(req, buffer + cur_len, total_len);
+    if(received <= 0) {
+      // Respond with 500 Internal Server Error
+      httpd_resp_send_err(req, HTTPD_500_INTERNAL_SERVER_ERROR, "Failed to post control value");
+      return ESP_FAIL;
+    }
+    cur_len += received;
+  }
+  buffer[total_len] = '\0';
 
+  auto error = Endpoints::handleURI(req->uri, buffer, SCRATCH_BUFSIZE);
+  send_httpd_response(req, error, static_cast<const char*>(buffer));
+  return ESP_OK;
+}
 
 HAL::REST::RestServer::RestServer() {
   // TODO MDNS name should be set at compile time.
@@ -72,20 +92,19 @@ void HAL::REST::RestServer::start() {
   }
 
   auto availableEndpoints = Endpoints::available();
-  auto method = HTTP_GET;
   for(size_t i = 0; i < availableEndpoints.count; i++) {
     auto endpoint = availableEndpoints.endpoints[i];
     switch(endpoint.method) {
       default:
-      case RestMethod::GET: break;
-      case RestMethod::POST: method = HTTP_POST; break;
+      case RestMethod::GET: {
+        httpd_uri_t uri = {.uri = endpoint.uri, .method = HTTP_GET, .handler = rest_common_get_handler, .user_ctx = rest_context};
+        httpd_register_uri_handler(server, &uri);
+      } break;
+      case RestMethod::POST: {
+        httpd_uri_t uri = {.uri = endpoint.uri, .method = HTTP_POST, .handler = rest_common_post_handler, .user_ctx = rest_context};
+        httpd_register_uri_handler(server, &uri);
+      } break;
     }
-
-    // Register the common get handler for the request.
-    httpd_uri_t uri = {.uri = endpoint.uri, .method = method, .handler = rest_common_get_handler, .user_ctx = rest_context};
-    httpd_register_uri_handler(server, &uri);
-
-    // TODO handle post type endpoints.
   }
 
   // TODO URI handler for getting web server files
