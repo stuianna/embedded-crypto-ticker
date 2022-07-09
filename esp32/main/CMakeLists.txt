@@ -28,6 +28,7 @@ idf_component_register(
         "lib/crypto/data_table.cpp"
         "lib/rest_server/server.cpp"
         "lib/rest_server/mdns.cpp"
+        "lib/rest_server/file_system.cpp"
         "lib/rest_server/endpoints.cpp"
         "lib/hal/button.cpp"
         "lib/hal/hardware_information.cpp"
