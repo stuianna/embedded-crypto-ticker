@@ -1,0 +1,25 @@
+name: build-frontend
+
+on:
+  push:
+    branches: 
+      - 'master'
+      - 'develop'
+   
+  pull_request:
+    branches: 
+      - 'master'
+      - 'develop'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: 
+      image: node:lts-alpine
+      options: --entrypoint /bin/ash
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install modules
+      run: npm --prefix front install
+    - name: Build
+      run: npm --prefix front run build
