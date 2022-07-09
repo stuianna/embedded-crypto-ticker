@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['qrcode_0',['QRCode',['../classGUI_1_1Widgets_1_1QRCode.html',1,'GUI::Widgets']]],
-  ['qrcode_3c_20120_20_3e_1',['QRCode&lt; 120 &gt;',['../classGUI_1_1Widgets_1_1QRCode.html',1,'GUI::Widgets']]],
-  ['quotebanner_2',['QuoteBanner',['../classGUI_1_1Widgets_1_1QuoteBanner.html',1,'GUI::Widgets']]]
+  ['percentage_0',['Percentage',['../classGUI_1_1Widgets_1_1Percentage.html',1,'GUI::Widgets']]],
+  ['price_1',['Price',['../classGUI_1_1Widgets_1_1Price.html',1,'GUI::Widgets']]],
+  ['provisioning_2',['Provisioning',['../classGUI_1_1Views_1_1Provisioning.html',1,'GUI::Views']]]
 ];

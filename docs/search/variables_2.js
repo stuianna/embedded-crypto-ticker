@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['fiat_0',['fiat',['../structTasks_1_1CurrencyUpdateTask_1_1FailedRequest.html#a3a53907b368959accb5fabd1001efc53',1,'Tasks::CurrencyUpdateTask::FailedRequest']]]
+  ['endpoints_0',['endpoints',['../structREST_1_1Endpoints_1_1Registered.html#ac20f51576aab7f062a770e9e24811c44',1,'REST::Endpoints::Registered']]]
 ];

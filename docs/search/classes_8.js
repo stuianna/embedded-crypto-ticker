@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['percentage_0',['Percentage',['../classGUI_1_1Widgets_1_1Percentage.html',1,'GUI::Widgets']]],
-  ['price_1',['Price',['../classGUI_1_1Widgets_1_1Price.html',1,'GUI::Widgets']]],
-  ['provisioning_2',['Provisioning',['../classGUI_1_1Views_1_1Provisioning.html',1,'GUI::Views']]]
+  ['mdnsservice_0',['MDNSService',['../classHAL_1_1REST_1_1MDNSService.html',1,'HAL::REST']]]
 ];

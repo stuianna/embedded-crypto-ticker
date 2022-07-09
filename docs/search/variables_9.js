@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['symbol_0',['symbol',['../structCrypto_1_1Definition.html#a5edbfe6a2838e0f2b362524534bca641',1,'Crypto::Definition']]]
+  ['returncode_0',['returnCode',['../structTasks_1_1CurrencyUpdateTask_1_1FailedRequest.html#a5781322c9eccd2a04b4d223bc76dfd2a',1,'Tasks::CurrencyUpdateTask::FailedRequest']]]
 ];

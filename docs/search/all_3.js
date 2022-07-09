@@ -9,11 +9,12 @@ var searchData=
   ['compiledate_6',['compileDate',['../classHAL_1_1__HardwareInformation.html#abed8be1a0c2d178b2ab41686f8bba37f',1,'HAL::_HardwareInformation']]],
   ['compiletime_7',['compileTime',['../classHAL_1_1__HardwareInformation.html#a2b4b33a127630504c0cc1682c7cbd463',1,'HAL::_HardwareInformation']]],
   ['cores_8',['cores',['../classHAL_1_1__HardwareInformation.html#a6f83cd82e5138dc2ffe34c365fcc18bd',1,'HAL::_HardwareInformation']]],
-  ['crypto_9',['Crypto',['../namespaceCrypto.html',1,'']]],
-  ['currency_10',['currency',['../structTasks_1_1CurrencyUpdateTask_1_1FailedRequest.html#a796bed630409ab1e9b115c87ae13bc1d',1,'Tasks::CurrencyUpdateTask::FailedRequest::currency()'],['../structCrypto_1_1Entry.html#a043a945f34c6c239c9335e379f1cb0fd',1,'Crypto::Entry::currency()']]],
-  ['currency_11',['Currency',['../namespaceCrypto.html#a273dd5ff1461b8b5ed231465b1d48aa6',1,'Crypto']]],
-  ['currencycount_12',['currencyCount',['../namespaceCrypto.html#af5f34510aafd61cf263cc199886e14c4',1,'Crypto']]],
-  ['currencyindex_13',['currencyIndex',['../namespaceCrypto.html#a490f29c93f8fb2d7913b5ca2931b67ea',1,'Crypto']]],
-  ['currencyupdatetask_14',['CurrencyUpdateTask',['../classTasks_1_1CurrencyUpdateTask.html',1,'Tasks']]],
-  ['currentfree_15',['currentFree',['../namespaceHAL_1_1System_1_1Heap.html#a9f54b02b08f28a4bca738610deb809b4',1,'HAL::System::Heap']]]
+  ['count_9',['count',['../structREST_1_1Endpoints_1_1Registered.html#a7689cac2b5bfba20d64e46be56c0a5df',1,'REST::Endpoints::Registered']]],
+  ['crypto_10',['Crypto',['../namespaceCrypto.html',1,'']]],
+  ['currency_11',['currency',['../structTasks_1_1CurrencyUpdateTask_1_1FailedRequest.html#a796bed630409ab1e9b115c87ae13bc1d',1,'Tasks::CurrencyUpdateTask::FailedRequest::currency()'],['../structCrypto_1_1Entry.html#a043a945f34c6c239c9335e379f1cb0fd',1,'Crypto::Entry::currency()']]],
+  ['currency_12',['Currency',['../namespaceCrypto.html#a273dd5ff1461b8b5ed231465b1d48aa6',1,'Crypto']]],
+  ['currencycount_13',['currencyCount',['../namespaceCrypto.html#af5f34510aafd61cf263cc199886e14c4',1,'Crypto']]],
+  ['currencyindex_14',['currencyIndex',['../namespaceCrypto.html#a490f29c93f8fb2d7913b5ca2931b67ea',1,'Crypto']]],
+  ['currencyupdatetask_15',['CurrencyUpdateTask',['../classTasks_1_1CurrencyUpdateTask.html',1,'Tasks']]],
+  ['currentfree_16',['currentFree',['../namespaceHAL_1_1System_1_1Heap.html#a9f54b02b08f28a4bca738610deb809b4',1,'HAL::System::Heap']]]
 ];
