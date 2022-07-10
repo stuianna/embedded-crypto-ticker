@@ -13,7 +13,23 @@ on:
       - 'develop'
 
 jobs:
-  build:
+  front-end:
+    runs-on: ubuntu-latest
+    container: 
+      image: node:lts-alpine
+      options: --entrypoint /bin/ash
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install modules
+      run: npm --prefix front install
+    - name: Build
+      run: npm --prefix front run build
+    - uses: actions/upload-artifact@master
+      with:
+        name: frontend-dist
+        path: front/dist
+  app:
+    needs: front-end
     runs-on: ubuntu-latest
     container: 
       image: espressif/idf:release-v4.4
@@ -22,6 +38,10 @@ jobs:
     - name: work around permission issue
       run: git config --global --add safe.directory /__w/embedded-crypto-ticker/embedded-crypto-ticker
     - uses: actions/checkout@v2
+    - uses: actions/download-artifact@master
+      with:
+        name: frontend-dist 
+        path: front/dist
     - name: Initialise submodules
       run: git submodule update --init --recursive
     - name: Apply ESP32 Patches
