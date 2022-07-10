@@ -26,6 +26,10 @@ idf_component_register(
         "tasks/factory_reset.cpp"
         "lib/crypto/coin_gecko.cpp"
         "lib/crypto/data_table.cpp"
+        "lib/rest_server/server.cpp"
+        "lib/rest_server/mdns.cpp"
+        "lib/rest_server/file_system.cpp"
+        "lib/rest_server/endpoints.cpp"
         "lib/hal/button.cpp"
         "lib/hal/hardware_information.cpp"
         "lib/hal/lvgl_driver.cpp"
@@ -42,3 +46,10 @@ idf_component_register(
         "./lib"
     EMBED_TXTFILES certificate_store/coin_gecko_root_cert.pem
 )
+
+set(WEB_SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../front")
+if(EXISTS ${WEB_SRC_DIR}/dist)
+    spiffs_create_partition_image(www ${WEB_SRC_DIR}/dist FLASH_IN_PROJECT test)
+else()
+    message(FATAL_ERROR "${WEB_SRC_DIR}/dist doesn't exit. Please run 'npm run build' in ${WEB_SRC_DIR}")
+endif()

@@ -3,6 +3,7 @@ SDL2_DOCKER_IMAGE=tsukisuperior/sdl2-docker
 PORT=/dev/ttyUSB0
 DOCKER_ESP32=docker run --rm -it --device=$(PORT) -v $(PWD):/project -w /project $(ESP32_DOCKER_IMAGE)
 DOCKER_SDL2=docker run --rm -it -v $(PWD):/project -w /project -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY=$(DISPLAY) -h $$HOSTNAME -v $(HOME)/.Xauthority:/root/.Xauthority $(SDL2_DOCKER_IMAGE)
+DOCKER_VUE=docker run -it --rm -v $(PWD)/front:/app -w /app -p 8080:8080  -u "$(id -u)" node:lts-alpine
 
 .PHONY: build configure menuconfig build-esp32 erase monitor flash run-image configure simulator build-x86_64 docs
 
@@ -20,6 +21,9 @@ run-image-esp32:
 
 run-image-sdl2:
 	$(DOCKER_SDL2) /bin/bash
+
+run-image-vue:
+	$(DOCKER_VUE) /bin/ash
 
 build-esp32:
 	idf.py -C esp32 build
@@ -41,6 +45,8 @@ clean:
 	cd esp32/components/esp32-button && git restore .
 	cd esp32/components/lvgl_esp32_drivers && git restore .
 	rm -rf docs/html
+	rm -rf front/dist
+	rm -rf front/node_modules
 
 docs:
 	doxygen
